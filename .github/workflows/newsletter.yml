@@ -1,7 +1,7 @@
 name: AI Weekly Newsletter
 
 on:
-  # ── Scheduled: every Friday at 5:00 PM UTC ───────────────────
+  # ── Scheduled: every Monday at 7:00 AM AEST / 8:00 AM AEDT ───────────────────
   schedule:
     - cron: "0 21 * * 0"
 
