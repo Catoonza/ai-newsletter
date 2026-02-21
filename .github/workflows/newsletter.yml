@@ -1,0 +1,71 @@
+name: AI Weekly Newsletter
+
+on:
+  # ── Scheduled: every Friday at 5:00 PM UTC ───────────────────
+  schedule:
+    - cron: "0 17 * * 5"
+
+  # ── Manual trigger from GitHub Actions UI ────────────────────
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (skip email sending)"
+        required: false
+        default: "false"
+        type: boolean
+
+jobs:
+  generate-newsletter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ── 1. Checkout repo ──────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Python ──────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # ── 3. Install dependencies ───────────────────────────────
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── 4. Run newsletter generator ───────────────────────────
+      - name: Generate newsletter
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_TO: ${{ secrets.SMTP_TO }}
+          # Optional: override these if using a non-Gmail SMTP provider
+          # SMTP_HOST: smtp.gmail.com
+          # SMTP_PORT: 587
+        run: |
+          cd src
+          python newsletter.py
+
+      # ── 5. Commit the output files back to the repo ───────────
+      # This archives every edition in your repo under output/
+      - name: Commit newsletter to repo
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add output/
+          git diff --staged --quiet || git commit -m "chore: add AI Weekly newsletter $(date +'%Y-%m-%d')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 6. Upload newsletter as a downloadable artifact ───────
+      - name: Upload newsletter artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-weekly-${{ github.run_id }}
+          path: output/
+          retention-days: 90
