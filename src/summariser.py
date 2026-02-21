@@ -75,7 +75,7 @@ Synthesise it into a polished newsletter using EXACTLY this structure:
 
 ---
 
-# 🤖 AI Weekly — Week of {start}
+# 🤖 AI Weekly — Week of {end}
 
 *Your dual-layer briefing on everything happening in AI this week.*
 
@@ -142,6 +142,9 @@ Important instructions:
 - If a section has no data, write "No significant updates this week." rather than fabricating content.
 - Prioritise quality over quantity. Cut weak stories. Surface surprising or important ones.
 - Always explain WHY something matters, not just WHAT happened.
+- Ensure that data from multiple sources is synthesised together to identify trends, not just listed separately.
+- Spend time sifting through all content to find the most relevant releases and news. Do not just pick the first few items.
+- Ensure model releases are checked for over every day in the date range, and using multiple sources.
 - Provide URLs as markdown links wherever available.
 """
 

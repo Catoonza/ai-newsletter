@@ -47,8 +47,7 @@ jobs:
           # SMTP_HOST: smtp.gmail.com
           # SMTP_PORT: 587
         run: |
-          cd src
-          python newsletter.py
+          python src/newsletter.py
 
       # ── 5. Commit the output files back to the repo ───────────
       # This archives every edition in your repo under output/
