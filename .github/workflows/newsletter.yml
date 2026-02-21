@@ -3,7 +3,7 @@ name: AI Weekly Newsletter
 on:
   # ── Scheduled: every Friday at 5:00 PM UTC ───────────────────
   schedule:
-    - cron: "0 17 * * 5"
+    - cron: "0 21 * * 0"
 
   # ── Manual trigger from GitHub Actions UI ────────────────────
   workflow_dispatch:
