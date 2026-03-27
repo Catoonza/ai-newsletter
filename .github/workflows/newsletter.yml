@@ -1,9 +1,9 @@
 name: AI Weekly Newsletter
 
 on:
-  # ── Scheduled: every Monday at 7:00 AM AEST / 8:00 AM AEDT ───────────────────
+  # ── Scheduled: every Sunday at 10:00 PM UTC (Monday 8 AM AEST) ──
   schedule:
-    - cron: "0 21 * * 0"
+    - cron: "0 22 * * 0"
 
   # ── Manual trigger from GitHub Actions UI ────────────────────
   workflow_dispatch:
@@ -14,6 +14,10 @@ on:
         default: "false"
         type: boolean
 
+# ── Grant the GITHUB_TOKEN write access to the repo ──────────────
+permissions:
+  contents: write
+
 jobs:
   generate-newsletter:
     runs-on: ubuntu-latest
@@ -23,6 +27,8 @@ jobs:
       # ── 1. Checkout repo ──────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # ── 2. Set up Python ──────────────────────────────────────
       - name: Set up Python 3.11
@@ -55,11 +61,13 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add output/
-          git diff --staged --quiet || git commit -m "chore: add AI Weekly newsletter $(date +'%Y-%m-%d')"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git add output/ || echo "Nothing in output/ to stage"
+          if git diff --staged --quiet; then
+            echo "No changes to commit — newsletter may not have generated"
+          else
+            git commit -m "chore: add AI Weekly newsletter $(date +'%Y-%m-%d')"
+            git push
+          fi
 
       # ── 6. Upload newsletter as a downloadable artifact ───────
       - name: Upload newsletter artifact

@@ -1,6 +1,11 @@
 """
 Fetches blog posts from AI provider RSS feeds.
 No API key required — RSS is open and free.
+
+NOTE ON ANTHROPIC & OPENAI:
+Their sites are JavaScript-rendered and have no native RSS feed.
+We use community-maintained feeds hosted on GitHub (updated hourly via Actions)
+that scrape these sites. Source: https://github.com/Olshansk/rss-feeds
 """
 
 import datetime
@@ -8,73 +13,103 @@ import feedparser
 from typing import List, Dict
 
 
-# Add or remove feeds here as needed
 RSS_FEEDS = [
-    # Anthropic
+    # ── Anthropic ─────────────────────────────────────────────────
+    # Community-maintained feeds (JS-rendered site, no native RSS)
     {
-        "name": "Anthropic",
-        "url": "https://www.anthropic.com/news/rss.xml",
+        "name": "Anthropic News",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_news.xml",
         "category": "provider",
     },
-    # OpenAI
+    {
+        "name": "Anthropic Engineering",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_engineering.xml",
+        "category": "provider",
+    },
+    {
+        "name": "Anthropic Research",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_research.xml",
+        "category": "provider",
+    },
+
+    # ── OpenAI ────────────────────────────────────────────────────
+    # Community-maintained feed (JS-rendered site, no native RSS)
+    {
+        "name": "OpenAI Research",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_openai_research.xml",
+        "category": "provider",
+    },
+    # OpenAI does also have a native blog feed
     {
         "name": "OpenAI Blog",
         "url": "https://openai.com/blog/rss.xml",
         "category": "provider",
     },
-    # Google DeepMind
+
+    # ── Google DeepMind ───────────────────────────────────────────
     {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/rss.xml",
         "category": "provider",
     },
-    # Google AI Blog
     {
         "name": "Google AI Blog",
         "url": "https://blog.research.google/feeds/posts/default",
         "category": "provider",
     },
-    # Mistral
+
+    # ── Mistral ───────────────────────────────────────────────────
     {
         "name": "Mistral AI",
         "url": "https://mistral.ai/news/rss",
         "category": "provider",
     },
-    # Meta AI
+
+    # ── Meta ──────────────────────────────────────────────────────
     {
         "name": "Meta AI",
         "url": "https://ai.meta.com/blog/rss/",
         "category": "provider",
     },
-    # Hugging Face
+
+    # ── Hugging Face ──────────────────────────────────────────────
     {
         "name": "Hugging Face Blog",
         "url": "https://huggingface.co/blog/feed.xml",
         "category": "community",
     },
-    # Microsoft Research
+
+    # ── Microsoft ─────────────────────────────────────────────────
     {
         "name": "Microsoft Research AI",
         "url": "https://www.microsoft.com/en-us/research/feed/",
         "category": "provider",
     },
-    # AWS Machine Learning Blog
+
+    # ── AWS ───────────────────────────────────────────────────────
     {
         "name": "AWS Machine Learning Blog",
         "url": "https://aws.amazon.com/blogs/machine-learning/feed/",
         "category": "provider",
     },
-    # NVIDIA Technical Blog
+
+    # ── NVIDIA ────────────────────────────────────────────────────
     {
         "name": "NVIDIA Technical Blog",
         "url": "https://developer.nvidia.com/blog/feed/",
         "category": "provider",
     },
-    # Cohere
+
+    # ── AI Coding Tools ───────────────────────────────────────────
     {
-        "name": "Cohere Blog",
-        "url": "https://cohere.com/blog/rss",
-        "category": "provider",
+        "name": "Cursor Blog",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_cursor.xml",
+        "category": "tools",
+    },
+    {
+        "name": "Windsurf Blog",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_windsurf.xml",
+        "category": "tools",
     },
 ]
 
@@ -85,6 +120,11 @@ def fetch_provider_blogs(start_date: datetime.datetime, end_date: datetime.datet
     for feed_config in RSS_FEEDS:
         try:
             feed = feedparser.parse(feed_config["url"])
+
+            # Warn if the feed returned nothing at all (likely a dead URL)
+            if feed.bozo and not feed.entries:
+                print(f"   ⚠️  Empty/broken feed for {feed_config['name']}: {feed_config['url']}")
+                continue
 
             for entry in feed.entries:
                 # Parse published date
