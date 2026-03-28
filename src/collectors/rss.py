@@ -2,12 +2,15 @@
 Fetches blog posts from AI provider RSS feeds.
 No API key required — RSS is open and free.
 
-NOTE ON ANTHROPIC & OPENAI:
-Their sites are JavaScript-rendered and have no native RSS feed.
-We use community-maintained feeds hosted on GitHub (updated hourly via Actions)
-that scrape these sites. Source: https://github.com/Olshansk/rss-feeds
+Notes on broken/JS-rendered sites:
+- Anthropic: no native RSS, use community-maintained feeds from github.com/Olshansk/rss-feeds
+- OpenAI: no native RSS for research, use community feed; blog.rss.xml works natively
+- Meta AI: no public RSS feed at all, use Meta Research feed instead
+- Mistral: their /rss endpoint is broken; no known working feed, covered by NewsAPI instead
+- Windsurf: community feed not maintained, removed
 """
 
+import time
 import datetime
 import feedparser
 from typing import List, Dict
@@ -15,7 +18,8 @@ from typing import List, Dict
 
 RSS_FEEDS = [
     # ── Anthropic ─────────────────────────────────────────────────
-    # Community-maintained feeds (JS-rendered site, no native RSS)
+    # JS-rendered site — use community-maintained feeds (updated hourly)
+    # Source: https://github.com/Olshansk/rss-feeds
     {
         "name": "Anthropic News",
         "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_news.xml",
@@ -33,16 +37,15 @@ RSS_FEEDS = [
     },
 
     # ── OpenAI ────────────────────────────────────────────────────
-    # Community-maintained feed (JS-rendered site, no native RSS)
-    {
-        "name": "OpenAI Research",
-        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_openai_research.xml",
-        "category": "provider",
-    },
-    # OpenAI does also have a native blog feed
+    # Native blog feed works; research site is JS-rendered so use community feed
     {
         "name": "OpenAI Blog",
         "url": "https://openai.com/blog/rss.xml",
+        "category": "provider",
+    },
+    {
+        "name": "OpenAI Research",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_openai_research.xml",
         "category": "provider",
     },
 
@@ -53,22 +56,22 @@ RSS_FEEDS = [
         "category": "provider",
     },
     {
-        "name": "Google AI Blog",
-        "url": "https://blog.research.google/feeds/posts/default",
-        "category": "provider",
-    },
-
-    # ── Mistral ───────────────────────────────────────────────────
-    {
-        "name": "Mistral AI",
-        "url": "https://mistral.ai/news/rss",
+        "name": "Google AI / Research",
+        "url": "https://research.google/blog/rss/",
         "category": "provider",
     },
 
     # ── Meta ──────────────────────────────────────────────────────
+    # ai.meta.com/blog has no RSS — use Meta Research blog instead
     {
-        "name": "Meta AI",
-        "url": "https://ai.meta.com/blog/rss/",
+        "name": "Meta Research Blog",
+        "url": "https://research.facebook.com/feed/",
+        "category": "provider",
+    },
+    # Meta's general engineering blog also covers AI heavily
+    {
+        "name": "Meta Engineering Blog",
+        "url": "https://engineering.fb.com/feed/",
         "category": "provider",
     },
 
@@ -100,16 +103,25 @@ RSS_FEEDS = [
         "category": "provider",
     },
 
-    # ── AI Coding Tools ───────────────────────────────────────────
+    # ── Cursor ────────────────────────────────────────────────────
     {
         "name": "Cursor Blog",
         "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_cursor.xml",
         "category": "tools",
     },
+
+    # ── The Verge AI ─────────────────────────────────────────────
     {
-        "name": "Windsurf Blog",
-        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_windsurf.xml",
-        "category": "tools",
+        "name": "The Verge - AI",
+        "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "category": "news",
+    },
+
+    # ── Ars Technica AI ───────────────────────────────────────────
+    {
+        "name": "Ars Technica - AI",
+        "url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
+        "category": "news",
     },
 ]
 
@@ -121,23 +133,23 @@ def fetch_provider_blogs(start_date: datetime.datetime, end_date: datetime.datet
         try:
             feed = feedparser.parse(feed_config["url"])
 
-            # Warn if the feed returned nothing at all (likely a dead URL)
-            if feed.bozo and not feed.entries:
-                print(f"   ⚠️  Empty/broken feed for {feed_config['name']}: {feed_config['url']}")
+            # Warn if the feed came back completely empty
+            if not feed.entries:
+                print(f"   ⚠️  No entries from {feed_config['name']} ({feed_config['url']})")
                 continue
 
             for entry in feed.entries:
-                # Parse published date
+                # Parse published date — try multiple fields
                 published = None
                 for date_field in ["published_parsed", "updated_parsed"]:
-                    if hasattr(entry, date_field) and getattr(entry, date_field):
-                        import time
-                        published = datetime.datetime.fromtimestamp(
-                            time.mktime(getattr(entry, date_field))
-                        )
+                    val = getattr(entry, date_field, None)
+                    if val:
+                        try:
+                            published = datetime.datetime.fromtimestamp(time.mktime(val))
+                        except (OverflowError, OSError):
+                            pass
                         break
 
-                # Skip if no date or outside range
                 if not published:
                     continue
                 if not (start_date <= published <= end_date):
@@ -147,8 +159,8 @@ def fetch_provider_blogs(start_date: datetime.datetime, end_date: datetime.datet
                     "source": "rss",
                     "provider": feed_config["name"],
                     "category": feed_config["category"],
-                    "title": entry.get("title", ""),
-                    "summary": entry.get("summary", "")[:500],  # Cap length
+                    "title": entry.get("title", "").strip(),
+                    "summary": entry.get("summary", "")[:500],
                     "url": entry.get("link", ""),
                     "published_at": published.isoformat(),
                 })
@@ -156,6 +168,5 @@ def fetch_provider_blogs(start_date: datetime.datetime, end_date: datetime.datet
         except Exception as e:
             print(f"   ⚠️  RSS error for {feed_config['name']}: {e}")
 
-    # Sort by date descending
     posts.sort(key=lambda x: x["published_at"], reverse=True)
     return posts

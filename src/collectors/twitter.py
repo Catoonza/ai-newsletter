@@ -1,119 +1,115 @@
 """
-Fetches recent tweets from specific AI profiles.
+Fetches recent AI discussion from Twitter/X profiles.
 
-Uses ntscraper — a free library that scrapes public Nitter instances.
-No Twitter API key required, but scraping may occasionally be rate-limited.
-
-To use the official Twitter API instead (paid, $100+/month):
-  - Set TWITTER_BEARER_TOKEN in your environment
-  - Uncomment the twitter_api.py implementation below
+Strategy: ntscraper / Nitter is effectively dead (all public instances down).
+Instead we use web search via the Anthropic API's web search tool to find
+recent posts from key AI figures. This is reliable, free, and requires no
+Twitter API credentials.
 """
 
-import datetime
 import os
+import json
+import datetime
+import anthropic
 from typing import List, Dict
 
 
-# ── Profiles to follow ───────────────────────────────────────────
-# Add or remove handles as you like
-TWITTER_PROFILES = [
-    # AI Lab Leaders
-    "sama",           # Sam Altman (OpenAI)
-    "demishassabis",  # Demis Hassabis (Google DeepMind)
-    "karpathy",       # Andrej Karpathy
-    "ylecun",         # Yann LeCun (Meta)
-    "goodfellow_ian", # Ian Goodfellow
-    "drfeifei",       # Fei-Fei Li
-    "EMostaque",      # Emad Mostaque
-    "abhi1nandy2",    # Abhishek Thakur (HuggingFace)
-
-    # AI Researchers & Engineers
-    "GaryMarcus",     # Gary Marcus (AI critic)
-    "fchollet",       # François Chollet (Keras)
-    "jimfan",         # Jim Fan (NVIDIA)
-    "hardmaru",       # David Ha
-    "xlr8harder",     # Sasha Rush
-
-    # AI News & Commentary
-    "bentossell",     # Ben Tossell (AI tools)
-    "swyx",           # Shawn Wang (AI engineer)
-    "hturan",         # AI news
-
-    # Anthropic
-    "darioamodei",    # Dario Amodei (Anthropic CEO)
-    "danielgross",    # Daniel Gross
+# Profiles and topics to search for
+AI_FIGURES = [
+    ("Sam Altman", "sama"),
+    ("Demis Hassabis", "demishassabis"),
+    ("Andrej Karpathy", "karpathy"),
+    ("Yann LeCun", "ylecun"),
+    ("Dario Amodei", "darioamodei"),
+    ("François Chollet", "fchollet"),
+    ("Jim Fan", "jimfan"),
+    ("Gary Marcus", "GaryMarcus"),
+    ("Shawn Wang", "swyx"),
+    ("Emad Mostaque", "EMostaque"),
 ]
 
 
 def fetch_twitter_posts(start_date: datetime.datetime, end_date: datetime.datetime) -> List[Dict]:
     """
-    Attempts to fetch tweets using ntscraper.
-    Falls back gracefully if the library isn't installed or scraping fails.
+    Uses Claude with web search to find notable recent posts/statements
+    from key AI figures on Twitter/X.
     """
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        print("   ⚠️  ANTHROPIC_API_KEY not set — skipping Twitter fetch")
+        return []
+
+    client = anthropic.Anthropic(api_key=api_key)
+
+    start_str = start_date.strftime("%B %d, %Y")
+    end_str = end_date.strftime("%B %d, %Y")
+
+    figures_list = "\n".join([f"- {name} (@{handle})" for name, handle in AI_FIGURES])
+
+    prompt = f"""Search Twitter/X for notable posts from these AI figures between {start_str} and {end_str}:
+
+{figures_list}
+
+For each person, find their most notable or discussed tweet/post from this week.
+Focus on posts about: AI model releases, research findings, industry commentary, 
+predictions, or anything that sparked significant discussion.
+
+Return your findings as a JSON array with this exact structure:
+[
+  {{
+    "handle": "username",
+    "name": "Full Name",
+    "text": "the tweet content or a close paraphrase",
+    "url": "https://x.com/... or empty string if not found",
+    "published_at": "YYYY-MM-DD",
+    "why_notable": "one sentence on why this post matters"
+  }}
+]
+
+Return ONLY the JSON array, no other text. If you cannot find notable posts for 
+someone this week, skip them. Only include genuinely interesting or impactful posts."""
+
     try:
-        from ntscraper import Nitter
-        return _fetch_with_ntscraper(start_date, end_date)
-    except ImportError:
-        print("   ⚠️  ntscraper not installed — run: pip install ntscraper")
-        print("   ⚠️  Skipping Twitter fetch")
+        response = client.messages.create(
+            model="claude-opus-4-6",
+            max_tokens=2000,
+            tools=[{"type": "web_search_20250305", "name": "web_search"}],
+            messages=[{"role": "user", "content": prompt}],
+        )
+
+        # Extract text content from response
+        full_text = ""
+        for block in response.content:
+            if hasattr(block, "text"):
+                full_text += block.text
+
+        # Parse JSON
+        clean = full_text.strip()
+        if clean.startswith("```"):
+            clean = clean.split("```")[1]
+            if clean.startswith("json"):
+                clean = clean[4:]
+        clean = clean.strip().rstrip("```").strip()
+
+        posts_raw = json.loads(clean)
+
+        # Normalise into our standard format
+        tweets = []
+        for p in posts_raw:
+            tweets.append({
+                "source": "twitter",
+                "handle": p.get("handle", ""),
+                "text": p.get("text", "") + (f"\n\n💡 {p['why_notable']}" if p.get("why_notable") else ""),
+                "url": p.get("url", ""),
+                "published_at": p.get("published_at", end_date.strftime("%Y-%m-%d")),
+                "stats": {"likes": 0, "retweets": 0, "comments": 0},
+            })
+
+        return tweets
+
+    except json.JSONDecodeError as e:
+        print(f"   ⚠️  Could not parse Twitter search results as JSON: {e}")
         return []
     except Exception as e:
-        print(f"   ⚠️  Twitter scraping failed: {e}")
+        print(f"   ⚠️  Twitter web search failed: {e}")
         return []
-
-
-def _fetch_with_ntscraper(start_date: datetime.datetime, end_date: datetime.datetime) -> List[Dict]:
-    from ntscraper import Nitter
-
-    tweets = []
-
-    # Use a public Nitter instance (ntscraper picks one automatically)
-    scraper = Nitter(log_level=0, skip_instance_check=False)
-
-    for handle in TWITTER_PROFILES:
-        try:
-            results = scraper.get_tweets(handle, mode="user", number=20)
-
-            for tweet in results.get("tweets", []):
-                # Parse date
-                date_str = tweet.get("date", "")
-                try:
-                    # ntscraper returns dates like "Feb 19, 2026 · 3:42 PM UTC"
-                    # Strip the middle dot separator
-                    clean = date_str.replace(" · ", " ").strip()
-                    published = datetime.datetime.strptime(clean, "%b %d, %Y %I:%M %p UTC")
-                except Exception:
-                    continue
-
-                # Filter to date range
-                if not (start_date <= published <= end_date):
-                    continue
-
-                # Skip retweets (they start with "RT @")
-                text = tweet.get("text", "")
-                if text.startswith("RT @"):
-                    continue
-
-                tweets.append({
-                    "source": "twitter",
-                    "handle": handle,
-                    "text": text,
-                    "url": tweet.get("link", ""),
-                    "published_at": published.isoformat(),
-                    "stats": {
-                        "likes": tweet.get("likes", 0),
-                        "retweets": tweet.get("retweets", 0),
-                        "comments": tweet.get("comments", 0),
-                    },
-                })
-
-        except Exception as e:
-            print(f"   ⚠️  Could not fetch tweets for @{handle}: {e}")
-
-    # Sort by engagement (likes + retweets) descending
-    tweets.sort(
-        key=lambda x: x["stats"]["likes"] + x["stats"]["retweets"],
-        reverse=True,
-    )
-
-    return tweets

@@ -87,33 +87,25 @@ Synthesise it into a polished newsletter using EXACTLY this structure:
 
 ## 🚀 Model Releases & Provider Updates
 ### The Quick Take
-[Bullet points]
-### 🔬 Deeper Dive
-[Technical explanation with analogies]
+[Bullet points - what new models, features, or products were released this week? Why do they matter?]
 
 ---
 
 ## 📚 Research Highlights (arXiv)
 ### The Quick Take
-[Bullet points — pick the 4-6 most significant or interesting papers]
-### 🔬 Deeper Dive
-[Explain 1-2 of the most important papers in plain English — what did they find, why does it matter?]
+[Bullet points — pick the 4-6 most significant or interesting papers and detail their key findings in plain English. Why does it matter? What are the implications?]
 
 ---
 
 ## 🏢 AI in Business & Industry
 ### The Quick Take
-[Bullet points]
-### 🔬 Deeper Dive
-[Broader implications — what trends are emerging?]
+[Bullet points - what trends are we seeing in how companies are adopting or using AI? Any interesting partnerships, use cases, or applications?]
 
 ---
 
 ## 🛠️ AI Tools & Products
 ### The Quick Take
-[Bullet points]
-### 🔬 Deeper Dive
-[What does the evolution of tooling tell us about where the field is heading?]
+[Bullet points - What does the evolution of tooling tell us about where the field is heading?]
 
 ---
 
