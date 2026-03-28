@@ -21,7 +21,7 @@ permissions:
 jobs:
   generate-newsletter:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       # ── 1. Checkout repo ──────────────────────────────────────
