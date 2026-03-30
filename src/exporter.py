@@ -2,14 +2,14 @@
 Converts Claude's Markdown newsletter into the branded HTML template
 and sends it via email.
 
-The Markdown output from summariser.py follows this structure:
+Section structure expected from summariser.py:
   ## This Week at a Glance        → summary bar
-  ## 🚀 Model Releases...         → section with ### The Quick Take bullets
-  ## 📚 Research Highlights       → section with ### The Quick Take bullets
-  ## 🏢 AI in Business...         → section with ### The Quick Take bullets
-  ## 🛠️ AI Tools...               → section with ### The Quick Take bullets
-  ## 🐦 From the AI Community     → section with ### Notable Discussions bullets
-  ## 📌 One to Watch              → inverted black block, plain prose
+  ## 🚀 Model Releases...         → #models
+  ## 📚 Research Highlights       → #research
+  ## 🏢 AI in Business...         → #industry
+  ## 🛠️ AI Tools...               → #tools
+  ## 🐦 From the AI Community     → #community
+  ## 📌 One to Watch              → #watch  (inverted block)
 """
 
 import os
@@ -21,7 +21,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-# Maps heading fragments → (html_id, display_title, section_number)
+# Maps heading fragment → (html_id, display_title, section_number)
+# html_id MUST match the href in the nav links in newsletter.html
 SECTION_MAP = [
     ("Model Releases",        "models",    "Model Releases & Provider Updates",  "§ 01"),
     ("Research Highlights",   "research",  "Research Highlights",                "§ 02"),
@@ -35,19 +36,46 @@ SECTION_MAP = [
 # ── Inline markdown → HTML ────────────────────────────────────────
 
 def _md_inline(text: str) -> str:
+    """Convert inline markdown to HTML, preserving source links."""
+    # Links → <a> (must come before bold/italic to avoid mangling brackets)
     text = re.sub(r'\[(.+?)\]\((.+?)\)', r'<a href="\2">\1</a>', text)
+    # Bold
     text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    # Italic
     text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
     return text
 
 
-# ── Extract bullet lines from a section's content ─────────────────
+def _extract_source_link(text: str) -> tuple[str, str]:
+    """
+    Pull the LAST markdown link from a bullet text and return
+    (text_without_link, source_html).  If no link, returns (text, "").
+    """
+    matches = list(re.finditer(r'\[(.+?)\]\((.+?)\)', text))
+    if not matches:
+        # Also handle bare URLs at end of line
+        bare = re.search(r'https?://\S+$', text.strip())
+        if bare:
+            url = bare.group(0).rstrip('.,)')
+            clean = text[:bare.start()].strip()
+            domain = re.sub(r'^https?://(www\.)?', '', url).split('/')[0]
+            return clean, f'<a class="source-link" href="{url}">{domain} ↗</a>'
+        return text, ""
+
+    # Use the last link as the source attribution
+    last = matches[-1]
+    url = last.group(2)
+    # Remove that link from the text
+    clean = text[:last.start()].rstrip(' —–') + text[last.end():]
+    clean = clean.strip()
+    domain = re.sub(r'^https?://(www\.)?', '', url).split('/')[0]
+    return clean, f'<a class="source-link" href="{url}">{domain} ↗</a>'
+
+
+# ── Section content extraction ────────────────────────────────────
 
 def _extract_bullets(content_lines: list[str]) -> list[str]:
-    """
-    Returns bullet lines from content, skipping ### sub-headings.
-    Collects everything after any ### heading (Quick Take, Notable Discussions, etc.)
-    """
+    """Return bullet lines from beneath any ### sub-heading."""
     bullets = []
     past_subheading = False
     for line in content_lines:
@@ -61,18 +89,13 @@ def _extract_bullets(content_lines: list[str]) -> list[str]:
 
 
 def _extract_prose(content_lines: list[str]) -> list[str]:
-    """
-    Returns non-bullet, non-heading prose lines from content.
-    Used for One to Watch and any section without bullet structure.
-    """
+    """Return non-heading, non-bullet prose lines."""
     prose = []
     for line in content_lines:
-        stripped = line.strip()
-        if stripped.startswith("#"):
+        s = line.strip()
+        if s.startswith("#") or s.startswith("- ") or s.startswith("* ") or s == "---":
             continue
-        if stripped.startswith("- ") or stripped.startswith("* "):
-            continue
-        prose.append(stripped)
+        prose.append(s)
     return prose
 
 
@@ -80,13 +103,16 @@ def _extract_prose(content_lines: list[str]) -> list[str]:
 
 def _render_bullet_block(bullets: list[str], label: str = "The Quick Take") -> str:
     if not bullets:
-        return ""
+        return '<p style="color:var(--text-muted);font-style:italic;font-size:13px;">No significant updates this week.</p>'
+
     items_html = ""
-    for line in bullets:
-        content = _md_inline(line[2:].strip())  # strip "- " or "* "
-        items_html += f"    <li>{content}</li>\n"
-    return f"""
-<div class="quick-take">
+    for raw in bullets:
+        line = raw[2:].strip()           # strip leading "- " or "* "
+        body, source_html = _extract_source_link(line)
+        body_html = _md_inline(body)
+        items_html += f"    <li>{body_html}{source_html}</li>\n"
+
+    return f"""<div class="quick-take">
   <div class="quick-take-label">{label}</div>
   <ul>
 {items_html}  </ul>
@@ -94,9 +120,7 @@ def _render_bullet_block(bullets: list[str], label: str = "The Quick Take") -> s
 
 
 def _render_one_to_watch(content_lines: list[str]) -> str:
-    """One to Watch: inverted black block with prose."""
     prose_lines = _extract_prose(content_lines)
-    # Merge into paragraphs on blank-line boundaries
     paragraphs, current = [], []
     for line in prose_lines:
         if line == "":
@@ -111,8 +135,7 @@ def _render_one_to_watch(content_lines: list[str]) -> str:
     paras_html = "\n  ".join(
         f"<p>{_md_inline(p)}</p>" for p in paragraphs if p
     )
-    return f"""
-<div class="section" id="watch">
+    return f"""<div class="section" id="watch">
   <div class="section-header">
     <div class="section-label">§ 06</div>
     <div class="section-title">One to Watch</div>
@@ -128,12 +151,10 @@ def _render_one_to_watch(content_lines: list[str]) -> str:
 def _render_standard_section(html_id: str, section_num: str,
                                title: str, content_lines: list[str]) -> str:
     bullets = _extract_bullets(content_lines)
-    # Determine label — community section uses "Notable Discussions"
     label = "Notable Discussions This Week" if html_id == "community" else "The Quick Take"
     bullet_html = _render_bullet_block(bullets, label)
 
-    return f"""
-<div class="section" id="{html_id}">
+    return f"""<div class="section" id="{html_id}">
   <div class="section-header">
     <div class="section-label">{section_num}</div>
     <div class="section-title">{title}</div>
@@ -143,101 +164,98 @@ def _render_standard_section(html_id: str, section_num: str,
 </div>"""
 
 
-# ── Main parser ───────────────────────────────────────────────────
+# ── Main Markdown → HTML parser ───────────────────────────────────
 
 def markdown_to_html(md: str, date: datetime.datetime) -> str:
     lines = md.splitlines()
     week_of = date.strftime("Week of %b %d, %Y")
     next_edition = (date + datetime.timedelta(days=7)).strftime("%B %d, %Y")
+    edition_num = date.isocalendar()[1]
 
-    # ── Extract "This Week at a Glance" for the summary bar ───────
+    # ── Extract summary from "This Week at a Glance" ──────────────
     summary_text = ""
     in_summary = False
     for line in lines:
-        stripped = line.strip()
-        if re.match(r'^##\s+This Week at a Glance', stripped, re.IGNORECASE):
+        s = line.strip()
+        if re.match(r'^##\s+This Week at a Glance', s, re.IGNORECASE):
             in_summary = True
             continue
         if in_summary:
-            if stripped.startswith("##"):
+            if s.startswith("##"):
                 break
-            if stripped and not stripped.startswith("#") and not stripped.startswith("---"):
-                summary_text += stripped + " "
+            if s and not s.startswith("#") and s != "---":
+                summary_text += s + " "
 
     summary_text = summary_text.strip()
     summary_html = (
         f"<strong>This week:</strong> {_md_inline(summary_text)}"
-        if summary_text else ""
+        if summary_text else "Your weekly briefing on what's happening in AI."
     )
 
-    # ── Split into top-level ## sections ──────────────────────────
+    # ── Split into ## top-level sections ──────────────────────────
     raw_sections: list[tuple[str, list[str]]] = []
-    current_heading, current_lines = None, []
+    cur_heading, cur_lines = None, []
 
     for line in lines:
-        stripped = line.strip()
-        if re.match(r'^##\s+', stripped) and not stripped.startswith("###"):
-            heading = re.sub(r'^##\s+', '', stripped)
-            if current_heading is not None:
-                raw_sections.append((current_heading, current_lines))
-            current_heading = heading
-            current_lines = []
-        elif current_heading is not None:
-            current_lines.append(line)
+        s = line.strip()
+        if re.match(r'^##\s+', s) and not s.startswith("###"):
+            heading = re.sub(r'^##\s+', '', s)
+            if cur_heading is not None:
+                raw_sections.append((cur_heading, cur_lines))
+            cur_heading = heading
+            cur_lines = []
+        elif cur_heading is not None:
+            cur_lines.append(line)
 
-    if current_heading is not None:
-        raw_sections.append((current_heading, current_lines))
+    if cur_heading is not None:
+        raw_sections.append((cur_heading, cur_lines))
 
     # ── Render each section ───────────────────────────────────────
     sections_html = ""
 
     for heading, content in raw_sections:
-        # Skip — already rendered as summary bar
+        # Skip — already used in summary bar
         if re.search(r'at a glance', heading, re.IGNORECASE):
             continue
-        # Skip footer noise
-        if re.search(r'next edition', heading, re.IGNORECASE):
+        # Skip footer artefacts
+        if re.search(r'next edition|independent newsletter|not financial', heading, re.IGNORECASE):
             continue
-        # One to Watch — special inverted block
+        # One to Watch — inverted dark block
         if re.search(r'one to watch', heading, re.IGNORECASE):
-            sections_html += _render_one_to_watch(content)
+            sections_html += _render_one_to_watch(content) + "\n"
             continue
 
-        # Match to known sections
+        # Match to known section map
         matched = False
         for key, html_id, display_title, section_num in SECTION_MAP:
             if key.lower() in heading.lower():
                 sections_html += _render_standard_section(
                     html_id, section_num, display_title, content
-                )
+                ) + "\n"
                 matched = True
                 break
 
         if not matched:
-            # Fallback for any unexpected section
+            # Generic fallback
             bullets = _extract_bullets(content)
-            bullet_html = _render_bullet_block(bullets)
-            safe_id = re.sub(r'[^a-z0-9]', '-', heading.lower())[:20]
-            clean_title = re.sub(r'[^\w\s&]', '', heading).strip()
-            sections_html += f"""
-<div class="section" id="{safe_id}">
+            safe_id = re.sub(r'[^a-z0-9]', '-', heading.lower())[:24].strip('-')
+            clean_title = re.sub(r'[^\w\s&\-]', '', heading).strip()
+            sections_html += f"""<div class="section" id="{safe_id}">
   <div class="section-header">
     <div class="section-title">{clean_title}</div>
     <div class="section-rule"></div>
   </div>
-  {bullet_html}
-</div>"""
+  {_render_bullet_block(bullets)}
+</div>\n"""
 
-    # ── Populate template ─────────────────────────────────────────
+    # ── Load template and substitute placeholders ─────────────────
     template_path = Path(__file__).parent / "template" / "newsletter.html"
-    template = template_path.read_text(encoding="utf-8")
+    html = template_path.read_text(encoding="utf-8")
 
-    edition_num = date.isocalendar()[1]
-    html = template
-    html = html.replace("{{WEEK_OF}}", week_of)
-    html = html.replace("{{EDITION}}", f"Vol. 2026 &nbsp;·&nbsp; No. {edition_num}")
-    html = html.replace("{{SUMMARY}}", summary_html)
-    html = html.replace("{{SECTIONS}}", sections_html)
+    html = html.replace("{{WEEK_OF}}",     week_of)
+    html = html.replace("{{EDITION}}",     f"Vol. 2026 · No. {edition_num}")
+    html = html.replace("{{SUMMARY}}",     summary_html)
+    html = html.replace("{{SECTIONS}}",    sections_html)
     html = html.replace("{{NEXT_EDITION}}", next_edition)
 
     return html
@@ -263,9 +281,9 @@ def save_newsletter(newsletter_md: str, date: datetime.datetime) -> str:
 
 
 def _maybe_send_email(newsletter_md: str, newsletter_html: str, date: datetime.datetime):
-    smtp_from = os.environ.get("SMTP_FROM")
+    smtp_from    = os.environ.get("SMTP_FROM")
     smtp_password = os.environ.get("SMTP_PASSWORD")
-    smtp_to = os.environ.get("SMTP_TO")
+    smtp_to      = os.environ.get("SMTP_TO")
 
     if not all([smtp_from, smtp_password, smtp_to]):
         print("   ℹ️  Email not configured — newsletter saved to file only")
@@ -275,14 +293,14 @@ def _maybe_send_email(newsletter_md: str, newsletter_html: str, date: datetime.d
     smtp_port = int(os.environ.get("SMTP_PORT", "587"))
 
     week_str = date.strftime("%B %d, %Y")
-    subject = f"🤖 AI Weekly — Week of {week_str}"
+    subject  = f"🤖 AI Weekly — Week of {week_str}"
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = smtp_from
-    msg["To"] = smtp_to
+    msg["From"]    = smtp_from
+    msg["To"]      = smtp_to
 
-    msg.attach(MIMEText(newsletter_md, "plain"))
+    msg.attach(MIMEText(newsletter_md,   "plain"))
     msg.attach(MIMEText(newsletter_html, "html"))
 
     try:
