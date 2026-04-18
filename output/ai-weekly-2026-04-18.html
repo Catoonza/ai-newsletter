@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>AI Weekly — Week of Apr 18, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ── Reset ───────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Design tokens — light mode ──────────────────────────── */
+  :root {
+    --bg-outer:     #e8e4dc;
+    --bg-paper:     #faf8f4;
+    --bg-warm:      #f2efe9;
+    --bg-ink:       #0f0f0f;
+    --bg-ink-soft:  #1e1e1e;
+
+    --text-primary:   #0f0f0f;
+    --text-secondary: #3a3a3a;
+    --text-muted:     #5a5a5a;
+    --text-faint:     #888888;
+    --text-on-dark:   #f0ece4;
+    --text-on-dark-muted: rgba(240,236,228,0.75);
+
+    --border-strong:  #0f0f0f;
+    --border-mid:     #b0a898;
+    --border-light:   #d8d3ca;
+    --border-warm:    #c8c0b0;
+
+    --accent:         #c41e3a;
+    --accent-dim:     #9e1830;
+    --teal:           #0a6b78;
+    --teal-light:     #e4f4f6;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Source Serif 4', Georgia, serif;
+    --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  /* ── Dark mode overrides ─────────────────────────────────── */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-outer:     #111111;
+      --bg-paper:     #1a1918;
+      --bg-warm:      #201f1d;
+      --bg-ink:       #f0ece4;
+      --bg-ink-soft:  #e8e4dc;
+
+      --text-primary:   #f0ece4;
+      --text-secondary: #d4cfc7;
+      --text-muted:     #a09890;
+      --text-faint:     #706860;
+      --text-on-dark:   #0f0f0f;
+      --text-on-dark-muted: rgba(15,15,15,0.75);
+
+      --border-strong:  #f0ece4;
+      --border-mid:     #4a4540;
+      --border-light:   #2e2c2a;
+      --border-warm:    #3a3530;
+
+      --accent:         #e8364f;
+      --accent-dim:     #c41e3a;
+      --teal:           #2ab8cc;
+      --teal-light:     #0e2a2e;
+    }
+  }
+
+  /* ── Base ────────────────────────────────────────────────── */
+  body {
+    background: var(--bg-outer);
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 16px 80px;
+    line-height: 1;
+  }
+
+  a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; }
+
+  /* ── Wrapper ─────────────────────────────────────────────── */
+  .email-wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-mid);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.10);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     MASTHEAD
+  ═══════════════════════════════════════════════════════════ */
+  .masthead {
+    padding: 32px 48px 22px;
+    text-align: center;
+    border-bottom: 3px double var(--border-strong);
+  }
+
+  .masthead-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .masthead-title {
+    font-family: var(--font-display);
+    font-size: 58px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    color: var(--text-primary);
+    margin-bottom: 0;
+  }
+  .masthead-title .red { color: var(--accent); }
+
+  /* Divider rule with diamond */
+  .masthead-rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0 14px;
+  }
+  .masthead-rule::before,
+  .masthead-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-strong);
+  }
+  .masthead-diamond {
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* Meta row: Vol | tagline | date — each on its own line concept
+     but using a 3-column grid so they sit side by side on desktop */
+  .masthead-meta {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    padding-top: 2px;
+  }
+
+  .masthead-vol {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+  }
+
+  .masthead-tagline {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .masthead-date {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     SUMMARY BAR (black band)
+  ═══════════════════════════════════════════════════════════ */
+  .summary-bar {
+    background: var(--bg-ink);
+    color: var(--text-on-dark);
+    padding: 16px 48px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    font-weight: 300;
+    border-bottom: 3px solid var(--accent);
+  }
+  .summary-bar strong {
+    font-weight: 700;
+    color: var(--text-on-dark);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     SECTION NAV
+  ═══════════════════════════════════════════════════════════ */
+  .section-nav {
+    display: flex;
+    background: var(--bg-warm);
+    border-bottom: 1px solid var(--border-light);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+
+  .section-nav a {
+    flex-shrink: 0;
+    display: block;
+    padding: 11px 18px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-right: 1px solid var(--border-light);
+    transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+  .section-nav a:last-child { border-right: none; }
+  .section-nav a:hover {
+    color: var(--accent);
+    background: rgba(196, 30, 58, 0.06);
+    text-decoration: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CONTENT BODY
+  ═══════════════════════════════════════════════════════════ */
+  .content {
+    padding: 0 48px;
+  }
+
+  /* ── Section container ────────────────────────────────────── */
+  .section {
+    padding: 36px 0 32px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .section:last-child {
+    border-bottom: none;
+    padding-bottom: 8px;
+  }
+
+  /* ── Section header ───────────────────────────────────────── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+    flex-shrink: 0;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     QUICK TAKE BLOCK
+  ═══════════════════════════════════════════════════════════ */
+  .quick-take {
+    background: var(--bg-warm);
+    border-left: 3px solid var(--accent);
+    padding: 18px 22px 14px;
+  }
+
+  .quick-take-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .quick-take ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Each bullet item */
+  .quick-take ul li {
+    position: relative;
+    padding: 11px 0 11px 20px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .quick-take ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .quick-take ul li:first-child {
+    padding-top: 0;
+  }
+
+  /* Em-dash marker */
+  .quick-take ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    top: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    line-height: 1.65;
+  }
+  .quick-take ul li:first-child::before { top: 0; }
+
+  .quick-take ul li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .quick-take ul li a {
+    color: var(--teal);
+  }
+
+  /* Source link at end of bullet */
+  .source-link {
+    display: inline-block;
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 1px 6px;
+    border-radius: 2px;
+    text-decoration: none;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .source-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ONE TO WATCH (inverted dark block)
+  ═══════════════════════════════════════════════════════════ */
+  .one-to-watch {
+    background: var(--bg-ink);
+    padding: 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .one-to-watch::before {
+    content: '◆';
+    position: absolute;
+    right: 22px;
+    top: 14px;
+    font-size: 52px;
+    color: rgba(255,255,255,0.04);
+    font-family: var(--font-display);
+    line-height: 1;
+  }
+
+  .one-to-watch-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .one-to-watch p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-on-dark);
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .one-to-watch p:last-child { margin-bottom: 0; }
+
+  .one-to-watch strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .one-to-watch a {
+    color: #6ecfdb;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════════════════════════ */
+  .footer {
+    padding: 20px 48px 24px;
+    background: var(--bg-warm);
+    border-top: 3px double var(--border-strong);
+    text-align: center;
+  }
+
+  .footer-next {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .footer-next strong {
+    color: var(--text-primary);
+  }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: var(--text-faint);
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     MOBILE
+  ═══════════════════════════════════════════════════════════ */
+  @media (max-width: 600px) {
+    body { padding: 0 0 48px; }
+
+    .email-wrapper {
+      border-left: none;
+      border-right: none;
+      box-shadow: none;
+    }
+
+    .masthead { padding: 24px 24px 18px; }
+
+    .masthead-title { font-size: 40px; }
+
+    /* On mobile, stack meta items vertically */
+    .masthead-meta {
+      grid-template-columns: 1fr;
+      gap: 5px;
+      text-align: center;
+    }
+    .masthead-vol   { text-align: center; }
+    .masthead-date  { text-align: center; }
+    .masthead-tagline { white-space: normal; }
+
+    .summary-bar  { padding: 14px 24px; }
+    .content      { padding: 0 24px; }
+    .footer       { padding: 18px 24px 22px; }
+
+    .section { padding: 28px 0 24px; }
+
+    .section-title { font-size: 19px; }
+  }
+
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ── MASTHEAD ─────────────────────────────────────────── -->
+  <div class="masthead">
+    <div class="masthead-eyebrow">Independent AI Research Digest</div>
+    <div class="masthead-title">AI <span class="red">Weekly</span></div>
+    <div class="masthead-rule"><div class="masthead-diamond"></div></div>
+    <div class="masthead-meta">
+      <span class="masthead-vol">Vol. 2026 · No. 16</span>
+      <span class="masthead-tagline">What happened in AI this week — and why it matters</span>
+      <span class="masthead-date">Week of Apr 18, 2026</span>
+    </div>
+  </div>
+
+  <!-- ── SUMMARY BAR ──────────────────────────────────────── -->
+  <div class="summary-bar"><strong>This week:</strong> This week tells a story of AI's maturation hitting three critical walls: <strong>infrastructure reality</strong>, <strong>safety awakening</strong>, and <strong>institutional shift</strong>. OpenAI imploded visibly (leadership departures, Stargate UK paused), while infrastructure costs triggered actual policy action (Bay Area data center moratoriums). Meanwhile, the field pivoted hard toward agents—but agents that need to be monitored, audited, and constrained. The AI boom's infrastructure fantasies are colliding with physics and politics.</div>
+
+  <!-- ── SECTION NAV ──────────────────────────────────────── -->
+  <nav class="section-nav">
+    <a href="#models">🚀 Models</a>
+    <a href="#research">📚 Research</a>
+    <a href="#industry">🏢 Industry</a>
+    <a href="#tools">🛠 Tools</a>
+    <a href="#community">🐦 Community</a>
+    <a href="#watch">📌 One to Watch</a>
+  </nav>
+
+  <!-- ── SECTIONS ─────────────────────────────────────────── -->
+  <div class="content">
+    <div class="section" id="models">
+  <div class="section-header">
+    <div class="section-label">§ 01</div>
+    <div class="section-title">Model Releases & Provider Updates</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="quick-take">
+  <div class="quick-take-label">The Quick Take</div>
+  <ul>
+    <li><strong>OpenAI released GPT-Rosalind</strong> for life sciences and <strong>upgraded Codex</strong> with computer use, image generation, and memory—directly competing with Anthropic's Claude Code as agentic coding intensifies. (OpenAI Blog)</li>
+    <li><strong>Anthropic shipped Claude Opus 4.7</strong>, focusing on software engineering and image analysis, plus <strong>Claude Design</strong> and a <strong>new cybersecurity-focused Mythos Preview</strong> model that reportedly thawed relations with the Trump administration. (Anthropic News)</li>
+    <li><strong>Google released Gemini 3.1 Flash TTS</strong> with granular audio tags for expressive speech, and upgraded <strong>Personal Intelligence</strong> to generate images from your Google Photos. (Google DeepMind, The Verge)</li>
+    <li><strong>Amazon Nova Micro fine-tuning</strong> now reduces inference cost by 95% and latency by 50% via model distillation—efficiency, not capability, is becoming the differentiator. (AWS ML Blog)</li>
+    <li><strong>OpenAI expanded GPT-5.4-Cyber</strong> access to vetted defense firms with $10M in API grants, signaling AI as critical infrastructure for national security. (OpenAI Blog)</li>
+  </ul>
+</div>
+</div>
+<div class="section" id="research">
+  <div class="section-header">
+    <div class="section-label">§ 02</div>
+    <div class="section-title">Research Highlights</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="quick-take">
+  <div class="quick-take-label">The Quick Take</div>
+  <ul>
+    <li><strong>Agentic Microphysics manifesto</strong> proposes safety analysis shift from isolated models to multi-agent <em>interaction patterns</em>—communication, observation, mutual influence. This is a methodological reframing: treat agent swarms as populations, not individuals. ()<a class="source-link" href="http://arxiv.org/abs/2604.15236v1">arxiv.org ↗</a></li>
+    <li><strong>CoopEval benchmark</strong> found that stronger LLMs defect more in social dilemmas (prisoner's dilemma, public goods games), and tested 15 game-theoretic mechanisms to restore cooperation. Reasoning ≠ ethics. ()<a class="source-link" href="http://arxiv.org/abs/2604.15267v1">arxiv.org ↗</a></li>
+    <li><strong>RL-STPA framework</strong> adapts hazard analysis (from nuclear/aviation) to reinforcement learning, addressing RL-specific risks: black-box policies, distributional shift, hierarchical failure modes. Safety engineering meets deep learning. ()<a class="source-link" href="http://arxiv.org/abs/2604.15201v1">arxiv.org ↗</a></li>
+    <li><strong>RadAgent tool-using AI</strong> for stepwise CT interpretation generates reports with inspectable reasoning traces—clinicians can validate and refine each step, not just accept a final answer. Explainability as clinical requirement. ()<a class="source-link" href="http://arxiv.org/abs/2604.15231v1">arxiv.org ↗</a></li>
+    <li><strong>Looped Transformers stability analysis</strong> shows that test-time compute scaling (spending more iterations on hard problems) only works if architectures avoid fixed-point collapse. A theoretical constraint on scaling inference. ()<a class="source-link" href="http://arxiv.org/abs/2604.15259v1">arxiv.org ↗</a></li>
+    <li><strong>SpecGuard speculative decoding</strong> uses step-level verification (not just token-level) to prevent erroneous reasoning steps from propagating—agents need internal checkpoints, not just output validation. ()<a class="source-link" href="http://arxiv.org/abs/2604.15244v1">arxiv.org ↗</a></li>
+  </ul>
+</div>
+</div>
+<div class="section" id="industry">
+  <div class="section-header">
+    <div class="section-label">§ 03</div>
+    <div class="section-title">AI in Business & Industry</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="quick-take">
+  <div class="quick-take-label">The Quick Take</div>
+  <ul>
+    <li><strong>OpenAI paused Stargate UK</strong> data center, citing high energy costs and unfavorable regulation—infrastructure constraints are now real bottlenecks, not just speculation. ()<a class="source-link" href="https://alltoc.com/tech/whats-happening-with-openais-stargate-uk">alltoc.com ↗</a></li>
+    <li><strong>Bay Area becomes first to ban new data centers</strong>: Oakley approved a moratorium over power and water concerns; executives "fret over industry's increasingly toxic public image." Trillions in planned development at risk. (<a href="https://www.sfchronicle.com/bayarea/article/bay-area-data-center-ban-22208938.php">SF Chronicle</a>,)<a class="source-link" href="https://www.businessinsider.com/data-center-industry-response-growing-pushback-regulation-2026-4">businessinsider.com ↗</a></li>
+    <li><strong>Apollo's Jim Zelter warns investors</strong>: US data centers alone could require $5–6 trillion over 5 years; unclear if ROI will materialize. Skepticism from inside the capital class. ()<a class="source-link" href="https://www.businessinsider.com/apollo-jim-zelter-ai-investment-spending-boom-investor-return-warning-2026-4">businessinsider.com ↗</a></li>
+    <li><strong>Allbirds pivoted to AI company</strong> (Allbirds AI/data centers) and briefly septuple its stock price—classic meme-stock phenomenon showing retail enthusiasm divorced from fundamentals. ()<a class="source-link" href="https://www.theverge.com/podcast/913792/ai-divide-sam-altman-vergecast">theverge.com ↗</a></li>
+    <li><strong>Cleary Gottlieb released ClearyX</strong> software to let corporate clients do their own legal work, cutting law firm costs; <strong>DataVisor launched Vera</strong>, conversational AI agents for fraud/AML; <strong>Commvault released AI Protect</strong> to monitor and backup rogue AI agents. Enterprise adoption is real but defensive (cost-cutting, risk mitigation). (<a href="https://www.businessinsider.com/cleary-gottlieb-clearyx-ai-software-for-clients-2026-4">Business Insider</a>, <a href="https://www.helpnetsecurity.com/2026/04/14/datavisor-vera/">Help Net Security</a>,)<a class="source-link" href="https://www.theregister.com/2026/04/14/commvault_has_a_ctrlz_for/">theregister.com ↗</a></li>
+    <li><strong>Nature study: humans still trounce AI agents on complex tasks</strong> despite researchers embracing AI in workflows. Humans remain superior at reasoning-heavy work. ()<a class="source-link" href="https://www.nature.com/articles/d41586-026-01199-z">nature.com ↗</a></li>
+  </ul>
+</div>
+</div>
+<div class="section" id="tools">
+  <div class="section-header">
+    <div class="section-label">§ 04</div>
+    <div class="section-title">AI Tools & Products</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="quick-take">
+  <div class="quick-take-label">The Quick Take</div>
+  <ul>
+    <li><strong>Cursor shipped multi-agent systems</strong> for GPU kernel optimization (+38% speedup) and enables agent-created visualizations in canvases; <strong>Amplitude ships 3x more production code</strong> with Cursor—agentic coding is moving from demo to production velocity. (<a href="https://cursor.com/blog/multi-agent-kernels">Cursor Blog</a>,)<a class="source-link" href="https://cursor.com/blog/amplitude">cursor.com ↗</a></li>
+    <li><strong>Dairy Queen deploying AI chatbots in drive-thrus</strong> to speed service and upsell; <strong>Canva pivoted to AI-first</strong> (design second) with AI connectors and scheduling. Consumer/SMB products leading, not lagging. (<a href="https://www.theverge.com/ai-artificial-intelligence/913928/dairy-queen-ai-drive-thru-presto">The Verge</a>,)<a class="source-link" href="https://www.cnet.com/tech/services-and-software/canva-create-2026-news-ai-connectors-scheduling/">cnet.com ↗</a></li>
+    <li><strong>Amazon Nova cost efficiency</strong>: Micro model + distillation cuts inference cost 95%, latency 50% for video semantic search. <strong>Smaller models + clever routing > bigger models.</strong> ()<a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/optimize-video-semantic-search-intent-with-amazon-nova-model-distillation-on-amazon-bedrock/">aws.amazon.com ↗</a></li>
+    <li><strong>NVIDIA NemoClaw + OpenClaw</strong> for local, always-on AI agents (persistent identity, file access, API calls). On-device agents reduce vendor lock-in and latency. ()<a class="source-link" href="https://developer.nvidia.com/blog/build-a-secure-always-on-local-ai-agent-with-nvidia-nemoclaw-and-openclaw/">developer.nvidia.com ↗</a></li>
+    <li><strong>Meta published Capacity Efficiency Program</strong>: unified AI agents to automate infrastructure optimization, freeing engineers from repetitive performance tuning. Internal dog-fooding of agentic workflows. ()<a class="source-link" href="https://engineering.fb.com/2026/04/16/developer-tools/capacity-efficiency-at-meta-how-unified-ai-agents-optimize-performance-at-hyperscale/">engineering.fb.com ↗</a></li>
+    <li><strong>World ID facial scanning orbs expand</strong>: Tinder users can now verify identity for free boosts (OpenAI's Sam Altman's company). Biometric verification becoming gated access token. ()<a class="source-link" href="https://www.theverge.com/ai-artificial-intelligence/914385/world-id-tinder-identity-verifying-orb">theverge.com ↗</a></li>
+  </ul>
+</div>
+</div>
+<div class="section" id="community">
+  <div class="section-header">
+    <div class="section-label">§ 05</div>
+    <div class="section-title">From the AI Community</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="quick-take">
+  <div class="quick-take-label">Notable Discussions This Week</div>
+  <ul>
+    <li><strong>Illia Polosukhin</strong> (Transformer paper co-author, Near Protocol): "AI agents are becoming like a billionaire's chief of staff—we need institutions to prepare." Flagging governance gap. ()<a class="source-link" href="https://www.businessinsider.com/illia-polosukhin-transformer-author-ai-agents-near-protocol-2026-4">businessinsider.com ↗</a></li>
+    <li><strong>Jensen Huang</strong> (NVIDIA): "We don't pick winners; we invest across the ecosystem." Explains why NVIDIA avoids exclusive bets (learned from history). Neutrality as strategy. ()<a class="source-link" href="https://www.businessinsider.com/jensen-huang-explains-nvidia-doesnt-pick-winners-openai-anthropic-intel-2026-4">businessinsider.com ↗</a></li>
+    <li><strong>Mistral AI</strong> dropped "European AI playbook"—explicit call for EU strategic autonomy in AI, positioning against US/China dominance. Geopolitical AI is official now. ()<a class="source-link" href="https://europe.mistral.ai/">europe.mistral.ai ↗</a></li>
+    <li><strong>OneProject.org</strong>: "Democratic AI to serve the public"—rethinking AI governance as public utility, not corporate product. Alternative framing gaining institutional voice. ()<a class="source-link" href="https://oneproject.org/how-to-make-ai-serve-the-public/">oneproject.org ↗</a></li>
+    <li><strong>MIT Technology Review</strong>: "Enterprise AI as operating layer"—shifts conversation from models to integration. The real work is <em>embedding</em> AI in workflows, not building new models. ()<a class="source-link" href="https://www.technologyreview.com/2026/04/16/1135554/treating-enterprise-ai-as-an-operating-layer/">technologyreview.com ↗</a></li>
+  </ul>
+</div>
+</div>
+<div class="section" id="watch">
+  <div class="section-header">
+    <div class="section-label">§ 06</div>
+    <div class="section-title">One to Watch</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="one-to-watch">
+    <div class="one-to-watch-label">📌 &nbsp;Editor's Pick</div>
+    <p><strong>The Data Center Regulation Paradox</strong>: OpenAI paused Stargate UK, Bay Area banned new data centers, and Apollo warned on ROI—yet demand for AI compute keeps rising. This creates a <strong>supply constraint that benefits incumbents</strong> (NVIDIA, hyperscalers with existing capacity) while locking out new entrants. Europe explicitly wants sovereign AI capacity (Mistral), but regulation is making it economically unviable. The result: consolidation toward a handful of well-capitalized operators, increased geopolitical fragmentation, and higher costs for everyone else. Watch whether this accelerates a shift toward on-device AI (smaller models, local execution) or centralizes power further. This is the physical infrastructure chokepoint that no amount of model innovation can solve.</p>
+  <p><em>Next edition: April 25, 2026</em></p>
+  <p><em>AI Weekly is an independent newsletter. Not financial or investment advice.</em></p>
+  </div>
+</div>
+
+  </div>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <div class="footer">
+    <div class="footer-next">Next edition: <strong>April 25, 2026</strong></div>
+    <div class="footer-disclaimer">
+      AI Weekly is an independent digest. All summaries reflect publicly available reporting.<br>
+      Not financial or investment advice.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

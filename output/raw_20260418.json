@@ -1,0 +1,2123 @@
+{
+  "date_range": {
+    "start": "2026-04-11T07:57:50.473953",
+    "end": "2026-04-18T07:57:50.473953"
+  },
+  "news_articles": [
+    {
+      "source": "newsapi",
+      "title": "Pragmata is just OK, but it could\u2019ve been great",
+      "description": "Over the last few years, Capcom has done an exceptional job of solidifying its lineup of big, long-running franchises. The likes of Monster Hunter, Resident Evil, and Street Fighter have all been on strong and consistent runs, an impressive thing given the cu\u2026",
+      "url": "https://www.theverge.com/games/910385/pragmata-review-ps5-xbox-switch-2-pc",
+      "published_at": "2026-04-13T12:25:24Z",
+      "source_name": "The Verge"
+    },
+    {
+      "source": "newsapi",
+      "title": "AI Could Democratize One of Tech's Most Valuable Resources",
+      "description": "AI is making it easier to design chips and optimize software for different silicon. Some startups envision a revolution in chipmaking.",
+      "url": "https://www.wired.com/story/ai-could-democratize-one-of-techs-most-valuable-resources/",
+      "published_at": "2026-04-15T18:00:00Z",
+      "source_name": "Wired"
+    },
+    {
+      "source": "newsapi",
+      "title": "Human scientists trounce the best AI agents on complex tasks",
+      "description": "State-of-the-industry report finds that, despite the limitations of artificial-intelligence systems, researchers have embraced them.",
+      "url": "https://www.nature.com/articles/d41586-026-01199-z",
+      "published_at": "2026-04-13T00:00:00Z",
+      "source_name": "Nature.com"
+    },
+    {
+      "source": "newsapi",
+      "title": "Data center executives fret over the industry's increasingly toxic public image",
+      "description": "Data center development has boomed but communities and politicians are pushing back. Sinking sentiment imperils trillions of dollars of development.",
+      "url": "https://www.businessinsider.com/data-center-industry-response-growing-pushback-regulation-2026-4",
+      "published_at": "2026-04-16T09:53:01Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "What Allbirds needs to do to make its Hail Mary AI pivot succeed",
+      "description": "Allbirds' plan won't be easy to pull off. It needs more money, expertise, and relationships with hyperscalers.",
+      "url": "https://www.businessinsider.com/allbirds-ai-pivot-data-centers-success-2026-4",
+      "published_at": "2026-04-16T19:01:10Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "A Polymarket trader made $300,000 betting on Biden's pardons, a new analysis shows",
+      "description": "In the final hours of President Biden's term, an anonymous prediction market trader placed lucrative bets on who would be pardoned even as the odds were nearly zero.",
+      "url": "https://www.npr.org/2026/04/16/nx-s1-5786580/a-polymarket-trader-made-300-000-betting-on-bidens-pardons",
+      "published_at": "2026-04-16T12:00:00Z",
+      "source_name": "NPR"
+    },
+    {
+      "source": "newsapi",
+      "title": "How cosmic rays are helping mining companies find critical minerals underground",
+      "description": "As rich ore gets harder to find, the mining industry is using subatomic particles to map rock deep underground",
+      "url": "https://www.scientificamerican.com/article/how-cosmic-rays-are-helping-mining-companies-find-critical-minerals/",
+      "published_at": "2026-04-14T10:00:00Z",
+      "source_name": "Scientific American"
+    },
+    {
+      "source": "newsapi",
+      "title": "From a fear of dying to AI 'martyr': Meet the 20-year-old Texan accused of plotting against Sam Altman",
+      "description": "Before his arrest at OpenAI's headquarters, Daniel Moreno-Gama lived in a quiet Houston suburb, worked at a pizzeria, and went to community college.",
+      "url": "https://www.businessinsider.com/sam-altman-molotov-attack-suspect-daniel-moreno-gama-houston-2026-4",
+      "published_at": "2026-04-15T16:50:24Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "Bay Area city becomes first to ban data centers over power and water concerns",
+      "description": "Oakley has become the first Bay Area city to temporarily halt new data centers, approving a moratorium as officials study the industry's heavy energy and...",
+      "url": "https://www.sfchronicle.com/bayarea/article/bay-area-data-center-ban-22208938.php",
+      "published_at": "2026-04-16T02:50:11Z",
+      "source_name": "San Francisco Chronicle"
+    },
+    {
+      "source": "newsapi",
+      "title": "A Wall Street law firm is selling software for clients to do their own legal work",
+      "description": "Wall Street law firm Cleary Gottlieb has a plan as corporate clients move away from law firms to shrink their bills.",
+      "url": "https://www.businessinsider.com/cleary-gottlieb-clearyx-ai-software-for-clients-2026-4",
+      "published_at": "2026-04-15T13:00:01Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "Here is what 3 leaders in AI think of the AI bubble and the signs of vulnerability to watch for",
+      "description": "Some leaders in AI are saying that the balance sheet and cost efficiency are the most important signs to watch for when it comes to the AI bubble.",
+      "url": "https://www.businessinsider.com/what-leaders-in-ai-think-of-the-ai-bubble-2026-4",
+      "published_at": "2026-04-13T10:27:08Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "Treating enterprise AI as an operating layer",
+      "description": "There\u2019s a fault line running through enterprise AI, and it\u2019s not the one getting the most attention. The public conversation still tracks foundation models and benchmarks \u2014 GPT versus Gemini, reasoning scores, and marginal capability gains. But in practice, t\u2026",
+      "url": "https://www.technologyreview.com/2026/04/16/1135554/treating-enterprise-ai-as-an-operating-layer/",
+      "published_at": "2026-04-16T13:00:00Z",
+      "source_name": "MIT Technology Review"
+    },
+    {
+      "source": "newsapi",
+      "title": "Commvault has a Ctrl+Z for rogue AI agents",
+      "description": "The company's new software keeps an eye on your agents and backs up data.\nKeep your agents close and your agent-monitoring software closer. Commvault\u2019s new AI Protect can discover and monitor AI agents running inside AWS, Azure, and GCP environments and even \u2026",
+      "url": "https://www.theregister.com/2026/04/14/commvault_has_a_ctrlz_for/",
+      "published_at": "2026-04-14T20:57:07Z",
+      "source_name": "Theregister.com"
+    },
+    {
+      "source": "newsapi",
+      "title": "AI Updates for the Week of 4/12/26",
+      "description": "Updates Below are some of the highlights in AI, robotics, and machine learning for this past week. 4/12 4/11 4/10 4/9 4/8 4/7 4/6 Learn More You can get more details as well as citations in my AI Timeline. Learn how to take advantage of its filters here. Imag\u2026",
+      "url": "https://www.annielytics.com/blog/ai/ai-updates-for-the-week-of-4-12-26/",
+      "published_at": "2026-04-13T01:24:42Z",
+      "source_name": "Annielytics.com"
+    },
+    {
+      "source": "newsapi",
+      "title": "Generative AI in the Real World: Aishwarya Naresh Reganti on Making AI Work in Production",
+      "description": "As the founder and CEO of LevelUp Labs, Aishwarya Naresh Reganti helps organizations \u201creally grapple with AI,\u201d and through her teaching, she guides individuals who are doing the same. Aishwarya joined Ben to share her experience as a forward-deployed expert s\u2026",
+      "url": "https://www.oreilly.com/radar/podcast/generative-ai-in-the-real-world-aishwarya-naresh-reganti-on-making-ai-work-in-production/",
+      "published_at": "2026-04-16T14:03:20Z",
+      "source_name": "Oreilly.com"
+    },
+    {
+      "source": "newsapi",
+      "title": "Get to insights faster using Notebooks in Amazon SageMaker Unified Studio",
+      "description": "In this post, we demonstrate how Notebooks in Amazon SageMaker Unified Studio help you get to insights faster by simplifying infrastructure configuration. You'll see how to analyze housing price data, create scalable data tables, run distributed profiling, an\u2026",
+      "url": "https://aws.amazon.com/blogs/big-data/get-to-insights-faster-using-notebooks-in-amazon-sagemaker-unified-studio/",
+      "published_at": "2026-04-15T21:24:36Z",
+      "source_name": "Amazon.com"
+    },
+    {
+      "source": "newsapi",
+      "title": "What Is an SEO Authority Ecosystem? A Modern Approach to Search Visibility",
+      "description": "As search rankings become increasingly difficult to sustain amid algorithm volatility, rising agency costs, and...\nThe post What Is an SEO Authority Ecosystem? A Modern Approach to Search Visibility appeared first on Social Media Explorer.",
+      "url": "https://socialmediaexplorer.com/search-engine-optimization-2/what-is-an-seo-authority-ecosystem-a-modern-approach-to-search-visibility/",
+      "published_at": "2026-04-16T18:10:44Z",
+      "source_name": "Socialmediaexplorer.com"
+    },
+    {
+      "source": "newsapi",
+      "title": "DataVisor brings conversational AI agents to fraud and AML operations",
+      "description": "DataVisor has announced Vera, a suite of conversational AI agents designed to combat financial crime. Vera enables institutions to manage risk using natural language, allowing teams to issue instructions that AI agents execute across the fraud and AML lifecyc\u2026",
+      "url": "https://www.helpnetsecurity.com/2026/04/14/datavisor-vera/",
+      "published_at": "2026-04-14T11:59:42Z",
+      "source_name": "Help Net Security"
+    },
+    {
+      "source": "newsapi",
+      "title": "Why Does It Suddenly Feel Like OpenAI Is Melting Down Into Disaster?",
+      "description": "Just under three and a half years after its watershed ChatGPT moment, OpenAI seems almost unrecognizable and struggling to find its footing.",
+      "url": "http://futurism.com/artificial-intelligence/openai-melting-down-disaster",
+      "published_at": "2026-04-12T10:00:00Z",
+      "source_name": "Futurism"
+    },
+    {
+      "source": "newsapi",
+      "title": "Agentic workflows are making distributed, always-on databases nonnegotiable",
+      "description": "Enterprise database infrastructure is undergoing its most consequential redesign in decades, as agentic AI workloads demand a level of elasticity that legacy architectures were never built to provide. As AI becomes deeply embedded in mission-critical workflow\u2026",
+      "url": "https://siliconangle.com/2026/04/15/redefining-database-infrastructure-oracle-ai-database-oracledatadeepdivenyc/",
+      "published_at": "2026-04-15T19:18:53Z",
+      "source_name": "SiliconANGLE News"
+    },
+    {
+      "source": "newsapi",
+      "title": "Internal Salesforce org chart shows the 10 executives helping CEO Marc Benioff navigate AI's threat to software",
+      "description": "Salesforce is under pressure as generative AI threatens to upend its business model. These execs are helping Marc Benioff respond.",
+      "url": "https://www.businessinsider.com/salesforce-org-chart-shows-executives-under-marc-benioff-2026-4",
+      "published_at": "2026-04-15T09:00:02Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "European AI. A playbook to own it. By Mistral",
+      "description": "Discover Mistral AI\u2019s actionable playbook to turn Europe into a self-reliant AI powerhouse\u2014fostering talent, scaling innovation, and securing strategic autonomy.",
+      "url": "https://europe.mistral.ai/",
+      "published_at": "2026-04-12T19:51:06Z",
+      "source_name": "Mistral.ai"
+    },
+    {
+      "source": "newsapi",
+      "title": "Democratic AI to serve the public \u2013 OneProject.org",
+      "description": "Rethinking AI power: why the public must govern the systems shaping our lives.",
+      "url": "https://oneproject.org/how-to-make-ai-serve-the-public/",
+      "published_at": "2026-04-11T21:35:12Z",
+      "source_name": "Oneproject.org"
+    },
+    {
+      "source": "newsapi",
+      "title": "What\u2019s happening with OpenAI\u2019s Stargate UK? #tech",
+      "description": "OpenAI pauses Stargate UK, citing costs and regulation OpenAI has paused its Stargate UK data center effort, tying the decision to two main constraints: high energy costs and an unfavorable regulatory environment. The pause affects plans that were aimed at sc\u2026",
+      "url": "https://alltoc.com/tech/whats-happening-with-openais-stargate-uk",
+      "published_at": "2026-04-12T12:02:02Z",
+      "source_name": "Alltoc.com"
+    },
+    {
+      "source": "newsapi",
+      "title": "2026 is the year payroll stacks break, and AI must grow up",
+      "description": "New regulations require AI-ready, resilient payroll systems now.",
+      "url": "https://www.techradar.com/pro/2026-is-the-year-payroll-stacks-break-and-ai-must-grow-up",
+      "published_at": "2026-04-16T09:01:54Z",
+      "source_name": "TechRadar"
+    },
+    {
+      "source": "newsapi",
+      "title": "\u2018Authorities can ask them to hand over data\u2019: Report claims over 80% of Europeans don\u2019t trust US and Chinese businesses to handle their data \u2013 Europe is desperate for homegrown AI, cloud, and telecoms as the rift with the US grows",
+      "description": "Distrust of US and Chinese companies may have reached an all-time high, and Europeans want homegrown alternatives.",
+      "url": "https://www.techradar.com/pro/security/authorities-can-ask-them-to-hand-over-data-report-claims-over-80-percent-of-europeans-dont-trust-us-and-chinese-businesses-to-handle-their-data-europe-is-desperate-for-homegrown-ai-cloud-and-telecoms-as-the-rift-with-the-us-grows",
+      "published_at": "2026-04-14T12:05:00Z",
+      "source_name": "TechRadar"
+    },
+    {
+      "source": "newsapi",
+      "title": "California Presses Ahead With State AI Regulation Framework In US",
+      "description": "Hoover Institution fellow Nand Mulchandani said that the AI governance-related dispute reflects a structural feature of the US system.",
+      "url": "https://english.news.cn/northamerica/20260412/2d53c1a5a2f34983ba1364811bc02696/c.html",
+      "published_at": "2026-04-13T00:00:00Z",
+      "source_name": "News.cn"
+    },
+    {
+      "source": "newsapi",
+      "title": "Federal Reserve chair nominee's disclosure includes crypto and AI holdings",
+      "description": "With more than $100 million from investments spanning finance, digital assets, and AI, Kevin Warsh is expected to be one of the wealthiest people to potentially become Fed chair.",
+      "url": "https://cointelegraph.com/news/federal-reserve-chair-nominee-discloses-holdings-in-crypto-and-ai",
+      "published_at": "2026-04-14T15:37:27Z",
+      "source_name": "Cointelegraph"
+    },
+    {
+      "source": "newsapi",
+      "title": "Amadeus FiRe Flags \u201cLow Point\u201d After 2025 Loss, Skips Dividend, Eyes 2026 Stabilization",
+      "description": "Amadeus FiRe (ETR:AAD) reported a difficult 2025 marked by weakening demand across its staffing and training businesses, restructuring expenses, and a sharp ...",
+      "url": "https://www.marketbeat.com/instant-alerts/amadeus-fire-flags-low-point-after-2025-loss-skips-dividend-eyes-2026-stabilization-2026-04-15/?utm_source=yahoofinance&amp;utm_medium=yahoofinance",
+      "published_at": "2026-04-15T15:09:56Z",
+      "source_name": "MarketBeat"
+    },
+    {
+      "source": "newsapi",
+      "title": "OpenAI\u2019s Proposed \u201cIndustrial Policy\u201d",
+      "description": "OpenAI has put out a proposal for an \"Industrial Policy\"--an alliance between government and the AI industry--designed to create a new economic and political order.",
+      "url": "https://www.patheos.com/blogs/geneveith/2026/04/openais-proposed-industrial-policy/",
+      "published_at": "2026-04-16T10:00:57Z",
+      "source_name": "Patheos"
+    },
+    {
+      "source": "newsapi",
+      "title": "How AI is helping businesses save time and money amid tariff chaos",
+      "description": "Generative AI aids US importers with tariff refunds and scenario planning. KPMG and EQI use AI tools to navigate trade compliance and optimize costs.",
+      "url": "https://www.businessinsider.com/ai-helps-us-businesses-manage-supreme-court-tariff-impacts-2026-4",
+      "published_at": "2026-04-15T15:45:17Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "Can Puck reinvent the news business for the influencer age?",
+      "description": "Today, I\u2019m talking with Sarah Personette, CEO of Puck, which is a fancy new media company that\u2019s been around for just about five years now. Puck hires big stars and gives them newsletters that are all mostly part of a subscription bundle. These newsletters ar\u2026",
+      "url": "https://www.theverge.com/podcast/910443/can-puck-reinvent-the-news-business-for-the-influencer-age",
+      "published_at": "2026-04-13T13:08:38Z",
+      "source_name": "The Verge"
+    },
+    {
+      "source": "newsapi",
+      "title": "Apollo's president warns the AI spending boom may not pay off for investors",
+      "description": "US data centers alone could require $5 trillion to $6 trillion over the next five years, Jim Zelter estimates.",
+      "url": "https://www.businessinsider.com/apollo-jim-zelter-ai-investment-spending-boom-investor-return-warning-2026-4",
+      "published_at": "2026-04-17T05:32:25Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "'A billionaire's chief of staff': How this AI pioneer puts a dozen agents to work",
+      "description": "Illia Polosukhin, a co-author of the seminal transformer paper, said our institutions need to be better prepared as AI agents become more capable.",
+      "url": "https://www.businessinsider.com/illia-polosukhin-transformer-author-ai-agents-near-protocol-2026-4",
+      "published_at": "2026-04-11T08:11:01Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "Private credit funds faced a $20 billion redemption rush. Here are 3 charts showing how much investors got.",
+      "description": "Private credit redemptions reached record levels in the first quarter of this year, and these charts explain how investors asked for about $20 billion back.",
+      "url": "https://www.businessinsider.com/private-credit-20-billion-redemption-data-blue-owl-blackstone-apollo-2026-4",
+      "published_at": "2026-04-15T15:27:05Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "Canva Really Wants to Be Your Workplace AI Bestie",
+      "description": "The new Canva feels AI-first, design second.",
+      "url": "https://www.cnet.com/tech/services-and-software/canva-create-2026-news-ai-connectors-scheduling/",
+      "published_at": "2026-04-16T13:01:09Z",
+      "source_name": "CNET"
+    },
+    {
+      "source": "newsapi",
+      "title": "Digiday+ Research: Publishers favor generative AI over predictive AI",
+      "description": "Publishers have worked to find the right fit for AI tools, and found that generative AI lends itself better to journalism than predictive AI.",
+      "url": "http://digiday.com/media/digiday-research-publishers-favor-generative-ai-over-predictive-ai/",
+      "published_at": "2026-04-14T04:01:00Z",
+      "source_name": "Digiday"
+    },
+    {
+      "source": "newsapi",
+      "title": "\"We had this problem before in the games we created with CD Projekt\": Blood of Dawnwalker CEO defends use of AI voice placeholders to save time",
+      "description": "Open world vampire RPG The Blood of Dawnwalker makes use of AI-generated voice acting, Rebel Wolves CEO Konrad Tomaszkiewicz has revealed, but doesn't actually feature it in-game. The devs deployed the soul-regurgitating tech to create placeholder voice perfo\u2026",
+      "url": "https://www.rockpapershotgun.com/we-had-this-problem-before-in-the-games-we-created-with-cd-projekt-blood-of-dawnwalker-ceo-defends-use-of-ai-voice-placeholders-to-save-time",
+      "published_at": "2026-04-15T20:12:30Z",
+      "source_name": "Rock Paper Shotgun"
+    },
+    {
+      "source": "newsapi",
+      "title": "Governing the hidden risks of generative AI in the enterprise",
+      "description": "With the right governance, organizations can scale generative AI securely and build lasting trust.",
+      "url": "https://www.techradar.com/pro/governing-the-hidden-risks-of-generative-ai-in-the-enterprise",
+      "published_at": "2026-04-14T08:53:53Z",
+      "source_name": "TechRadar"
+    },
+    {
+      "source": "newsapi",
+      "title": "AI Agents Are Coming for Your Dating Life",
+      "description": "The developers of Pixel Societies are using AI agents to simulate social interactions. It's an attempt optimize the process of choosing new colleagues, friends, and even romantic partners.",
+      "url": "https://www.wired.com/story/ai-agents-are-coming-for-your-dating-life-next/",
+      "published_at": "2026-04-13T10:00:00Z",
+      "source_name": "Wired"
+    },
+    {
+      "source": "newsapi",
+      "title": "The Hidden Demand for AI Inside Your Company",
+      "description": "How BBVA, one of Europe\u2019s largest banks, brought AI use out of the shadows by ditching centralized mandates and following employees\u2019 lead on adoption.",
+      "url": "https://hbr.org/2026/04/the-hidden-demand-for-ai-inside-your-company",
+      "published_at": "2026-04-14T12:05:43Z",
+      "source_name": "Harvard Business Review"
+    },
+    {
+      "source": "newsapi",
+      "title": "Introspective Diffusion Language Models",
+      "description": "First DLM to match AR quality with 2.9-4.1x throughput. Code, models, and interactive analysis.",
+      "url": "https://introspective-diffusion.github.io/",
+      "published_at": "2026-04-14T07:57:33Z",
+      "source_name": "Github.io"
+    },
+    {
+      "source": "newsapi",
+      "title": "Jensen Huang explains why Nvidia invests in tons of companies, instead of trying to pick winners",
+      "description": "Huang said that there were two reasons behind this. One, its not Nvidia's job to pick winners. Two, the company's history is a lesson.",
+      "url": "https://www.businessinsider.com/jensen-huang-explains-nvidia-doesnt-pick-winners-openai-anthropic-intel-2026-4",
+      "published_at": "2026-04-16T05:25:12Z",
+      "source_name": "Business Insider"
+    },
+    {
+      "source": "newsapi",
+      "title": "New Linux Kernel Rules Put the Onus on Humans for AI Tool Usage",
+      "description": "&#8220;Penguins&#8221; by TomaLaPlaya\r\n\n\" data-medium-file=\"https://hackaday.com/wp-content/uploads/2019/10/LinuxMarketing.jpg?w=400\" data-large-file=\"https://hackaday.com/wp-content/uploads/2019/10/LinuxMarketing.jpg?w=800\" />It\u2019s fair to say that the topic \u2026",
+      "url": "https://hackaday.com/2026/04/14/new-linux-kernel-rules-put-the-onus-on-humans-for-ai-tool-usage/",
+      "published_at": "2026-04-14T11:00:39Z",
+      "source_name": "Hackaday"
+    },
+    {
+      "source": "newsapi",
+      "title": "The only way to fight deepfakes is by making deepfakes",
+      "description": "I was unsure if my parents would notice that the voice on the other end wasn't mine - or that it was mine, sort of, but it wasn't me. The voice said hello, asked my dad how he was doing, and asked again when he didn't respond quickly enough. \"What is that, Ga\u2026",
+      "url": "https://www.theverge.com/report/913445/deepfake-detection-reality-defender-pindrop-ai",
+      "published_at": "2026-04-16T18:44:25Z",
+      "source_name": "The Verge"
+    },
+    {
+      "source": "newsapi",
+      "title": "The Strange Origin of AI\u2019s \u2018Reasoning\u2019 Abilities",
+      "description": "It involves 4chan, of all places.",
+      "url": "https://www.theatlantic.com/technology/2026/04/4chan-ai-dungeon-thinking-reasoning/686794/",
+      "published_at": "2026-04-14T15:38:00Z",
+      "source_name": "The Atlantic"
+    }
+  ],
+  "blog_posts": [
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "Full-Stack Optimizations for Agentic Inference with NVIDIA Dynamo",
+      "summary": "<img alt=\"\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"432\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/inference-press-dynamo-gtc26-4960950-1920x1080-1-768x432.png\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"inference-press-dynamo-gtc26-4960950-1920x1080\" width=\"768\" />Coding agents are starting to write production code at scale. Stripe\u2019s agents generate 1,300+ PRs per week. Ramp attributes 30% of merged PRs to agents....",
+      "url": "https://developer.nvidia.com/blog/full-stack-optimizations-for-agentic-inference-with-nvidia-dynamo/",
+      "published_at": "2026-04-17T22:52:47"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Introducing granular cost attribution for Amazon Bedrock",
+      "summary": "In this post, we share how Amazon Bedrock's granular cost attribution works and walk through example cost tracking scenarios.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-granular-cost-attribution-for-amazon-bedrock/",
+      "published_at": "2026-04-17T22:04:15"
+    },
+    {
+      "source": "rss",
+      "provider": "Ars Technica - AI",
+      "category": "news",
+      "title": "US-sanctioned currency exchange says $15 million heist done by \"unfriendly states\"",
+      "summary": "Grinex says needed hacking resources \"available exclusively to ... unfriendly states.\"",
+      "url": "https://arstechnica.com/security/2026/04/russia-friendly-exchange-says-western-special-service-behind-15-million-cyberattack/",
+      "published_at": "2026-04-17T21:28:35"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "OpenAI\u2019s former Sora boss is leaving",
+      "summary": "Last month, OpenAI gave up on its Sora video generation tool, and on Friday, the Sora team's leader, Bill Peebles, announced that he is leaving the company. OpenAI has been shifting its priorities as part of an effort to avoid \"side quests,\" and Peebles' departure is just one of many recent changes as the company [&#8230;]",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/914463/openai-sora-bill-peebles-kevin-weil-leaving-departing",
+      "published_at": "2026-04-17T21:13:25"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "Should you stare into Sam Altman&#8217;s orb before your next date?",
+      "summary": "Tinder users who prove they're a real person by visiting an identity-verifying orb will soon be able to get five free boosts in the app - and it's just the latest service to embrace the orb. World, which was co-founded by OpenAI CEO Sam Altman, initially tested Tinder verification using its facial scanning orbs through [&#8230;]",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/914385/world-id-tinder-identity-verifying-orb",
+      "published_at": "2026-04-17T20:42:47"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "Anthropic\u2019s new cybersecurity model could get it back in the government\u2019s good graces",
+      "summary": "The Trump administration has spent nearly two months fighting with AI company Anthropic. It's dubbed the company a \"RADICAL LEFT, WOKE COMPANY\" full of \"Leftwing nut jobs\" and a menace to national security. But some of the ice may reportedly be melting between the two, thanks to Anthropic's buzzy new cybersecurity-focused model: Claude Mythos Preview. [&#8230;]",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/914229/tides-turning-anthropic-trump-administration-cybersecurity-mythos-preview",
+      "published_at": "2026-04-17T20:14:21"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Optimize video semantic search intent with Amazon Nova Model Distillation on Amazon Bedrock",
+      "summary": "In this post, we show you how to use Model Distillation, a model customization technique on Amazon Bedrock, to transfer routing intelligence from a large teacher model (Amazon Nova Premier) into a much smaller student model (Amazon Nova Micro). This approach cuts inference cost by over 95% and reduces latency by 50% while maintaining the nuanced routing quality that the task demands.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/optimize-video-semantic-search-intent-with-amazon-nova-model-distillation-on-amazon-bedrock/",
+      "published_at": "2026-04-17T19:43:38"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Power video semantic search with Amazon Nova Multimodal Embeddings",
+      "summary": "In this post, we show you how to build a video semantic search solution on Amazon Bedrock using Nova Multimodal Embeddings that intelligently understands user intent and retrieves accurate video results across all signal types simultaneously. We also share a reference implementation you can deploy and explore with your own content.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/power-video-semantic-search-with-amazon-nova-multimodal-embeddings/",
+      "published_at": "2026-04-17T19:43:35"
+    },
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "Build a More Secure, Always-On Local AI Agent with OpenClaw and NVIDIA NemoClaw",
+      "summary": "<img alt=\"Decorative image.\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"432\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/Claw-DGX-Spark-768x432.jpg\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"Claw-DGX-Spark\" width=\"768\" />Agents are evolving from question-and-answer systems into long-running autonomous assistants that read files, call APIs, and drive multi-step workflows....",
+      "url": "https://developer.nvidia.com/blog/build-a-secure-always-on-local-ai-agent-with-nvidia-nemoclaw-and-openclaw/",
+      "published_at": "2026-04-17T18:59:12"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "This charming gadget writes bad AI poetry",
+      "summary": "I've never been as charmed and frustrated by one gadget as I have with the Poetry Camera. It's a delightful object. White and cherry red with a color-matched woven strap, it looks playful and adorably lo-fi. If I saw it on a store shelf, I'd absolutely pick it up. But aside from obviously appealing, I'm [&#8230;]",
+      "url": "https://www.theverge.com/gadgets/913981/poetry-camera-ai-hands-on",
+      "published_at": "2026-04-17T17:30:00"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Nova Forge SDK series part 2: Practical guide to fine-tune Nova models using data mixing capabilities",
+      "summary": "This hands-on guide walks through every step of fine-tuning an Amazon Nova model with the Amazon Nova Forge SDK, from data preparation to training with data mixing to evaluation, giving you a repeatable playbook you can adapt to your own use case. This is the second part in our Nova Forge SDK series, building on the SDK introduction and first part, which covered kicking off customization experiments.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/nova-forge-sdk-series-part-2-practical-guide-to-fine-tune-nova-models-using-data-mixing-capabilities/",
+      "published_at": "2026-04-17T17:27:40"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "From hours to minutes: How Agentic AI gave marketers time back for what matters",
+      "summary": "In this post, we share how AWS Marketing\u2019s Technology, AI, and Analytics (TAA) team worked with Gradial to build an agentic AI solution on Amazon Bedrock for accelerating content publishing workflows.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/from-hours-to-minutes-how-agentic-ai-gave-marketers-time-back-for-what-matters/",
+      "published_at": "2026-04-17T17:12:10"
+    },
+    {
+      "source": "rss",
+      "provider": "Hugging Face Blog",
+      "category": "community",
+      "title": "Building a Fast Multilingual OCR Model with Synthetic Data",
+      "summary": "",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-ocr-v2",
+      "published_at": "2026-04-17T16:17:55"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "Dairy Queen is putting an AI chatbot in its drive-thrus",
+      "summary": "Dairy Queen is becoming the latest fast food chain to get in on AI, as it's bringing a chatbot to dozens of its drive-thrus across the US and Canada. It aims to help speed up drive-thru service and \"encourage customers to add more food to their orders,\" according to The Wall Street Journal. Following a [&#8230;]",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/913928/dairy-queen-ai-drive-thru-presto",
+      "published_at": "2026-04-17T15:46:37"
+    },
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "Accelerate Clean, Modular, Nuclear Reactor Design with AI Physics",
+      "summary": "<img alt=\"\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"338\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/image8.gif\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"image8\" width=\"600\" />The development of socially acceptable nuclear reactors requires that they are safe, clean, efficient, economical, and sustainable. Meeting these requirements...",
+      "url": "https://developer.nvidia.com/blog/accelerate-clean-modular-nuclear-reactor-design-with-ai-physics/",
+      "published_at": "2026-04-17T15:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "The \u2018AI is inevitable\u2019 trap",
+      "summary": "In the latest sign of AI silly season, Allbirds, the shoe company, told the world it was now an AI company and briefly managed to septuple its stock price. The Newbird AI story is really just one of a bunch of things this week that made us wonder: have we reached the peak of AI, [&#8230;]",
+      "url": "https://www.theverge.com/podcast/913792/ai-divide-sam-altman-vergecast",
+      "published_at": "2026-04-17T13:24:34"
+    },
+    {
+      "source": "rss",
+      "provider": "Ars Technica - AI",
+      "category": "news",
+      "title": "Recent advances push Big Tech closer to the Q-Day danger zone",
+      "summary": "Here's which players are winning the race to transition to post-quantum crypto.",
+      "url": "https://arstechnica.com/security/2026/04/while-some-big-tech-players-accelerate-pqc-readiness-others-stay-the-course/",
+      "published_at": "2026-04-17T11:00:50"
+    },
+    {
+      "source": "rss",
+      "provider": "Anthropic News",
+      "category": "provider",
+      "title": "Introducing Claude Design by Anthropic Labs",
+      "summary": "Introducing Claude Design by Anthropic Labs",
+      "url": "https://www.anthropic.com/news/claude-design-anthropic-labs",
+      "published_at": "2026-04-17T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Cost-efficient custom text-to-SQL using Amazon Nova Micro and Amazon Bedrock on-demand inference",
+      "summary": "In this post, we demonstrate two approaches to fine-tune Amazon Nova Micro for custom SQL dialect generation to deliver both cost efficiency and production ready performance.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/cost-efficient-custom-text-to-sql-using-amazon-nova-micro-and-amazon-bedrock-on-demand-inference/",
+      "published_at": "2026-04-16T17:43:03"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Transform retail with AWS generative AI services",
+      "summary": "Online retailers face a persistent challenge: shoppers struggle to determine the fit and look when ordering online, leading to increased returns and decreased purchase confidence. The cost? Lost revenue, operational overhead, and customer frustration. Meanwhile, consumers increasingly expect immersive, interactive shopping experiences that bridge the gap between online and in-store retail. Retailers implementing virtual try-on [\u2026]",
+      "url": "https://aws.amazon.com/blogs/machine-learning/transform-retail-with-aws-generative-ai-services/",
+      "published_at": "2026-04-16T17:39:56"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "How Automated Reasoning checks in Amazon Bedrock transform generative AI compliance",
+      "summary": "In this post, you'll learn why probabilistic AI validation falls short in regulated industries and how Automated Reasoning checks use formal verification to deliver mathematically proven results. You'll also see how customers across six industries use this technology to produce formally verified, auditable AI outputs, and how to get started.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-automated-reasoning-checks-in-amazon-bedrock-transform-generative-ai-compliance/",
+      "published_at": "2026-04-16T17:34:42"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "OpenAI\u2019s big Codex update is a direct shot at Claude Code",
+      "summary": "OpenAI is beefing up its agentic coding and development system, Codex, with a suite of updates that let it use your computer, generate images, and remember from past experiences. The package of updates comes as OpenAI's rivalry with Anthropic intensifies, following the stellar successes of Claude Code and OpenAI aggressively shifting resources to catch up. [&#8230;]",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/913034/openai-codex-updates-use-macos",
+      "published_at": "2026-04-16T17:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "Google\u2019s AI Mode update lets you open links without leaving the page",
+      "summary": "Google is upgrading AI Mode in Chrome with a new feature that will allow you to open links to sources alongside your chat. Now, instead of automatically opening a new tab, clicking a source will open the website side by side with AI Mode, allowing you to ask follow-up questions about what's on the page. [&#8230;]",
+      "url": "https://www.theverge.com/tech/913109/google-ai-mode-tabs-sources",
+      "published_at": "2026-04-16T17:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Meta Engineering Blog",
+      "category": "provider",
+      "title": "Capacity Efficiency at Meta: How Unified AI Agents Optimize Performance at Hyperscale",
+      "summary": "<p>We&#8217;re sharing insights into Meta&#8217;s Capacity Efficiency Program, where we&#8217;ve built an AI agent platform that helps automate finding and fixing performance issues throughout our infrastructure. By leveraging encoded domain expertise across a unified, standardized tool interface these agents help save power and free up engineers&#8217; time away from addressing performance issues to innovating on [...]</p>\n<p><a class=\"btn btn-secondary understrap-read-more-link\" href=\"https://",
+      "url": "https://engineering.fb.com/2026/04/16/developer-tools/capacity-efficiency-at-meta-how-unified-ai-agents-optimize-performance-at-hyperscale/",
+      "published_at": "2026-04-16T16:00:34"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "Gemini can now pull from Google Photos to generate personalized images",
+      "summary": "Google's Personal Intelligence feature, which lets Gemini pull data from apps like Google Photos to offer responses tailored to you, can now use that data and its Nano Banana 2 image model to create images based on your personal context. With the feature, you can use prompts like \"Design my dream house\" or \"Create a [&#8230;]",
+      "url": "https://www.theverge.com/tech/913202/gemini-personal-intelligence-images-nano-banana",
+      "published_at": "2026-04-16T16:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "The Verge - AI",
+      "category": "news",
+      "title": "Anthropic releases a new Opus model amid Mythos Preview buzz",
+      "summary": "Anthropic has released its most powerful \"generally available\" model to date: Claude Opus 4.7. The company called it a step up from Opus 4.6 for advanced software engineering tasks, particularly in complex coding areas that in the past required more hand-holding. It's also supposed to be better at analyzing images and following instructions, and it [&#8230;]",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/913184/anthropic-claude-opus-4-7-cybersecurity",
+      "published_at": "2026-04-16T15:59:24"
+    },
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "How to Build Vision AI Pipelines Using NVIDIA DeepStream Coding Agents",
+      "summary": "<img alt=\"\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"432\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/robotics-key-visual-metropolis-deepstream-gtc26-abstract-code-r2_1920x1080-768x432.png\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"robotics-key-visual-metropolis-deepstream-gtc26-abstract-code-r2_1920x1080\" width=\"768\" />Developing real-time vision AI applications presents a significant challenge for developers, often demanding intricate da",
+      "url": "https://developer.nvidia.com/blog/how-to-build-vision-ai-pipelines-using-deepstream-coding-agents/",
+      "published_at": "2026-04-16T15:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Meta Engineering Blog",
+      "category": "provider",
+      "title": "Post-Quantum Cryptography Migration at Meta: Framework, Lessons, and Takeaways",
+      "summary": "<p>We\u2019re sharing lessons learned from Meta\u2019s post-quantum cryptography (PQC) migration to help other organizations strengthen their resilience as industry transitions to post-quantum cryptography standards. We\u2019re proposing the idea of PQC Migration Levels to help teams within organizations manage the complexity of PQC migration for their various use cases. By outlining Meta\u2019s approach to this work [...]</p>\n<p><a class=\"btn btn-secondary understrap-read-more-link\" href=\"https://engineering.fb.co",
+      "url": "https://engineering.fb.com/2026/04/16/security/post-quantum-cryptography-migration-at-meta-framework-lessons-and-takeaways/",
+      "published_at": "2026-04-16T14:59:44"
+    },
+    {
+      "source": "rss",
+      "provider": "Google AI / Research",
+      "category": "provider",
+      "title": "Designing synthetic datasets for the real world: Mechanism design and reasoning from first principles",
+      "summary": "Generative AI",
+      "url": "https://research.google/blog/designing-synthetic-datasets-for-the-real-world-mechanism-design-and-reasoning-from-first-principles/",
+      "published_at": "2026-04-16T14:41:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Google AI / Research",
+      "category": "provider",
+      "title": "AI-generated synthetic neurons speed up brain mapping",
+      "summary": "General Science",
+      "url": "https://research.google/blog/ai-generated-synthetic-neurons-speed-up-brain-mapping/",
+      "published_at": "2026-04-16T12:18:00"
+    },
+    {
+      "source": "rss",
+      "provider": "OpenAI Blog",
+      "category": "provider",
+      "title": "Codex for (almost) everything",
+      "summary": "The updated Codex app for macOS and Windows adds computer use, in-app browsing, image generation, memory, and plugins to accelerate developer workflows.",
+      "url": "https://openai.com/index/codex-for-almost-everything",
+      "published_at": "2026-04-16T10:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "OpenAI Blog",
+      "category": "provider",
+      "title": "Introducing GPT-Rosalind for life sciences research",
+      "summary": "OpenAI introduces GPT-Rosalind, a frontier reasoning model built to accelerate drug discovery, genomics analysis, protein reasoning, and scientific research workflows.",
+      "url": "https://openai.com/index/introducing-gpt-rosalind",
+      "published_at": "2026-04-16T01:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Anthropic News",
+      "category": "provider",
+      "title": "Introducing Claude Opus 4.7",
+      "summary": "Introducing Claude Opus 4.7",
+      "url": "https://www.anthropic.com/news/claude-opus-4-7",
+      "published_at": "2026-04-16T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "OpenAI Blog",
+      "category": "provider",
+      "title": "Accelerating the cyber defense ecosystem that protects us all",
+      "summary": "Leading security firms and enterprises join OpenAI\u2019s Trusted Access for Cyber, using GPT-5.4-Cyber and $10M in API grants to strengthen global cyber defense.",
+      "url": "https://openai.com/index/accelerating-cyber-defense-ecosystem",
+      "published_at": "2026-04-16T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "OpenAI Research",
+      "category": "provider",
+      "title": "Introducing GPT-Rosalind for life sciences research",
+      "summary": "Introducing GPT-Rosalind for life sciences research",
+      "url": "https://openai.com/index/introducing-gpt-rosalind/",
+      "published_at": "2026-04-16T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Hugging Face Blog",
+      "category": "community",
+      "title": "Ecom-RLVE: Adaptive Verifiable Environments for E-Commerce Conversational Agents",
+      "summary": "",
+      "url": "https://huggingface.co/blog/ecom-rlve",
+      "published_at": "2026-04-16T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Hugging Face Blog",
+      "category": "community",
+      "title": "The PR you would have opened yourself",
+      "summary": "",
+      "url": "https://huggingface.co/blog/transformers-to-mlx",
+      "published_at": "2026-04-16T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Hugging Face Blog",
+      "category": "community",
+      "title": "Training and Finetuning Multimodal Embedding & Reranker Models with Sentence Transformers",
+      "summary": "",
+      "url": "https://huggingface.co/blog/train-multimodal-sentence-transformers",
+      "published_at": "2026-04-16T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Google DeepMind",
+      "category": "provider",
+      "title": "Gemini 3.1 Flash TTS: the next generation of expressive AI speech",
+      "summary": "Our newest audio model introduces granular audio tags that give you precise control to direct AI speech for expressive audio generation.",
+      "url": "https://deepmind.google/blog/gemini-3-1-flash-tts-the-next-generation-of-expressive-ai-speech/",
+      "published_at": "2026-04-15T16:03:19"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Create rich, custom tooltips in Amazon Quick Sight",
+      "summary": "Today, we're announcing sheet tooltips in Amazon Quick Sight. Dashboard authors can now design custom tooltip layouts using free-form layout sheets. These layouts combine charts, key performance indicator (KPI) metrics, text, and other visuals into a single tooltip that renders dynamically when readers hover over data points.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/create-rich-custom-tooltips-in-amazon-quick-sight/",
+      "published_at": "2026-04-15T15:22:53"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Accelerating decode-heavy LLM inference with speculative decoding on AWS Trainium and vLLM",
+      "summary": "In this post, you will learn how speculative decoding works and why it helps reduce cost per generated token on AWS Trainium2.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/accelerating-decode-heavy-llm-inference-with-speculative-decoding-on-aws-trainium-and-vllm/",
+      "published_at": "2026-04-15T15:20:58"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Rede Mater Dei de Sa\u00fade: Monitoring AI agents in the revenue cycle with Amazon Bedrock AgentCore",
+      "summary": "This post is cowritten by Renata Salvador Grande, Gabriel Bueno and Paulo Laurentys at Rede Mater Dei de Sa\u00fade. The growing adoption of multi-agent AI systems is redefining critical operations in healthcare. In large hospital networks, where thousands of decisions directly impact cash flow, service delivery times, and the risk of claim denials, the ability [\u2026]",
+      "url": "https://aws.amazon.com/blogs/machine-learning/rede-mater-dei-de-saude-monitoring-ai-agents-in-the-revenue-cycle-with-amazon-bedrock-agentcore/",
+      "published_at": "2026-04-15T15:15:23"
+    },
+    {
+      "source": "rss",
+      "provider": "Hugging Face Blog",
+      "category": "community",
+      "title": "Inside VAKRA: Reasoning, Tool Use, and Failure Modes of Agents",
+      "summary": "",
+      "url": "https://huggingface.co/blog/ibm-research/vakra-benchmark-analysis",
+      "published_at": "2026-04-15T12:07:25"
+    },
+    {
+      "source": "rss",
+      "provider": "Cursor Blog",
+      "category": "tools",
+      "title": "Amplitude ships 3x more production code with Cursor",
+      "summary": "",
+      "url": "https://cursor.com/blog/amplitude",
+      "published_at": "2026-04-15T12:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Cursor Blog",
+      "category": "tools",
+      "title": "Better AI models enable more ambitious work",
+      "summary": "",
+      "url": "https://cursor.com/blog/better-models-ambitious-work",
+      "published_at": "2026-04-15T12:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "OpenAI Blog",
+      "category": "provider",
+      "title": "The next evolution of the Agents SDK",
+      "summary": "OpenAI updates the Agents SDK with native sandbox execution and a model-native harness, helping developers build secure, long-running agents across files and tools.",
+      "url": "https://openai.com/index/the-next-evolution-of-the-agents-sdk",
+      "published_at": "2026-04-15T10:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Hugging Face Blog",
+      "category": "community",
+      "title": "Meet HoloTab by HCompany. Your AI browser companion.",
+      "summary": "",
+      "url": "https://huggingface.co/blog/Hcompany/holotab",
+      "published_at": "2026-04-15T09:25:20"
+    },
+    {
+      "source": "rss",
+      "provider": "Cursor Blog",
+      "category": "tools",
+      "title": "Interact with agent-created visualizations in canvases",
+      "summary": "",
+      "url": "https://cursor.com/blog/canvas",
+      "published_at": "2026-04-15T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Navigating the generative AI journey: The Path-to-Value framework from AWS",
+      "summary": "In this post, we introduce the Generative AI Path-to-Value (P2V) framework, a structured approach to help you move generative AI initiatives from concept to production and sustained value creation.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/navigating-the-generative-ai-journey-the-path-to-value-framework-from-aws/",
+      "published_at": "2026-04-14T18:19:43"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Use-case based deployments on SageMaker JumpStart",
+      "summary": "We're excited to announce the launch of Amazon SageMaker JumpStart optimized deployments. SageMaker JumpStart improved deployments address the need for rich and straightforward deployment customization on SageMaker JumpStart by offering pre-defined deployment configurations, designed for specific use cases. Customers maintain the same level of visibility into the details of their proposed deployments, but now deployments are optimized for their specific use case and performance constraint.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/use-case-based-deployments-on-sagemaker-jumpstart/",
+      "published_at": "2026-04-14T18:14:54"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Best practices to run inference on Amazon SageMaker HyperPod",
+      "summary": "This post explores how Amazon SageMaker HyperPod provides a comprehensive solution for inference workloads. We walk you through the platform\u2019s key capabilities for dynamic scaling, simplified deployment, and intelligent resource management. By the end of this post, you\u2019ll understand how to use the HyperPod automated infrastructure, cost optimization features, and performance enhancements to reduce your total cost of ownership by up to 40% while accelerating your generative AI deployments from co",
+      "url": "https://aws.amazon.com/blogs/machine-learning/best-practices-to-run-inference-on-amazon-sagemaker-hyperpod/",
+      "published_at": "2026-04-14T18:09:22"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "How Guidesly built AI-generated trip reports for outdoor guides on AWS",
+      "summary": "In this post, we walk through how Guidesly built Jack AI on AWS using AWS Lambda, AWS Step Functions, Amazon Simple Storage Service (Amazon S3), Amazon Relational Database Service (Amazon RDS), Amazon SageMaker AI, and Amazon Bedrock to ingest trip media, enrich it with context, apply computer vision and generative AI, and publish marketing-ready content across multiple channels\u2014securely, reliably, and at scale.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-guidesly-built-ai-generated-trip-reports-for-outdoor-guides-on-aws/",
+      "published_at": "2026-04-14T18:02:56"
+    },
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "Building Custom Atomistic Simulation Workflows for Chemistry and Materials Science with NVIDIA ALCHEMI Toolkit",
+      "summary": "<img alt=\"\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"432\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/materials-science-chemistry-768x432.jpg\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"materials-science-chemistry\" width=\"768\" />For decades, computational chemistry has faced a tug-of-war between accuracy and speed. Ab initio methods like density functional theory (DFT) provide high...",
+      "url": "https://developer.nvidia.com/blog/building-custom-atomistic-simulation-workflows-for-chemistry-and-materials-science-with-nvidia-alchemi-toolkit/",
+      "published_at": "2026-04-14T16:30:00"
+    },
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "NVIDIA NVbandwidth: Your Essential Tool for Measuring GPU Interconnect and Memory Performance",
+      "summary": "<img alt=\"\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"432\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/01/image1-1-768x432.jpg\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"image1\" width=\"768\" />When you\u2019re writing CUDA applications, one of the most important things you need to focus on to write great code is data transfer performance. This applies to...",
+      "url": "https://developer.nvidia.com/blog/nvidia-nvbandwidth-your-essential-tool-for-measuring-gpu-interconnect-and-memory-performance/",
+      "published_at": "2026-04-14T16:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "NVIDIA Ising Introduces AI-Powered Workflows to Build Fault-Tolerant Quantum Systems",
+      "summary": "<img alt=\"Decorative image.\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"432\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/Ising-Quantum-768x432.jpg\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"Ising-Quantum\" width=\"768\" />NVIDIA Ising is the world's first family of open AI models for building quantum processors, launching with two model domains: Ising Calibration and Ising...",
+      "url": "https://developer.nvidia.com/blog/nvidia-ising-introduces-ai-powered-workflows-to-build-fault-tolerant-quantum-systems/",
+      "published_at": "2026-04-14T14:15:56"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "Spring AI SDK for Amazon Bedrock AgentCore is now Generally Available",
+      "summary": "With the new Spring AI AgentCore SDK, you can build production-ready AI agents and run them on the highly scalable AgentCore Runtime. The Spring AI AgentCore SDK is an open source library that brings Amazon Bedrock AgentCore capabilities into Spring AI. In this post, we build an AI agent starting with a chat endpoint, then adding streaming responses, conversation memory, and tools for web browsing and code execution.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/spring-ai-sdk-for-amazon-bedrock-agentcore-is-now-generally-available/",
+      "published_at": "2026-04-14T12:40:47"
+    },
+    {
+      "source": "rss",
+      "provider": "Cursor Blog",
+      "category": "tools",
+      "title": "Speeding up GPU kernels by 38% with a multi-agent system",
+      "summary": "",
+      "url": "https://cursor.com/blog/multi-agent-kernels",
+      "published_at": "2026-04-14T12:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Anthropic News",
+      "category": "provider",
+      "title": "Anthropic\u2019s Long-Term Benefit Trust appoints Vas Narasimhan to Board of Directors",
+      "summary": "Anthropic\u2019s Long-Term Benefit Trust appoints Vas Narasimhan to Board of Directors",
+      "url": "https://www.anthropic.com/news/narasimhan-board",
+      "published_at": "2026-04-14T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Anthropic Research",
+      "category": "provider",
+      "title": "Apr 14, 2026AlignmentAutomated Alignment Researchers: Using large language models to scale scalable oversight",
+      "summary": "Apr 14, 2026AlignmentAutomated Alignment Researchers: Using large language models to scale scalable oversight",
+      "url": "https://www.anthropic.com/research/automated-alignment-researchers",
+      "published_at": "2026-04-14T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "OpenAI Blog",
+      "category": "provider",
+      "title": "Trusted access for the next era of cyber defense",
+      "summary": "OpenAI expands its Trusted Access for Cyber program, introducing GPT-5.4-Cyber to vetted defenders and strengthening safeguards as AI cybersecurity capabilities advance.",
+      "url": "https://openai.com/index/scaling-trusted-access-for-cyber-defense",
+      "published_at": "2026-04-14T00:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "Google AI / Research",
+      "category": "provider",
+      "title": "Towards developing future-ready skills with generative AI",
+      "summary": "Education Innovation",
+      "url": "https://research.google/blog/towards-developing-future-ready-skills-with-generative-ai/",
+      "published_at": "2026-04-13T18:15:59"
+    },
+    {
+      "source": "rss",
+      "provider": "AWS Machine Learning Blog",
+      "category": "provider",
+      "title": "How to build effective reward functions with AWS Lambda for Amazon Nova model customization",
+      "summary": "This post demonstrates how Lambda enables scalable, cost-effective reward functions for Amazon Nova customization. You'll learn to choose between Reinforcement Learning via Verifiable Rewards (RLVR) for objectively verifiable tasks and Reinforcement Learning via AI Feedback (RLAIF) for subjective evaluation, design multi-dimensional reward systems that help you prevent reward hacking, optimize Lambda functions for training scale, and monitor reward distributions with Amazon CloudWatch. Working c",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-to-build-effective-reward-functions-with-aws-lambda-for-amazon-nova-model-customization/",
+      "published_at": "2026-04-13T16:01:18"
+    },
+    {
+      "source": "rss",
+      "provider": "Google DeepMind",
+      "category": "provider",
+      "title": "Gemini Robotics-ER 1.6: Powering real-world robotics tasks through enhanced embodied reasoning",
+      "summary": "Gemini Robotics ER 1.6: Enhancing spatial reasoning and multi-view understanding for autonomous robotics.",
+      "url": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
+      "published_at": "2026-04-13T15:52:13"
+    },
+    {
+      "source": "rss",
+      "provider": "OpenAI Blog",
+      "category": "provider",
+      "title": "Enterprises power agentic workflows in Cloudflare Agent Cloud with OpenAI",
+      "summary": "Cloudflare brings OpenAI\u2019s GPT-5.4 and Codex to Agent Cloud, enabling enterprises to build, deploy, and scale AI agents for real-world tasks with speed and security.",
+      "url": "https://openai.com/index/cloudflare-openai-agent-cloud",
+      "published_at": "2026-04-13T06:00:00"
+    },
+    {
+      "source": "rss",
+      "provider": "NVIDIA Technical Blog",
+      "category": "provider",
+      "title": "MiniMax M2.7\u00a0Advances\u00a0Scalable Agentic Workflows on\u00a0NVIDIA Platforms for Complex AI Applications",
+      "summary": "<img alt=\"Decorative object.\" class=\"webfeedsFeaturedVisual wp-post-image\" height=\"432\" src=\"https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/MM-Release-768x432.png\" style=\"display: block; margin-bottom: 5px; clear: both;\" title=\"MM-Release\" width=\"768\" />The release of&nbsp;MiniMax M2.7&nbsp;adds enhancements to the popular&nbsp;MiniMax&nbsp;M2.5 model,&nbsp;built for agentic harnesses,...",
+      "url": "https://developer.nvidia.com/blog/minimax-m2-7-advances-scalable-agentic-workflows-on-nvidia-platforms-for-complex-ai-applications/",
+      "published_at": "2026-04-12T01:02:44"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15312v1",
+      "title": "Bidirectional Cross-Modal Prompting for Event-Frame Asymmetric Stereo",
+      "authors": [
+        "Ninghui Xu",
+        "Fabio Tosi",
+        "Lihui Wang",
+        "Jiawei Han",
+        "Luca Bartolomei"
+      ],
+      "abstract": "Conventional frame-based cameras capture rich contextual information but suffer from limited temporal resolution and motion blur in dynamic scenes. Event cameras offer an alternative visual representation with higher dynamic range free from such limitations. The complementary characteristics of the two modalities make event-frame asymmetric stereo promising for reliable 3D perception under fast motion and challenging illumination. However, the modality gap often leads to marginalization of domain-specific cues essential for cross-modal stereo matching. In this paper, we introduce Bi-CMPStereo,",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15312v1",
+      "published_at": "2026-04-16T17:59:58"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15311v1",
+      "title": "LeapAlign: Post-Training Flow Matching Models at Any Generation Step by Building Two-Step Trajectories",
+      "authors": [
+        "Zhanhao Liang",
+        "Tao Yang",
+        "Jie Wu",
+        "Chengjian Feng",
+        "Liang Zheng"
+      ],
+      "abstract": "This paper focuses on the alignment of flow matching models with human preferences. A promising way is fine-tuning by directly backpropagating reward gradients through the differentiable generation process of flow matching. However, backpropagating through long trajectories results in prohibitive memory costs and gradient explosion. Therefore, direct-gradient methods struggle to update early generation steps, which are crucial for determining the global structure of the final image. To address this issue, we introduce LeapAlign, a fine-tuning method that reduces computational cost and enables ",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15311v1",
+      "published_at": "2026-04-16T17:59:56"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15310v1",
+      "title": "TokenLight: Precise Lighting Control in Images using Attribute Tokens",
+      "authors": [
+        "Sumit Chaturvedi",
+        "Yannick Hold-Geoffroy",
+        "Mengwei Ren",
+        "Jingyuan Liu",
+        "He Zhang"
+      ],
+      "abstract": "This paper presents a method for image relighting that enables precise and continuous control over multiple illumination attributes in a photograph. We formulate relighting as a conditional image generation task and introduce attribute tokens to encode distinct lighting factors such as intensity, color, ambient illumination, diffuse level, and 3D light positions. The model is trained on a large-scale synthetic dataset with ground-truth lighting annotations, supplemented by a small set of real captures to enhance realism and generalization. We validate our approach across a variety of relightin",
+      "categories": [
+        "cs.CV",
+        "cs.GR"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15310v1",
+      "published_at": "2026-04-16T17:59:50"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15309v1",
+      "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation",
+      "authors": [
+        "Yan Li",
+        "Zezi Zeng",
+        "Yifan Yang",
+        "Yuqing Yang",
+        "Ning Liao"
+      ],
+      "abstract": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage generation often leads to style inconsistency and poor global coherence, as elements are generated in isolation. We propose MM-WebAgent, a hierarchical agentic framework for multimodal webpage generation that coordinates AIGC-based element generation through hierarchical planning and iterative self-",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15309v1",
+      "published_at": "2026-04-16T17:59:49"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15308v1",
+      "title": "RAD-2: Scaling Reinforcement Learning in a Generator-Discriminator Framework",
+      "authors": [
+        "Hao Gao",
+        "Shaoyu Chen",
+        "Yifan Zhu",
+        "Yuehao Song",
+        "Wenyu Liu"
+      ],
+      "abstract": "High-level autonomous driving requires motion planners capable of modeling multimodal future uncertainties while remaining robust in closed-loop interactions. Although diffusion-based planners are effective at modeling complex trajectory distributions, they often suffer from stochastic instabilities and the lack of corrective negative feedback when trained purely with imitation learning. To address these issues, we propose RAD-2, a unified generator-discriminator framework for closed-loop planning. Specifically, a diffusion-based generator is used to produce diverse trajectory candidates, whil",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15308v1",
+      "published_at": "2026-04-16T17:59:44"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15306v1",
+      "title": "Generalization in LLM Problem Solving: The Case of the Shortest Path",
+      "authors": [
+        "Yao Tong",
+        "Jiayuan Ye",
+        "Anastasia Borovykh",
+        "Reza Shokri"
+      ],
+      "abstract": "Whether language models can systematically generalize remains actively debated. Yet empirical performance is jointly shaped by multiple factors such as training data, training paradigms, and inference-time strategies, making failures difficult to interpret. We introduce a controlled synthetic environment based on shortest-path planning, a canonical composable sequential optimization problem. The setup enables clean separation of these factors and supports two orthogonal axes of generalization: spatial transfer to unseen maps and length scaling to longer-horizon problems. We find that models ex",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15306v1",
+      "published_at": "2026-04-16T17:59:43"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15302v1",
+      "title": "Diagnosing LLM Judge Reliability: Conformal Prediction Sets and Transitivity Violations",
+      "authors": [
+        "Manan Gupta",
+        "Dhruv Kumar"
+      ],
+      "abstract": "LLM-as-judge frameworks are increasingly used for automatic NLG evaluation, yet their per-instance reliability remains poorly understood. We present a two-pronged diagnostic toolkit applied to SummEval: $\\textbf{(1)}$ a transitivity analysis that reveals widespread per-input inconsistency masked by low aggregate violation rates ($\\bar\u03c1 = 0.8$-$4.1\\%$), with $33$-$67\\%$ of documents exhibiting at least one directed 3-cycle; and $\\textbf{(2)}$ split conformal prediction sets over 1-5 Likert scores providing theoretically-guaranteed $\\geq(1{-}\u03b1)$ coverage, with set width serving as a per-instance",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15302v1",
+      "published_at": "2026-04-16T17:58:21"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15301v1",
+      "title": "Think in Latent Thoughts: A New Paradigm for Gloss-Free Sign Language Translation",
+      "authors": [
+        "Yiyang Jiang",
+        "Li Zhang",
+        "Xiao-Yong Wei",
+        "Li Qing"
+      ],
+      "abstract": "Many SLT systems quietly assume that brief chunks of signing map directly to spoken-language words. That assumption breaks down because signers often create meaning on the fly using context, space, and movement. We revisit SLT and argue that it is mainly a cross-modal reasoning task, not just a straightforward video-to-text conversion. We thus introduce a reasoning-driven SLT framework that uses an ordered sequence of latent thoughts as an explicit middle layer between the video and the generated text. These latent thoughts gradually extract and organize meaning over time. On top of this, we u",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15301v1",
+      "published_at": "2026-04-16T17:57:24"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15299v1",
+      "title": "AnimationBench: Are Video Models Good at Character-Centric Animation?",
+      "authors": [
+        "Leyi Wu",
+        "Pengjun Fang",
+        "Kai Sun",
+        "Yazhou Xing",
+        "Yinwei Wu"
+      ],
+      "abstract": "Video generation has advanced rapidly, with recent methods producing increasingly convincing animated results. However, existing benchmarks-largely designed for realistic videos-struggle to evaluate animation-style generation with its stylized appearance, exaggerated motion, and character-centric consistency. Moreover, they also rely on fixed prompt sets and rigid pipelines, offering limited flexibility for open-domain content and custom evaluation needs. To address this gap, we introduce AnimationBench, the first systematic benchmark for evaluating animation image-to-video generation. Animati",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15299v1",
+      "published_at": "2026-04-16T17:57:08"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15297v1",
+      "title": "Benchmarking Optimizers for MLPs in Tabular Deep Learning",
+      "authors": [
+        "Yury Gorishniy",
+        "Ivan Rubachev",
+        "Dmitrii Feoktistov",
+        "Artem Babenko"
+      ],
+      "abstract": "MLP is a heavily used backbone in modern deep learning (DL) architectures for supervised learning on tabular data, and AdamW is the go-to optimizer used to train tabular DL models. Unlike architecture design, however, the choice of optimizer for tabular DL has not been examined systematically, despite new optimizers showing promise in other domains. To fill this gap, we benchmark \\Noptimizers optimizers on \\Ndatasets tabular datasets for training MLP-based models in the standard supervised learning setting under a shared experiment protocol. Our main finding is that the Muon optimizer consiste",
+      "categories": [
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15297v1",
+      "published_at": "2026-04-16T17:57:02"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15294v1",
+      "title": "How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study",
+      "authors": [
+        "Zhen Yang",
+        "Ping Jian",
+        "Zhongbin Guo",
+        "Zuming Zhang",
+        "Chengzhi Li"
+      ],
+      "abstract": "Over the past year, spatial intelligence has drawn increasing attention. Many prior works study it from the perspective of visual-spatial intelligence, where models have access to visuospatial information from visual inputs. However, in the absence of visual information, whether linguistic intelligence alone is sufficient to endow models with spatial intelligence, and how models perform relevant tasks with text-only inputs still remain unexplored. Therefore, in this paper, we focus on a fundamental and critical capability in spatial intelligence from a linguistic perspective: viewpoint rotatio",
+      "categories": [
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15294v1",
+      "published_at": "2026-04-16T17:55:19"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15291v1",
+      "title": "AD4AD: Benchmarking Visual Anomaly Detection Models for Safer Autonomous Driving",
+      "authors": [
+        "Fabrizio Genilotti",
+        "Arianna Stropeni",
+        "Gionata Grotto",
+        "Francesco Borsatti",
+        "Manuel Barusco"
+      ],
+      "abstract": "The reliability of a machine vision system for autonomous driving depends heavily on its training data distribution. When a vehicle encounters significantly different conditions, such as atypical obstacles, its perceptual capabilities can degrade substantially. Unlike many domains where errors carry limited consequences, failures in autonomous driving translate directly into physical risk for passengers, pedestrians, and other road users. To address this challenge, we explore Visual Anomaly Detection (VAD) as a solution. VAD enables the identification of anomalous objects not present during tr",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15291v1",
+      "published_at": "2026-04-16T17:54:53"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15285v1",
+      "title": "Structural interpretability in SVMs with truncated orthogonal polynomial kernels",
+      "authors": [
+        "V\u00edctor Soto-Larrosa",
+        "Nuria Torrado",
+        "Edmundo J. Huertas"
+      ],
+      "abstract": "We study post-training interpretability for Support Vector Machines (SVMs) built from truncated orthogonal polynomial kernels. Since the associated reproducing kernel Hilbert space is finite-dimensional and admits an explicit tensor-product orthonormal basis, the fitted decision function can be expanded exactly in intrinsic RKHS coordinates. This leads to Orthogonal Representation Contribution Analysis (ORCA), a diagnostic framework based on normalized Orthogonal Kernel Contribution (OKC) indices. These indices quantify how the squared RKHS norm of the classifier is distributed across interact",
+      "categories": [
+        "stat.ML",
+        "cs.LG",
+        "math.ST"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15285v1",
+      "published_at": "2026-04-16T17:52:08"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15284v1",
+      "title": "GlobalSplat: Efficient Feed-Forward 3D Gaussian Splatting via Global Scene Tokens",
+      "authors": [
+        "Roni Itkin",
+        "Noam Issachar",
+        "Yehonatan Keypur",
+        "Yehonatan Keypur",
+        "Anpei Chen"
+      ],
+      "abstract": "The efficient spatial allocation of primitives serves as the foundation of 3D Gaussian Splatting, as it directly dictates the synergy between representation compactness, reconstruction speed, and rendering fidelity. Previous solutions, whether based on iterative optimization or feed-forward inference, suffer from significant trade-offs between these goals, mainly due to the reliance on local, heuristic-driven allocation strategies that lack global scene awareness. Specifically, current feed-forward methods are largely pixel-aligned or voxel-aligned. By unprojecting pixels into dense, view-alig",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15284v1",
+      "published_at": "2026-04-16T17:52:06"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15281v1",
+      "title": "R3D: Revisiting 3D Policy Learning",
+      "authors": [
+        "Zhengdong Hong",
+        "Shenrui Wu",
+        "Haozhe Cui",
+        "Boyi Zhao",
+        "Ran Ji"
+      ],
+      "abstract": "3D policy learning promises superior generalization and cross-embodiment transfer, but progress has been hindered by training instabilities and severe overfitting, precluding the adoption of powerful 3D perception models. In this work, we systematically diagnose these failures, identifying the omission of 3D data augmentation and the adverse effects of Batch Normalization as primary causes. We propose a new architecture coupling a scalable transformer-based 3D encoder with a diffusion decoder, engineered specifically for stability at scale and designed to leverage large-scale pre-training. Our",
+      "categories": [
+        "cs.CV",
+        "cs.RO"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15281v1",
+      "published_at": "2026-04-16T17:50:37"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15280v1",
+      "title": "Why Do Vision Language Models Struggle To Recognize Human Emotions?",
+      "authors": [
+        "Madhav Agarwal",
+        "Sotirios A. Tsaftaris",
+        "Laura Sevilla-Lara",
+        "Steven McDonagh"
+      ],
+      "abstract": "Understanding emotions is a fundamental ability for intelligent systems to be able to interact with humans. Vision-language models (VLMs) have made tremendous progress in the last few years for many visual tasks, potentially offering a promising solution for understanding emotions. However, it is surprising that even the most sophisticated contemporary VLMs struggle to recognize human emotions or to outperform even specialized vision-only classifiers. In this paper we ask the question \"Why do VLMs struggle to recognize human emotions?\", and observe that the inherently continuous and dynamic ta",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15280v1",
+      "published_at": "2026-04-16T17:49:58"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15273v1",
+      "title": "How Embeddings Shape Graph Neural Networks: Classical vs Quantum-Oriented Node Representations",
+      "authors": [
+        "Nouhaila Innan",
+        "Antonello Rosato",
+        "Alberto Marchisio",
+        "Muhammad Shafique"
+      ],
+      "abstract": "Node embeddings act as the information interface for graph neural networks, yet their empirical impact is often reported under mismatched backbones, splits, and training budgets. This paper provides a controlled benchmark of embedding choices for graph classification, comparing classical baselines with quantum-oriented node representations under a unified pipeline. We evaluate two classical baselines alongside quantum-oriented alternatives, including a circuit-defined variational embedding and quantum-inspired embeddings computed via graph operators and linear-algebraic constructions. All vari",
+      "categories": [
+        "cs.LG",
+        "quant-ph"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15273v1",
+      "published_at": "2026-04-16T17:45:24"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15272v1",
+      "title": "Prism: Symbolic Superoptimization of Tensor Programs",
+      "authors": [
+        "Mengdi Wu",
+        "Xiaoyu Jiang",
+        "Oded Padon",
+        "Zhihao Jia"
+      ],
+      "abstract": "This paper presents Prism, the first symbolic superoptimizer for tensor programs. The key idea is sGraph, a symbolic, hierarchical representation that compactly encodes large classes of tensor programs by symbolically representing some execution parameters. Prism organizes optimization as a two-level search: it constructs symbolic graphs that represent families of programs, and then instantiates them into concrete implementations. This formulation enables structured pruning of provably suboptimal regions of the search space using symbolic reasoning over operator semantics, algebraic identities",
+      "categories": [
+        "cs.PL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15272v1",
+      "published_at": "2026-04-16T17:43:31"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15271v1",
+      "title": "SegWithU: Uncertainty as Perturbation Energy for Single-Forward-Pass Risk-Aware Medical Image Segmentation",
+      "authors": [
+        "Tianhao Fu",
+        "Austin Wang",
+        "Charles Chen",
+        "Roby Aldave-Garza",
+        "Yucheng Chen"
+      ],
+      "abstract": "Reliable uncertainty estimation is critical for medical image segmentation, where automated contours feed downstream quantification and clinical decision support. Many strong uncertainty methods require repeated inference, while efficient single-forward-pass alternatives often provide weaker failure ranking or rely on restrictive feature-space assumptions. We present $\\textbf{SegWithU}$, a post-hoc framework that augments a frozen pretrained segmentation backbone with a lightweight uncertainty head. SegWithU taps intermediate backbone features and models uncertainty as perturbation energy in a",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15271v1",
+      "published_at": "2026-04-16T17:42:42"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15269v1",
+      "title": "Cloning is as Hard as Learning for Stabilizer States",
+      "authors": [
+        "Nikhil Bansal",
+        "Matthias C. Caro",
+        "Gaurav Mahajan"
+      ],
+      "abstract": "The impossibility of simultaneously cloning non-orthogonal states lies at the foundations of quantum theory. Even when allowing for approximation errors, cloning an arbitrary unknown pure state requires as many initial copies as needed to fully learn the state. Rather than arbitrary unknown states, modern quantum learning theory often considers structured classes of states and exploits such structure to develop learning algorithms that outperform general-state tomography. This raises the question: How do the sample complexities of learning and cloning relate for such structured classes? We ans",
+      "categories": [
+        "quant-ph",
+        "cs.LG",
+        "math.ST"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15269v1",
+      "published_at": "2026-04-16T17:41:16"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15267v1",
+      "title": "CoopEval: Benchmarking Cooperation-Sustaining Mechanisms and LLM Agents in Social Dilemmas",
+      "authors": [
+        "Emanuel Tewolde",
+        "Xiao Zhang",
+        "David Guzman Piedrahita",
+        "Vincent Conitzer",
+        "Zhijing Jin"
+      ],
+      "abstract": "It is increasingly important that LLM agents interact effectively and safely with other goal-pursuing agents, yet, recent works report the opposite trend: LLMs with stronger reasoning capabilities behave _less_ cooperatively in mixed-motive games such as the prisoner's dilemma and public goods settings. Indeed, our experiments show that recent models -- with or without reasoning enabled -- consistently defect in single-shot social dilemmas.   To tackle this safety concern, we present the first comparative study of game-theoretic mechanisms that are designed to enable cooperative outcomes betwe",
+      "categories": [
+        "cs.GT",
+        "cs.AI",
+        "cs.CL",
+        "cs.CY",
+        "cs.MA"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15267v1",
+      "published_at": "2026-04-16T17:40:30"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15259v1",
+      "title": "Stability and Generalization in Looped Transformers",
+      "authors": [
+        "Asher Labovich"
+      ],
+      "abstract": "Looped transformers promise test-time compute scaling by spending more iterations on harder problems, but it remains unclear which architectural choices let them extrapolate to harder problems at test time rather than memorize training-specific solutions. We introduce a fixed-point based framework for analyzing looped architectures along three axes of stability -- reachability, input-dependence, and geometry -- and use it to characterize when fixed-point iteration yields meaningful predictions. Theoretically, we prove that looped networks without recall have countable fixed points and cannot a",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15259v1",
+      "published_at": "2026-04-16T17:35:49"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15244v1",
+      "title": "From Tokens to Steps: Verification-Aware Speculative Decoding for Efficient Multi-Step Reasoning",
+      "authors": [
+        "Kiran Purohit",
+        "Ramasuri Narayanam",
+        "Soumyabrata Pal"
+      ],
+      "abstract": "Speculative decoding (SD) accelerates large language model inference by allowing a lightweight draft model to propose outputs that a stronger target model verifies. However, its token-centric nature allows erroneous steps to propagate. Prior approaches mitigate this using external reward models, but incur additional latency, computational overhead, and limit generalizability. We propose SpecGuard, a verification-aware speculative decoding framework that performs step-level verification using only model-internal signals. At each step, SpecGuard samples multiple draft candidates and selects the ",
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15244v1",
+      "published_at": "2026-04-16T17:20:13"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15242v1",
+      "title": "Optimal last-iterate convergence in matrix games with bandit feedback using the log-barrier",
+      "authors": [
+        "Come Fiegel",
+        "Pierre Menard",
+        "Tadashi Kozuno",
+        "Michal Valko",
+        "Vianney Perchet"
+      ],
+      "abstract": "We study the problem of learning minimax policies in zero-sum matrix games. Fiegel et al. (2025) recently showed that achieving last-iterate convergence in this setting is harder when the players are uncoupled, by proving a lower bound on the exploitability gap of Omega(t^{-1/4}). Some online mirror descent algorithms were proposed in the literature for this problem, but none have truly attained this rate yet. We show that the use of a log-barrier regularization, along with a dual-focused analysis, allows this O-tilde(t^{-1/4}) convergence with high-probability. We additionally extend our idea",
+      "categories": [
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15242v1",
+      "published_at": "2026-04-16T17:17:42"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15239v1",
+      "title": "TokenGS: Decoupling 3D Gaussian Prediction from Pixels with Learnable Tokens",
+      "authors": [
+        "Jiawei Ren",
+        "Michal Jan Tyszkiewicz",
+        "Jiahui Huang",
+        "Zan Gojcic"
+      ],
+      "abstract": "In this work, we revisit several key design choices of modern Transformer-based approaches for feed-forward 3D Gaussian Splatting (3DGS) prediction. We argue that the common practice of regressing Gaussian means as depths along camera rays is suboptimal, and instead propose to directly regress 3D mean coordinates using only a self-supervised rendering loss. This formulation allows us to move from the standard encoder-only design to an encoder-decoder architecture with learnable Gaussian tokens, thereby unbinding the number of predicted primitives from input image resolution and number of views",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15239v1",
+      "published_at": "2026-04-16T17:12:37"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15238v1",
+      "title": "A Nonlinear Separation Principle: Applications to Neural Networks, Control and Learning",
+      "authors": [
+        "Anand Gokhale",
+        "Anton V. Proskurnikov",
+        "Yu Kawano",
+        "Francesco Bullo"
+      ],
+      "abstract": "This paper investigates continuous-time and discrete-time firing-rate and Hopfield recurrent neural networks (RNNs), with applications in nonlinear control design and implicit deep learning. First, we introduce a nonlinear separation principle that guarantees global exponential stability for the interconnection of a contracting state-feedback controller and a contracting observer, alongside parametric extensions for robustness and equilibrium tracking. Second, we derive sharp linear matrix inequality (LMI) conditions that guarantee the contractivity of both firing rate and Hopfield neural netw",
+      "categories": [
+        "eess.SY",
+        "cs.LG",
+        "math.OC"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15238v1",
+      "published_at": "2026-04-16T17:12:32"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15237v1",
+      "title": "StreamCacheVGGT: Streaming Visual Geometry Transformers with Robust Scoring and Hybrid Cache Compression",
+      "authors": [
+        "Xuanyi Liu",
+        "Deyi Ji",
+        "Chunan Yu",
+        "Qi Zhu",
+        "Xuanfu Li"
+      ],
+      "abstract": "Reconstructing dense 3D geometry from continuous video streams requires stable inference under a constant memory budget. Existing $O(1)$ frameworks primarily rely on a ``pure eviction'' paradigm, which suffers from significant information destruction due to binary token deletion and evaluation noise from localized, single-layer scoring. To address these bottlenecks, we propose StreamCacheVGGT, a training-free framework that reimagines cache management through two synergistic modules: Cross-Layer Consistency-Enhanced Scoring (CLCES) and Hybrid Cache Compression (HCC). CLCES mitigates activation",
+      "categories": [
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15237v1",
+      "published_at": "2026-04-16T17:12:10"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15236v1",
+      "title": "Agentic Microphysics: A Manifesto for Generative AI Safety",
+      "authors": [
+        "Federico Pierucci",
+        "Matteo Prandi",
+        "Marcantonio Bracale Syrnikov",
+        "Marcello Galisai",
+        "Piercosma Bisconti"
+      ],
+      "abstract": "This paper advances a methodological proposal for safety research in agentic AI. As systems acquire planning, memory, tool use, persistent identity, and sustained interaction, safety can no longer be analysed primarily at the level of the isolated model. Population-level risks arise from structured interaction among agents, through processes of communication, observation, and mutual influence that shape collective behaviour over time. As the object of analysis shifts, a methodological gap emerges. Approaches focused either on single agents or on aggregate outcomes do not identify the interacti",
+      "categories": [
+        "cs.CY",
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15236v1",
+      "published_at": "2026-04-16T17:11:28"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15233v1",
+      "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications",
+      "authors": [
+        "Moin Aminnaseri",
+        "Farima Fatahi Bayat",
+        "Nikita Bhutani",
+        "Jean-Flavien Bussotti",
+        "Kevin Chan"
+      ],
+      "abstract": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single database, and (3) queries frequently rely on commonsense or external knowledge. Consequently, satisfying realistic data needs require integrating heterogeneous sources, modalities, and contextual data. In this paper, we present Blue's Data Intelligence Layer (DIL) designed to support multi-source, mult",
+      "categories": [
+        "cs.AI",
+        "cs.DB"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15233v1",
+      "published_at": "2026-04-16T17:10:21"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15231v1",
+      "title": "RadAgent: A tool-using AI agent for stepwise interpretation of chest computed tomography",
+      "authors": [
+        "M\u00e9lanie Roschewitz",
+        "Kenneth Styppa",
+        "Yitian Tao",
+        "Jiwoong Sohn",
+        "Jean-Benoit Delbrouck"
+      ],
+      "abstract": "Vision-language models (VLM) have markedly advanced AI-driven interpretation and reporting of complex medical imaging, such as computed tomography (CT). Yet, existing methods largely relegate clinicians to passive observers of final outputs, offering no interpretable reasoning trace for them to inspect, validate, or refine. To address this, we introduce RadAgent, a tool-using AI agent that generates CT reports through a stepwise and interpretable process. Each resulting report is accompanied by a fully inspectable trace of intermediate decisions and tool interactions, allowing clinicians to ex",
+      "categories": [
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15231v1",
+      "published_at": "2026-04-16T17:09:30"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15224v1",
+      "title": "Context Over Content: Exposing Evaluation Faking in Automated Judges",
+      "authors": [
+        "Manan Gupta",
+        "Inderjeet Nair",
+        "Lu Wang",
+        "Dhruv Kumar"
+      ],
+      "abstract": "The $\\textit{LLM-as-a-judge}$ paradigm has become the operational backbone of automated AI evaluation pipelines, yet rests on an unverified assumption: that judges evaluate text strictly on its semantic content, impervious to surrounding contextual framing. We investigate $\\textit{stakes signaling}$, a previously unmeasured vulnerability where informing a judge model of the downstream consequences its verdicts will have on the evaluated model's continued operation systematically corrupts its assessments. We introduce a controlled experimental framework that holds evaluated content strictly con",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15224v1",
+      "published_at": "2026-04-16T16:55:53"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15222v1",
+      "title": "AI-Assisted Requirements Engineering: An Empirical Evaluation Relative to Expert Judgment",
+      "authors": [
+        "Oz Levy",
+        "Ilya Dikman",
+        "Natan Levy",
+        "Michael Winokur"
+      ],
+      "abstract": "Artificial Intelligence is increasingly introduced into systems engineering activities, particularly within requirements engineering, where quality assessment and validation remain heavily dependent on expert judgment. While recent AI tools demonstrate promising capabilities in analyzing and generating requirements, their role within formal systems engineering processes-and their alignment with established INCOSE criteria-remains insufficiently understood. This paper investigates the extent to which AI-based tools can support systems engineers in evaluating requirement quality, without replaci",
+      "categories": [
+        "cs.SE",
+        "cs.AI"
+      ],
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2604.15222v1",
+      "published_at": "2026-04-16T16:53:57"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15221v1",
+      "title": "Vision-Based Safe Human-Robot Collaboration with Uncertainty Guarantees",
+      "authors": [
+        "Jakob Thumm",
+        "Marian Frei",
+        "Tianle Ni",
+        "Matthias Althoff",
+        "Marco Pavone"
+      ],
+      "abstract": "We propose a framework for vision-based human pose estimation and motion prediction that gives conformal prediction guarantees for certifiably safe human-robot collaboration. Our framework combines aleatoric uncertainty estimation with OOD detection for high probabilistic confidence. To integrate our pipeline in certifiable safety frameworks, we propose conformal prediction sets for human motion predictions with high, valid confidence. We evaluate our pipeline on recorded human motion data and a real-world human-robot collaboration setting.",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "primary_category": "cs.CV",
+      "url": "http://arxiv.org/abs/2604.15221v1",
+      "published_at": "2026-04-16T16:53:26"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15216v1",
+      "title": "Low-Cost System for Automatic Recognition of Driving Pattern in Assessing Interurban Mobility using Geo-Information",
+      "authors": [
+        "Oscar Romero",
+        "Aika Silveira Miura",
+        "Lorena Parra",
+        "Jaime Lloret"
+      ],
+      "abstract": "Mobility in urban and interurban areas, mainly by cars, is a day-to-day activity of many people. However, some of its main drawbacks are traffic jams and accidents. Newly made vehicles have pre-installed driving evaluation systems, which can prevent accidents. However, most cars on our roads do not have driver assessment systems. In this paper, we propose an approach for recognising driving styles and enabling drivers to reach safer and more efficient driving. The system consists of two physical sensors connected to a device node with a display and a speaker. An artificial neural network (ANN)",
+      "categories": [
+        "cs.HC",
+        "cs.CY",
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15216v1",
+      "published_at": "2026-04-16T16:47:08"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15214v1",
+      "title": "Optimal algorithmic complexity of inference in quantum kernel methods",
+      "authors": [
+        "Elies Gil-fuster",
+        "Seongwook Shin",
+        "Sofiene Jerbi",
+        "Jens Eisert",
+        "Maximilian J. Kramer"
+      ],
+      "abstract": "Quantum kernel methods are among the leading candidates for achieving quantum advantage in supervised learning. A key bottleneck is the cost of inference: evaluating a trained model on new data requires estimating a weighted sum $\\sum_{i=1}^N \u03b1_i k(x,x_i)$ of $N$ kernel values to additive precision $\\varepsilon$, where $\u03b1$ is the vector of trained coefficients. The standard approach estimates each term independently via sampling, yielding a query complexity of $O(N\\lVert\u03b1\\rVert_2^2/\\varepsilon^2)$. In this work, we identify two independent axes for improvement: (1) How individual kernel values",
+      "categories": [
+        "quant-ph",
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15214v1",
+      "published_at": "2026-04-16T16:45:02"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15210v1",
+      "title": "Learning to Think Like a Cartoon Captionist: Incongruity-Resolution Supervision for Multimodal Humor Understanding",
+      "authors": [
+        "Hatice Merve Vural",
+        "Doga Kukul",
+        "Ege Erdem Ozlu",
+        "Demir Ekin Arikan",
+        "Bob Mankoff"
+      ],
+      "abstract": "Humor is one of the few cognitive tasks where getting the reasoning right matters as much as getting the answer right. While recent work evaluates humor understanding on benchmarks such as the New Yorker Cartoon Caption Contest (NYCC), it largely treats it as black-box prediction, overlooking the structured reasoning processes underlying humor comprehension. We introduce IRS (Incongruity-Resolution Supervision), a framework that decomposes humor understanding into three components: incongruity modeling, which identifies mismatches in the visual scene; resolution modeling, which constructs cohe",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15210v1",
+      "published_at": "2026-04-16T16:41:13"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15203v1",
+      "title": "MADE: A Living Benchmark for Multi-Label Text Classification with Uncertainty Quantification of Medical Device Adverse Events",
+      "authors": [
+        "Raunak Agarwal",
+        "Markus Wenzel",
+        "Simon Baur",
+        "Jonas Zimmer",
+        "George Harvey"
+      ],
+      "abstract": "Machine learning in high-stakes domains such as healthcare requires not only strong predictive performance but also reliable uncertainty quantification (UQ) to support human oversight. Multi-label text classification (MLTC) is a central task in this domain, yet remains challenging due to label imbalances, dependencies, and combinatorial complexity. Existing MLTC benchmarks are increasingly saturated and may be affected by training data contamination, making it difficult to distinguish genuine reasoning capabilities from memorization. We introduce MADE, a living MLTC benchmark derived from {m}e",
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15203v1",
+      "published_at": "2026-04-16T16:28:16"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15201v1",
+      "title": "RL-STPA: Adapting System-Theoretic Hazard Analysis for Safety-Critical Reinforcement Learning",
+      "authors": [
+        "Steven A. Senczyszyn",
+        "Timothy C. Havens",
+        "Nathaniel Rice",
+        "Jason E. Summers",
+        "Benjamin D. Werner"
+      ],
+      "abstract": "As reinforcement learning (RL) deployments expand into safety-critical domains, existing evaluation methods fail to systematically identify hazards arising from the black-box nature of neural network enabled policies and distributional shift between training and deployment. This paper introduces Reinforcement Learning System-Theoretic Process Analysis (RL-STPA), a framework that adapts conventional STPA's systematic hazard analysis to address RL's unique challenges through three key contributions: hierarchical subtask decomposition using both temporal phase analysis and domain expertise to cap",
+      "categories": [
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2604.15201v1",
+      "published_at": "2026-04-16T16:27:42"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15190v1",
+      "title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation",
+      "authors": [
+        "Ziyang Chen",
+        "Renbing Chen",
+        "Daowei Li",
+        "Jinzhi Liao",
+        "Jiashen Sun"
+      ],
+      "abstract": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize when unobserved factors such as offline context and implicit habits are missing. Second, mechanism duality requires capturing both interpretable preferences and implicit statistical regularities, which no single paradigm achieves alone. We propose Policy-Guided Hybrid Simulation (PGHS), a dual-proc",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15190v1",
+      "published_at": "2026-04-16T16:23:13"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15180v1",
+      "title": "AdaSplash-2: Faster Differentiable Sparse Attention",
+      "authors": [
+        "Nuno Gon\u00e7alves",
+        "Hugo Pitorro",
+        "Vlad Niculae",
+        "Edoardo Ponti",
+        "Lei Li"
+      ],
+      "abstract": "Sparse attention has been proposed as a way to alleviate the quadratic cost of transformers, a central bottleneck in long-context training. A promising line of work is $\u03b1$-entmax attention, a differentiable sparse alternative to softmax that enables input-dependent sparsity yet has lagged behind softmax due to the computational overhead necessary to compute the normalizer $\u03c4$. In this paper, we introduce AdaSplash-2, which addresses this limitation through a novel histogram-based initialization that reduces the number of iterations needed to compute $\u03c4$ to typically 1--2. The key idea is to co",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15180v1",
+      "published_at": "2026-04-16T16:03:13"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15165v1",
+      "title": "Fabricator or dynamic translator?",
+      "authors": [
+        "Lisa Vasileva",
+        "Karin Sim"
+      ],
+      "abstract": "LLMs are proving to be adept at machine translation although due to their generative nature they may at times overgenerate in various ways. These overgenerations are different from the neurobabble seen in NMT and range from LLM self-explanations, to risky confabulations, to appropriate explanations, where the LLM is able to act as a human translator would, enabling greater comprehension for the target audience. Detecting and determining the exact nature of the overgenerations is a challenging task. We detail different strategies we have explored for our work in a commercial setting, and presen",
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15165v1",
+      "published_at": "2026-04-16T15:45:25"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15153v1",
+      "title": "Compressing Sequences in the Latent Embedding Space: $K$-Token Merging for Large Language Models",
+      "authors": [
+        "Zihao Xu",
+        "John Harvill",
+        "Ziwei Fan",
+        "Yizhou Sun",
+        "Hao Ding"
+      ],
+      "abstract": "Large Language Models (LLMs) incur significant computational and memory costs when processing long prompts, as full self-attention scales quadratically with input length. Token compression aims to address this challenge by reducing the number of tokens representing inputs. However, existing prompt-compression approaches primarily operate in token space and overlook inefficiencies in the latent embedding space. In this paper, we propose K-Token Merging, a latent-space compression framework that merges each contiguous block of K token embeddings into a single embedding via a lightweight encoder.",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15153v1",
+      "published_at": "2026-04-16T15:32:45"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15151v1",
+      "title": "QuantCode-Bench: A Benchmark for Evaluating the Ability of Large Language Models to Generate Executable Algorithmic Trading Strategies",
+      "authors": [
+        "Alexey Khoroshilov",
+        "Alexey Chernysh",
+        "Orkhan Ekhtibarov",
+        "Nini Kamkia",
+        "Dmitry Zmitrovich"
+      ],
+      "abstract": "Large language models have demonstrated strong performance on general-purpose programming tasks, yet their ability to generate executable algorithmic trading strategies remains underexplored. Unlike standard code benchmarks, trading-strategy generation requires simultaneous mastery of domain-specific financial logic, knowledge of a specialized API, and the ability to produce code that is not only syntactically correct but also leads to actual trades on historical data. In this work, we present QuantCode-Bench, a benchmark for the systematic evaluation of modern LLMs in generating strategies fo",
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15151v1",
+      "published_at": "2026-04-16T15:31:42"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15148v1",
+      "title": "IG-Search: Step-Level Information Gain Rewards for Search-Augmented Reasoning",
+      "authors": [
+        "Zihan Liang",
+        "Yufei Ma",
+        "Ben Chen",
+        "Zhipeng Qian",
+        "Huangyu Dai"
+      ],
+      "abstract": "Reinforcement learning has emerged as an effective paradigm for training large language models to perform search-augmented reasoning. However, existing approaches rely on trajectory-level rewards that cannot distinguish precise search queries from vague or redundant ones within a rollout group, and collapse to a near-zero gradient signal whenever every sampled trajectory fails. In this paper, we propose IG-Search, a reinforcement learning framework that introduces a step-level reward based on Information Gain (IG). For each search step, IG measures how much the retrieved documents improve the ",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.IR"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15148v1",
+      "published_at": "2026-04-16T15:22:47"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15140v1",
+      "title": "DiscoTrace: Representing and Comparing Answering Strategies of Humans and LLMs in Information-Seeking Question Answering",
+      "authors": [
+        "Neha Srikanth",
+        "Jordan Boyd-Graber",
+        "Rachel Rudinger"
+      ],
+      "abstract": "We introduce DiscoTrace, a method to identify the rhetorical strategies that answerers use when responding to information-seeking questions. DiscoTrace represents answers as a sequence of question-related discourse acts paired with interpretations of the original question, annotated on top of rhetorical structure theory parses. Applying DiscoTrace to answers from nine different human communities reveals that communities have diverse preferences for answer construction. In contrast, LLMs do not exhibit rhetorical diversity in their answers, even when prompted to mimic specific human community a",
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15140v1",
+      "published_at": "2026-04-16T15:17:36"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15124v1",
+      "title": "Blinded Multi-Rater Comparative Evaluation of a Large Language Model and Clinician-Authored Responses in CGM-Informed Diabetes Counseling",
+      "authors": [
+        "Zhijun Guo",
+        "Alvina Lai",
+        "Emmanouil Korakas",
+        "Aristeidis Vagenas",
+        "Irshad Ahamed"
+      ],
+      "abstract": "Continuous glucose monitoring (CGM) is central to diabetes care, but explaining CGM patterns clearly and empathetically remains time-intensive. Evidence for retrieval-grounded large language model (LLM) systems in CGM-informed counseling remains limited. To evaluate whether a retrieval-grounded LLM-based conversational agent (CA) could support patient understanding of CGM data and preparation for routine diabetes consultations. We developed a retrieval-grounded LLM-based CA for CGM interpretation and diabetes counseling support. The system generated plain-language responses while avoiding indi",
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2604.15124v1",
+      "published_at": "2026-04-16T15:11:47"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15114v1",
+      "title": "Amortized Optimal Transport from Sliced Potentials",
+      "authors": [
+        "Minh-Phuc Truong",
+        "Khai Nguyen"
+      ],
+      "abstract": "We propose a novel amortized optimization method for predicting optimal transport (OT) plans across multiple pairs of measures by leveraging Kantorovich potentials derived from sliced OT. We introduce two amortization strategies: regression-based amortization (RA-OT) and objective-based amortization (OA-OT). In RA-OT, we formulate a functional regression model that treats Kantorovich potentials from the original OT problem as responses and those obtained from sliced OT as predictors, and estimate these models via least-squares methods. In OA-OT, we estimate the parameters of the functional mod",
+      "categories": [
+        "stat.ML",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.15114v1",
+      "published_at": "2026-04-16T15:05:59"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.15107v1",
+      "title": "MinShap: A Modified Shapley Value Approach for Feature Selection",
+      "authors": [
+        "Chenghui Zheng",
+        "Garvesh Raskutti"
+      ],
+      "abstract": "Feature selection is a classical problem in statistics and machine learning, and it continues to remain an extremely challenging problem especially in the context of unknown non-linear relationships with dependent features. On the other hand, Shapley values are a classic solution concept from cooperative game theory that is widely used for feature attribution in general non-linear models with highly-dependent features. However, Shapley values are not naturally suited for feature selection since they tend to capture both direct effects from each feature to the response and indirect effects thro",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.15107v1",
+      "published_at": "2026-04-16T15:02:22"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14975v1",
+      "title": "Theta-regularized Kriging: Modelling and Algorithms",
+      "authors": [
+        "Xuelin Xie",
+        "Xiliang Lu"
+      ],
+      "abstract": "To obtain more accurate model parameters and improve prediction accuracy, we proposed a regularized Kriging model that penalizes the hyperparameter theta in the Gaussian stochastic process, termed the Theta-regularized Kriging. We derived the optimization problem for this model from a maximum likelihood perspective. Additionally, we presented specific implementation details for the iterative process, including the regularized optimization algorithm and the geometric search cross-validation tuning algorithm. Three distinct penalty methods, Lasso, Ridge, and Elastic-net regularization, were meti",
+      "categories": [
+        "stat.CO",
+        "math.NA",
+        "stat.AP",
+        "stat.ML"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14975v1",
+      "published_at": "2026-04-16T13:07:42"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14949v1",
+      "title": "Unsupervised feature selection using Bayesian Tucker decomposition",
+      "authors": [
+        "Y-h. Taguchi",
+        "Yoh-ichi Mototake"
+      ],
+      "abstract": "In this paper, we proposed Bayesian Tucker decomposition (BTuD) in which residual is supposed to obey Gaussian distribution analogous to linear regression. Although we have proposed an algorithm to perform the proposed BTuD, the conventional higher-order orthogonal iteration can generate Tucker decomposition consistent with the present implementation. Using the proposed BTuD, we can perform unsupervised feature selection successfully applied to various synthetic datasets, global coupled maps with randomized coupling strength, and gene expression profiles. Thus we can conclude that our newly pr",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14949v1",
+      "published_at": "2026-04-16T12:47:03"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14908v1",
+      "title": "Multi-User mmWave Beam and Rate Adaptation via Combinatorial Satisficing Bandits",
+      "authors": [
+        "Emre \u00d6zy\u0131ld\u0131r\u0131m",
+        "Bar\u0131\u015f Yayc\u0131",
+        "Umut Eren Akturk",
+        "Cem Tekin"
+      ],
+      "abstract": "We study downlink beam and rate adaptation in a multi-user mmWave MISO system where multiple base stations (BSs), each using analog beamforming from finite codebooks, serve multiple single-antenna user equipments (UEs) with a unique beam per UE and discrete data transmission rates. BSs learn about transmission success based on ACK/NACK feedback. To encode service goals, we introduce a satisficing throughput threshold $\u03c4_r$ and cast joint beam and rate adaptation as a combinatorial semi-bandit over beam-rate tuples. Within this framework, we propose SAT-CTS, a lightweight, threshold-aware polic",
+      "categories": [
+        "cs.LG",
+        "eess.SY",
+        "stat.ML"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14908v1",
+      "published_at": "2026-04-16T11:49:51"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14860v1",
+      "title": "Best of both worlds: Stochastic & adversarial best-arm identification",
+      "authors": [
+        "Yasin Abbasi-Yadkori",
+        "Peter L. Bartlett",
+        "Victor Gabillon",
+        "Alan Malek",
+        "Michal Valko"
+      ],
+      "abstract": "We study bandit best-arm identification with arbitrary and potentially adversarial rewards. A simple random uniform learner obtains the optimal rate of error in the adversarial scenario. However, this type of strategy is suboptimal when the rewards are sampled stochastically. Therefore, we ask: Can we design a learner that performs optimally in both the stochastic and adversarial problems while not being aware of the nature of the rewards? First, we show that designing such a learner is impossible in general. In particular, to be robust to adversarial rewards, we can only guarantee optimal rat",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14860v1",
+      "published_at": "2026-04-16T10:47:50"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14810v1",
+      "title": "Scalable Model-Based Clustering with Sequential Monte Carlo",
+      "authors": [
+        "Connie Trojan",
+        "Pavel Myshkov",
+        "Paul Fearnhead",
+        "James Hensman",
+        "Tom Minka"
+      ],
+      "abstract": "In online clustering problems, there is often a large amount of uncertainty over possible cluster assignments that cannot be resolved until more data are observed. This difficulty is compounded when clusters follow complex distributions, as is the case with text data. Sequential Monte Carlo (SMC) methods give a natural way of representing and updating this uncertainty over time, but have prohibitive memory requirements for large-scale problems. We propose a novel SMC algorithm that decomposes clustering problems into approximately independent subproblems, allowing a more compact representation",
+      "categories": [
+        "stat.ML",
+        "cs.LG",
+        "stat.CO"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14810v1",
+      "published_at": "2026-04-16T09:31:44"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14809v1",
+      "title": "Expert-Guided Class-Conditional Goodness-of-Fit Scores for Interpretable Classification with Informative Missingness: An Application to Seismic Monitoring",
+      "authors": [
+        "Shahar Cohen",
+        "David M. Steinberg",
+        "Yael Radzyner",
+        "Yochai Ben Horin"
+      ],
+      "abstract": "We study a classification problem with three key challenges: pervasive informative missingness, the integration of partial prior expert knowledge into the learning process, and the need for interpretable decision rules. We propose a framework that encodes prior knowledge through an expert-guided class-conditional model for one or more classes, and use this model to construct a small set of interpretable goodness-of-fit features. The features quantify how well the observed data agree with the expert model, isolating the contributions of different aspects of the data, including both observed and",
+      "categories": [
+        "stat.ML",
+        "cs.LG",
+        "stat.AP"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14809v1",
+      "published_at": "2026-04-16T09:31:37"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14702v1",
+      "title": "Gating Enables Curvature: A Geometric Expressivity Gap in Attention",
+      "authors": [
+        "Satwik Bathula",
+        "Anand A. Joshi"
+      ],
+      "abstract": "Multiplicative gating is widely used in neural architectures and has recently been applied to attention layers to improve performance and training stability in large language models. Despite the success of gated attention, the mathematical implications of gated attention mechanisms remain poorly understood. We study attention through the geometry of its representations by modeling outputs as mean parameters of Gaussian distributions and analyzing the induced Fisher--Rao geometry. We show that ungated attention operator is restricted to intrinsically flat statistical manifolds due to its affine",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14702v1",
+      "published_at": "2026-04-16T07:09:11"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14669v1",
+      "title": "Zeroth-Order Optimization at the Edge of Stability",
+      "authors": [
+        "Minhak Song",
+        "Liang Zhang",
+        "Bingcong Li",
+        "Niao He",
+        "Michael Muehlebach"
+      ],
+      "abstract": "Zeroth-order (ZO) methods are widely used when gradients are unavailable or prohibitively expensive, including black-box learning and memory-efficient fine-tuning of large models, yet their optimization dynamics in deep learning remain underexplored. In this work, we provide an explicit step size condition that exactly captures the (mean-square) linear stability of a family of ZO methods based on the standard two-point estimator. Our characterization reveals a sharp contrast with first-order (FO) methods: whereas FO stability is governed solely by the largest Hessian eigenvalue, mean-square st",
+      "categories": [
+        "cs.LG",
+        "math.DS",
+        "math.OC",
+        "stat.ML"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14669v1",
+      "published_at": "2026-04-16T06:23:18"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14621v1",
+      "title": "Differentially Private Conformal Prediction",
+      "authors": [
+        "Jiamei Wu",
+        "Ce Zhang",
+        "Zhipeng Cai",
+        "Jingsen Kong",
+        "Bei Jiang"
+      ],
+      "abstract": "Conformal prediction (CP) has attracted broad attention as a simple and flexible framework for uncertainty quantification through prediction sets. In this work, we study how to deploy CP under differential privacy (DP) in a statistically efficient manner. We first introduce differential CP, a non-splitting conformal procedure that avoids the efficiency loss caused by data splitting and serves as a bridge between oracle CP and private conformal inference. By exploiting the stability properties of DP mechanisms, differential CP establishes a direct connection to oracle CP and inherits correspond",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14621v1",
+      "published_at": "2026-04-16T05:08:02"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14587v1",
+      "title": "CLion: Efficient Cautious Lion Optimizer with Enhanced Generalization",
+      "authors": [
+        "Feihu Huang",
+        "Guanyi Zhang",
+        "Songcan Chen"
+      ],
+      "abstract": "Lion optimizer is a popular learning-based optimization algorithm in machine learning, which shows impressive performance in training many deep learning models. Although convergence property of the Lion optimizer has been studied, its generalization analysis is still missing. To fill this gap, we study generalization property of the Lion via algorithmic stability based on the mathematical induction. Specifically, we prove that the Lion has a generalization error of $O(\\frac{1}{N\u03c4^T})$, where $N$ is training sample size, and $\u03c4>0$ denotes the smallest absolute value of non-zero element in gradi",
+      "categories": [
+        "cs.LG",
+        "math.OC",
+        "stat.ML"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14587v1",
+      "published_at": "2026-04-16T03:32:48"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14575v1",
+      "title": "Generative Augmented Inference",
+      "authors": [
+        "Cheng Lu",
+        "Mengxin Wang",
+        "Dennis J. Zhang",
+        "Heng Zhang"
+      ],
+      "abstract": "Data-driven operations management often relies on parameters estimated from costly human-generated labels. Recent advances in large language models (LLMs) and other AI systems offer inexpensive auxiliary data, but introduce a new challenge: AI outputs are not direct observations of the target outcomes, but could involve high-dimensional representations with complex and unknown relationships to human labels. Conventional methods leverage AI predictions as direct proxies for true labels, which can be inefficient or unreliable when this relationship is weak or misspecified. We propose Generative ",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "stat.ME",
+        "stat.ML"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14575v1",
+      "published_at": "2026-04-16T03:10:37"
+    },
+    {
+      "source": "arxiv",
+      "id": "http://arxiv.org/abs/2604.14498v1",
+      "title": "Improving Machine Learning Performance with Synthetic Augmentation",
+      "authors": [
+        "Mel Sohm",
+        "Charles Dezons",
+        "Sami Sellami",
+        "Oscar Ninou",
+        "Axel Pincon"
+      ],
+      "abstract": "Synthetic augmentation is increasingly used to mitigate data scarcity in financial machine learning, yet its statistical role remains poorly understood. We formalize synthetic augmentation as a modification of the effective training distribution and show that it induces a structural bias--variance trade-off: while additional samples may reduce estimation error, they may also shift the population objective whenever the synthetic distribution deviates from regions relevant under evaluation. To isolate informational gains from mechanical sample-size effects, we introduce a size-matched null augme",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "stat.ML"
+      ],
+      "primary_category": "stat.ML",
+      "url": "http://arxiv.org/abs/2604.14498v1",
+      "published_at": "2026-04-16T00:23:01"
+    }
+  ],
+  "tweets": []
+}
