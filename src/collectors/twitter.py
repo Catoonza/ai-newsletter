@@ -71,7 +71,7 @@ someone this week, skip them. Only include genuinely interesting or impactful po
 
     try:
         response = client.messages.create(
-            model="claude-opus-4-6",
+            model="claude-haiku-4-5",
             max_tokens=2000,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": prompt}],
