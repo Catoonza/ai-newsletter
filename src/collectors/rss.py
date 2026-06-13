@@ -70,7 +70,7 @@ RSS_FEEDS = [
     },
     # Meta's general engineering blog also covers AI heavily
     {
-        "name": "Meta Engineering Blog",
+        "name": "Meta Engineering",
         "url": "https://engineering.fb.com/feed/",
         "category": "provider",
     },
@@ -110,7 +110,7 @@ RSS_FEEDS = [
         "category": "tools",
     },
 
-    # ── The Verge AI ─────────────────────────────────────────────
+    # ── The Verge AI ──────────────────────────────────────────────
     {
         "name": "The Verge - AI",
         "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",

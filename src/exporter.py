@@ -29,20 +29,20 @@ SECTION_MAP = [
 ]
 
 # Palette — hardcoded, no CSS variables (email clients don't support them)
-PAPER      = "#faf8f4"
-WARM       = "#f2efe9"
-OUTER      = "#e8e4dc"
-INK        = "#0f0f0f"
-INK_MID    = "#3a3a3a"
-INK_SOFT   = "#5a5a5a"
-INK_FAINT  = "#909090"
-ON_DARK    = "#f0ece4"
-RULE       = "#d8d3ca"
-RULE_MID   = "#b0a898"
-RED        = "#c41e3a"
-TEAL       = "#0a6b78"
-TEAL_BG    = "#e4f4f6"
-DARK_BG    = "#0f0f0f"
+PAPER     = "#faf8f4"
+WARM      = "#f2efe9"
+OUTER     = "#e8e4dc"
+INK       = "#0f0f0f"
+INK_MID   = "#3a3a3a"
+INK_SOFT  = "#5a5a5a"
+INK_FAINT = "#909090"
+ON_DARK   = "#f0ece4"
+RULE      = "#d8d3ca"
+RULE_MID  = "#b0a898"
+RED       = "#c41e3a"
+TEAL      = "#0a6b78"
+TEAL_BG   = "#e4f4f6"
+DARK_BG   = "#0f0f0f"
 
 # Font stacks — Playfair/Source Serif load via Google Fonts link in <head>;
 # Georgia/Times are the email-safe fallbacks that match the feel closely.
@@ -50,21 +50,48 @@ F_DISPLAY = "'Playfair Display', Georgia, 'Times New Roman', serif"
 F_BODY    = "'Source Serif 4', Georgia, 'Times New Roman', serif"
 F_MONO    = "'JetBrains Mono', 'Courier New', Courier, monospace"
 
+# Shared overflow-safe text style (prevents content from extending past container)
+_WRAP = "overflow-wrap:break-word;word-wrap:break-word;word-break:break-word;"
+
+# ── Endnote registry (populated per newsletter build) ─────────────
+_endnotes: list = []  # [(url, domain), ...]
+
+
+def _reset_endnotes():
+    global _endnotes
+    _endnotes = []
+
+
+def _add_endnote(url: str) -> int:
+    """Register a URL and return its 1-based endnote number."""
+    global _endnotes
+    # Deduplicate: if same URL already registered, return existing number
+    for i, (existing_url, _) in enumerate(_endnotes):
+        if existing_url == url:
+            return i + 1
+    domain = re.sub(r'^https?://(www\.)?', '', url).split('/')[0]
+    _endnotes.append((url, domain))
+    return len(_endnotes)
+
 
 # ── Markdown inline → HTML ────────────────────────────────────────
 
-def _md(text: str) -> str:
-    """Convert inline markdown to HTML with inline styles."""
-    # Links
+def _md(text: str, on_dark: bool = False) -> str:
+    """Convert inline markdown to HTML with inline styles.
+
+    on_dark: if True, bold text uses light color for dark backgrounds.
+    """
+    # Links — teal works on both light and dark
     text = re.sub(
         r'\[(.+?)\]\((https?://[^\)]+)\)',
         rf'<a href="\2" style="color:{TEAL};text-decoration:none;">\1</a>',
         text
     )
-    # Bold
+    # Bold — inherit parent color, don't force dark ink
+    bold_color = ON_DARK if on_dark else "inherit"
     text = re.sub(
         r'\*\*(.+?)\*\*',
-        rf'<strong style="color:{INK};font-weight:700;">\1</strong>',
+        rf'<strong class="bld" style="font-weight:700;color:{bold_color};">\1</strong>',
         text
     )
     # Italic
@@ -81,7 +108,7 @@ def _bullets(lines: list) -> list:
         s = line.strip()
         if s.startswith("###"):
             past = True; continue
-        if past and (s.startswith("- ") or s.startswith("* ")):
+        if past and (s.startswith("- ") or s.startswith("* ") or re.match(r'^\d+\.\s', s)):
             result.append(s)
     return result
 
@@ -94,50 +121,48 @@ def _prose(lines: list) -> list:
     ]
 
 
-def _first_url(lines: list) -> str:
-    """First URL found in any bullet line."""
-    for line in lines:
-        s = line.strip()
-        if not (s.startswith("- ") or s.startswith("* ")):
-            continue
-        m = re.search(r'https?://[^\s\)]+', s)
-        if m:
-            return m.group(0).rstrip(".,)")
-    return ""
+def _extract_all_urls(line: str) -> list:
+    """Extract all URLs from a line (both markdown links and bare URLs)."""
+    urls = []
+    # Markdown links [text](url)
+    for m in re.finditer(r'\[.+?\]\((https?://[^\)]+)\)', line):
+        urls.append(m.group(1).rstrip(".,)"))
+    # Bare URLs not inside markdown link syntax
+    bare_line = re.sub(r'\[.+?\]\(https?://[^\)]+\)', '', line)
+    for m in re.finditer(r'https?://[^\s]+', bare_line):
+        url = m.group(0).rstrip(".,)")
+        if url not in urls:
+            urls.append(url)
+    return urls
 
 
-def _split_url_from_line(line: str):
-    """
-    Split a bullet line into (body_text, url_or_empty).
-    Handles both markdown links [text](url) at end and bare URLs.
-    Returns body with markdown links still in it for _md() to process.
-    """
+def _strip_urls_from_body(line: str) -> str:
+    """Strip leading bullet/number prefix from a line. Keeps markdown links intact."""
     line = line.strip()
     if line.startswith(("- ", "* ")):
         line = line[2:].strip()
-
-    # Bare URL at end of line
-    bare = re.search(r'\s+(https?://\S+)$', line)
-    if bare:
-        url = bare.group(1).rstrip(".,)")
-        body = line[:bare.start()].strip()
-        return body, url
-
-    return line, ""
+    else:
+        # Numbered list: "1. text"
+        m = re.match(r'^\d+\.\s+', line)
+        if m:
+            line = line[m.end():].strip()
+    return line
 
 
 # ── HTML component builders ───────────────────────────────────────
 
-def _src_badge(url: str) -> str:
-    if not url:
-        return ""
-    domain = re.sub(r'^https?://(www\.)?', '', url).split('/')[0]
+# Shared table reset for Outlook spacing
+_TBL = "mso-table-lspace:0pt;mso-table-rspace:0pt;"
+
+
+def _endnote_sup(url: str) -> str:
+    """Render a superscript endnote number linking to the source."""
+    n = _add_endnote(url)
     return (
-        f'<a href="{url}" style="display:inline-block;margin-left:7px;'
-        f'font-family:{F_MONO};font-size:10px;color:{TEAL};'
-        f'background:{TEAL_BG};padding:1px 8px;border-radius:2px;'
-        f'text-decoration:none;vertical-align:middle;white-space:nowrap;">'
-        f'{domain}&nbsp;↗</a>'
+        f'<sup style="font-family:{F_MONO};font-size:10px;line-height:0;'
+        f'vertical-align:super;">'
+        f'<a href="{url}" style="color:{TEAL};text-decoration:none;">[{n}]</a>'
+        f'</sup>'
     )
 
 
@@ -145,18 +170,22 @@ def _bullet_rows(bullets: list) -> str:
     rows = []
     last = len(bullets) - 1
     for i, raw in enumerate(bullets):
-        body, url = _split_url_from_line(raw)
+        body = _strip_urls_from_body(raw)
+        urls = _extract_all_urls(raw)
         body_html = _md(body)
-        src = _src_badge(url)
+        # Append endnote superscripts for each source URL
+        endnotes_html = ""
+        for url in urls:
+            endnotes_html += _endnote_sup(url)
         border = f"border-bottom:1px solid {RULE};" if i < last else ""
         rows.append(
             f'<tr valign="top">'
             f'<td style="width:18px;padding:11px 6px 11px 0;{border}'
             f'font-family:{F_BODY};font-size:14px;line-height:1.65;'
             f'color:{RED};font-weight:700;">—</td>'
-            f'<td style="padding:11px 0;{border}'
-            f'font-family:{F_BODY};font-size:14px;line-height:1.68;color:{INK_MID};">'
-            f'{body_html}{src}</td>'
+            f'<td class="mid-text" style="padding:11px 0;{border}'
+            f'font-family:{F_BODY};font-size:14px;line-height:1.68;color:{INK_MID};{_WRAP}">'
+            f'{body_html}{endnotes_html}</td>'
             f'</tr>'
         )
     return "\n".join(rows)
@@ -170,39 +199,35 @@ def _qt_block(bullets: list, label: str = "The Quick Take") -> str:
         )
     rows_html = _bullet_rows(bullets)
     return (
-        f'<div style="background:{WARM};border-left:3px solid {RED};'
-        f'padding:18px 22px 14px 22px;">'
+        f'<table role="presentation" class="warm-bg" cellpadding="0" cellspacing="0" border="0"'
+        f' width="100%" bgcolor="{WARM}" style="background:{WARM};'
+        f'border-left:3px solid {RED};{_TBL}">'
+        f'<tr><td style="padding:18px 22px 14px 22px;">'
         f'<div style="font-family:{F_MONO};font-size:9px;letter-spacing:0.2em;'
         f'text-transform:uppercase;color:{RED};margin-bottom:14px;">{label}</div>'
-        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">'
+        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
+        f' width="100%" style="table-layout:fixed;{_TBL}">'
         f'<tbody>{rows_html}</tbody>'
         f'</table>'
-        f'</div>'
+        f'</td></tr></table>'
     )
 
 
-def _section_header(num: str, title: str, url: str = "") -> str:
-    if url:
-        title_el = (
-            f'<a href="{url}" style="font-family:{F_DISPLAY};font-size:23px;'
-            f'font-weight:700;color:{INK};text-decoration:none;line-height:1.1;">'
-            f'{title}</a>'
-        )
-    else:
-        title_el = (
-            f'<span style="font-family:{F_DISPLAY};font-size:23px;'
-            f'font-weight:700;color:{INK};line-height:1.1;">{title}</span>'
-        )
+def _section_header(num: str, title: str) -> str:
+    title_el = (
+        f'<span class="sec-title ink-text" style="font-family:{F_DISPLAY};font-size:22px;'
+        f'font-weight:700;color:{INK};line-height:1.2;{_WRAP}">{title}</span>'
+    )
     return (
-        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" '
-        f'width="100%" style="margin-bottom:20px;">'
+        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
+        f' width="100%" style="margin-bottom:20px;{_TBL}">'
         f'<tr valign="middle">'
-        f'<td style="width:1%;white-space:nowrap;padding-right:10px;'
+        f'<td style="white-space:nowrap;padding-right:10px;'
         f'font-family:{F_MONO};font-size:9px;letter-spacing:0.22em;'
         f'text-transform:uppercase;color:{RED};">{num}</td>'
-        f'<td style="width:1%;white-space:nowrap;">{title_el}</td>'
-        f'<td style="padding-left:12px;">'
-        f'<div style="height:1px;background:{RULE};font-size:0;line-height:0;">&nbsp;</div>'
+        f'<td style="white-space:nowrap;">{title_el}</td>'
+        f'<td width="100%" style="padding-left:12px;">'
+        f'<div class="rule-line" style="height:1px;background:{RULE};font-size:0;line-height:0;">&nbsp;</div>'
         f'</td>'
         f'</tr>'
         f'</table>'
@@ -211,12 +236,11 @@ def _section_header(num: str, title: str, url: str = "") -> str:
 
 def _standard_section(html_id: str, num: str, title: str, lines: list) -> str:
     bl    = _bullets(lines)
-    url   = _first_url(lines)
     label = "Notable Discussions This Week" if html_id == "community" else "The Quick Take"
     return (
         f'<div id="{html_id}" style="padding:36px 0 32px;'
         f'border-bottom:1px solid {RULE};">'
-        f'{_section_header(num, title, url)}'
+        f'{_section_header(num, title)}'
         f'{_qt_block(bl, label)}'
         f'</div>'
     )
@@ -232,22 +256,33 @@ def _one_to_watch(lines: list) -> str:
             cur.append(l)
     if cur: pgs.append(" ".join(cur))
 
-    paras = "".join(
-        f'<p style="font-family:{F_BODY};font-size:14px;line-height:1.75;'
-        f'color:{ON_DARK};font-weight:300;margin:0 0 12px 0;">{_md(p)}</p>'
-        for p in pgs if p
-    )
+    paras = ""
+    for p in pgs:
+        if not p:
+            continue
+        # Collect endnotes from any URLs in prose
+        urls = _extract_all_urls(p)
+        endnotes_html = ""
+        for url in urls:
+            endnotes_html += _endnote_sup(url)
+        paras += (
+            f'<p style="font-family:{F_BODY};font-size:14px;line-height:1.75;'
+            f'color:{ON_DARK};font-weight:300;margin:0 0 12px 0;{_WRAP}">'
+            f'{_md(p, on_dark=True)}{endnotes_html}</p>'
+        )
     # fix last paragraph margin
-    paras = re.sub(r'margin:0 0 12px 0;"></p>$', f'margin:0;"></p>', paras)
+    paras = re.sub(r'margin:0 0 12px 0;([^"]*?)"></p>$', r'margin:0;\1"></p>', paras)
 
     return (
         f'<div id="watch" style="padding:36px 0 0;">'
         f'{_section_header("§ 06", "One to Watch")}'
-        f'<div style="background:{DARK_BG};padding:24px 28px;position:relative;">'
+        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
+        f' width="100%" bgcolor="{DARK_BG}" style="background:{DARK_BG};{_TBL}">'
+        f'<tr><td style="padding:24px 28px;">'
         f'<div style="font-family:{F_MONO};font-size:9px;letter-spacing:0.22em;'
         f'text-transform:uppercase;color:{RED};margin-bottom:12px;">📌 &nbsp;Editor\'s Pick</div>'
         f'{paras}'
-        f'</div>'
+        f'</td></tr></table>'
         f'</div>'
     )
 
@@ -261,23 +296,66 @@ def _nav_bar() -> str:
         ("🏢", "Industry",  "#industry"),
         ("🛠", "Tools",     "#tools"),
         ("🐦", "Community", "#community"),
-        ("📌", "One to Watch","#watch"),
+        ("📌", "Watch",     "#watch"),
     ]
-    cells = ""
-    for emoji, label, href in items:
-        cells += (
-            f'<td style="border-right:1px solid {RULE};">'
-            f'<a href="{href}" style="display:block;padding:11px 18px;'
-            f'font-family:{F_MONO};font-size:9px;letter-spacing:0.13em;'
+    # 2 rows x 3 columns — fits any screen width without overflow
+    row1 = ""
+    row2 = ""
+    for i, (emoji, label, href) in enumerate(items):
+        cell = (
+            f'<td width="33%" style="text-align:center;'
+            f'border-bottom:1px solid {RULE};'
+            f'border-right:1px solid {RULE};">'
+            f'<a href="{href}" class="nav-link" style="display:block;'
+            f'padding:10px 6px;'
+            f'font-family:{F_MONO};font-size:9px;letter-spacing:0.08em;'
             f'text-transform:uppercase;color:{INK_SOFT};text-decoration:none;'
             f'white-space:nowrap;">'
             f'{emoji}&nbsp;{label}</a>'
             f'</td>'
         )
+        if i < 3:
+            row1 += cell
+        else:
+            row2 += cell
     return (
-        f'<div style="background:{WARM};border-bottom:1px solid {RULE};overflow:hidden;">'
-        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">'
-        f'<tr>{cells}</tr>'
+        f'<table role="presentation" class="warm-bg" cellpadding="0" cellspacing="0" border="0"'
+        f' width="100%" bgcolor="{WARM}" style="background:{WARM};{_TBL}">'
+        f'<tr>{row1}</tr>'
+        f'<tr>{row2}</tr>'
+        f'</table>'
+    )
+
+
+# ── Endnotes section ──────────────────────────────────────────────
+
+def _endnotes_section() -> str:
+    """Render the Sources endnotes section at the bottom of the newsletter body."""
+    global _endnotes
+    if not _endnotes:
+        return ""
+    rows = ""
+    for i, (url, domain) in enumerate(_endnotes):
+        n = i + 1
+        rows += (
+            f'<tr valign="top">'
+            f'<td style="width:28px;padding:4px 8px 4px 0;'
+            f'font-family:{F_MONO};font-size:11px;color:{TEAL};'
+            f'text-align:right;vertical-align:top;">[{n}]</td>'
+            f'<td style="padding:4px 0;font-family:{F_MONO};font-size:11px;'
+            f'color:{INK_SOFT};{_WRAP}">'
+            f'<a href="{url}" style="color:{TEAL};text-decoration:none;">'
+            f'{domain}</a>'
+            f'</td>'
+            f'</tr>'
+        )
+    return (
+        f'<div style="padding:32px 0 8px;border-top:1px solid {RULE};margin-top:32px;">'
+        f'<div style="font-family:{F_MONO};font-size:9px;letter-spacing:0.2em;'
+        f'text-transform:uppercase;color:{INK_SOFT};margin-bottom:14px;">Sources</div>'
+        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
+        f' width="100%" style="table-layout:fixed;">'
+        f'<tbody>{rows}</tbody>'
         f'</table>'
         f'</div>'
     )
@@ -289,118 +367,147 @@ def _build_html(summary_html: str, sections_html: str,
                 week_of: str, edition: str, next_ed: str) -> str:
 
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI Weekly — {week_of}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* Hover + dark mode only — everything else is inlined */
-.nav-link:hover {{ color:{RED} !important; background:rgba(196,30,58,0.05) !important; }}
-@media (prefers-color-scheme:dark) {{
-  body {{ background:#111110 !important; }}
-  .wrapper {{ background:#1c1b19 !important; border-color:#3a3830 !important; }}
-  .mh {{ background:#1c1b19 !important; }}
-  .warm-bg {{ background:#242220 !important; }}
-  .ink-text {{ color:#f0ece4 !important; }}
-  .mid-text {{ color:#d0ccc4 !important; }}
-  .soft-text {{ color:#908880 !important; }}
-  .rule-line {{ background:#343230 !important; }}
-  .qt-block {{ background:#242220 !important; }}
-  .outer-bg {{ background:#111110 !important; }}
-}}
-@media (max-width:580px) {{
-  .wrapper {{ width:100% !important; }}
-  .mh-title {{ font-size:42px !important; letter-spacing:-1px !important; }}
-  .mh-meta td {{ display:block !important; text-align:center !important; padding:3px 0 !important; }}
-  .body-pad {{ padding:0 22px !important; }}
-  .sb {{ padding:14px 22px !important; }}
-  .ft {{ padding:18px 22px !important; }}
-  .nav-scroll {{ overflow-x:auto !important; -webkit-overflow-scrolling:touch !important; }}
-}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+  <title>AI Weekly — {week_of}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <style>
+    :root {{ color-scheme: light dark; }}
+    .nav-link:hover {{ color:{RED} !important; background:rgba(196,30,58,0.05) !important; }}
+    @media (prefers-color-scheme:dark) {{
+      body {{ background:#111110 !important; }}
+      .wrapper {{ background:#1c1b19 !important; border-color:#3a3830 !important; }}
+      .mh, .warm-bg {{ background:#242220 !important; }}
+      .ink-text, .bld, .sec-title {{ color:#f0ece4 !important; }}
+      .mid-text, td.mid-text {{ color:#d0ccc4 !important; }}
+      .soft-text {{ color:#908880 !important; }}
+      .rule-line {{ background:#343230 !important; }}
+      .qt-block {{ background:#242220 !important; }}
+      .outer-bg {{ background:#111110 !important; }}
+      .nav-link {{ color:#908880 !important; }}
+      .dark-rule {{ background:#f0ece4 !important; }}
+    }}
+    @media screen and (max-width:600px) {{
+      .wrapper {{ width:100% !important; border-left:0 !important; border-right:0 !important; }}
+      .mh-title {{ font-size:36px !important; letter-spacing:-1px !important; }}
+      .mh-meta td {{ display:block !important; text-align:center !important; padding:3px 0 !important; }}
+      .body-pad {{ padding:0 16px !important; }}
+      .mh-pad {{ padding-left:16px !important; padding-right:16px !important; }}
+      .sb {{ padding:14px 16px !important; }}
+      .ft {{ padding:18px 16px !important; }}
+      .sec-title {{ font-size:18px !important; }}
+    }}
+  </style>
+  <!--[if mso]><style>table {{ border-collapse:collapse; }} td {{ font-family:Georgia,'Times New Roman',serif; }}</style><![endif]-->
 </head>
-<body class="outer-bg" style="margin:0;padding:40px 16px 80px;background:{OUTER};font-family:{F_BODY};">
+<body class="outer-bg" style="margin:0;padding:0;background:{OUTER};font-family:{F_BODY};
+  -webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 
-<div class="wrapper" style="max-width:680px;margin:0 auto;background:{PAPER};
-  border:1px solid {RULE_MID};
-  box-shadow:0 6px 48px rgba(0,0,0,0.14),0 1px 4px rgba(0,0,0,0.08);">
+<!-- Outer centering table — the industry-standard way to center in all clients -->
+<table role="presentation" class="outer-bg" cellpadding="0" cellspacing="0" border="0"
+  width="100%" bgcolor="{OUTER}" style="background:{OUTER};{_TBL}">
+  <tr>
+    <td style="padding:24px 12px 48px;" align="center">
 
-  <!-- ═══ MASTHEAD ════════════════════════════════════════════ -->
-  <div class="mh warm-bg" style="background:{WARM};padding:32px 48px 20px;
-    text-align:center;border-bottom:3px double {INK};">
+<!--[if mso]><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="680" align="center"><tr><td><![endif]-->
 
-    <div class="soft-text" style="font-family:{F_MONO};font-size:9px;
-      letter-spacing:0.22em;text-transform:uppercase;color:{INK_SOFT};
-      margin-bottom:14px;">Independent AI Research Digest</div>
+      <table role="presentation" class="wrapper" cellpadding="0" cellspacing="0" border="0"
+        width="100%"
+        bgcolor="{PAPER}"
+        style="max-width:680px;background:{PAPER};
+          border:1px solid {RULE_MID};{_TBL}">
 
-    <div class="mh-title ink-text" style="font-family:{F_DISPLAY};font-size:62px;
-      font-weight:900;letter-spacing:-2px;line-height:1;color:{INK};">
-      AI <span style="color:{RED};">Weekly</span>
-    </div>
+        <!-- ══ MASTHEAD ══════════════════════════════════════ -->
+        <tr><td class="mh warm-bg mh-pad" bgcolor="{WARM}"
+          style="background:{WARM};padding:28px 32px 18px;
+            text-align:center;border-bottom:3px double {INK};">
 
-    <!-- Ornamental rule -->
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0"
-      width="100%" style="margin:16px 0 14px;">
-      <tr valign="middle">
-        <td style="height:1px;background:{INK};font-size:0;line-height:0;">&nbsp;</td>
-        <td style="width:10px;padding:0 8px;">
-          <div style="width:7px;height:7px;background:{RED};
-            transform:rotate(45deg);margin:0 auto;font-size:0;"></div>
-        </td>
-        <td style="height:1px;background:{INK};font-size:0;line-height:0;">&nbsp;</td>
-      </tr>
-    </table>
+          <div class="soft-text" style="font-family:{F_MONO};font-size:9px;
+            letter-spacing:0.22em;text-transform:uppercase;color:{INK_SOFT};
+            margin-bottom:12px;">Independent AI Research Digest</div>
 
-    <!-- Vol / tagline / date — 3 column grid -->
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr valign="middle">
-        <td style="width:33%;text-align:left;font-family:{F_MONO};font-size:9px;
-          letter-spacing:0.14em;text-transform:uppercase;color:{INK_SOFT};"
-          class="soft-text">{edition}</td>
-        <td style="width:34%;text-align:center;font-family:{F_BODY};
-          font-style:italic;font-weight:300;font-size:12px;color:{INK_SOFT};"
-          class="soft-text">What happened in AI this week&nbsp;—&nbsp;and why it matters</td>
-        <td style="width:33%;text-align:right;font-family:{F_MONO};font-size:9px;
-          letter-spacing:0.14em;text-transform:uppercase;color:{INK_SOFT};"
-          class="soft-text">{week_of}</td>
-      </tr>
-    </table>
-  </div>
+          <div class="mh-title ink-text" style="font-family:{F_DISPLAY};font-size:48px;
+            font-weight:900;letter-spacing:-1.5px;line-height:1;color:{INK};">
+            AI <span style="color:{RED};">Weekly</span>
+          </div>
 
-  <!-- ═══ SUMMARY BAR ═════════════════════════════════════════ -->
-  <div class="sb" style="background:{DARK_BG};color:{ON_DARK};padding:16px 48px;
-    font-family:{F_BODY};font-size:13.5px;line-height:1.65;font-weight:300;
-    border-bottom:3px solid {RED};">
-    {summary_html}
-  </div>
+          <!-- Ornamental rule — Unicode diamond works everywhere including Outlook -->
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0"
+            width="100%" style="margin:14px 0 12px;{_TBL}">
+            <tr valign="middle">
+              <td class="dark-rule" style="height:1px;background:{INK};font-size:0;line-height:0;">&nbsp;</td>
+              <td style="width:24px;text-align:center;font-size:8px;color:{RED};padding:0 4px;">&#9670;</td>
+              <td class="dark-rule" style="height:1px;background:{INK};font-size:0;line-height:0;">&nbsp;</td>
+            </tr>
+          </table>
 
-  <!-- ═══ NAV BAR ═════════════════════════════════════════════ -->
-  {_nav_bar()}
+          <!-- Vol / tagline / date — stacked on mobile via mh-meta class -->
+          <table class="mh-meta" role="presentation" cellpadding="0" cellspacing="0" border="0"
+            width="100%" style="{_TBL}">
+            <tr valign="middle">
+              <td style="width:30%;text-align:left;font-family:{F_MONO};font-size:9px;
+                letter-spacing:0.12em;text-transform:uppercase;color:{INK_SOFT};"
+                class="soft-text">{edition}</td>
+              <td style="width:40%;text-align:center;font-family:{F_BODY};
+                font-style:italic;font-weight:300;font-size:11px;color:{INK_SOFT};"
+                class="soft-text">What happened in AI this week</td>
+              <td style="width:30%;text-align:right;font-family:{F_MONO};font-size:9px;
+                letter-spacing:0.12em;text-transform:uppercase;color:{INK_SOFT};"
+                class="soft-text">{week_of}</td>
+            </tr>
+          </table>
+        </td></tr>
 
-  <!-- ═══ SECTIONS ════════════════════════════════════════════ -->
-  <div class="body-pad" style="padding:0 48px;">
-    {sections_html}
-  </div>
+        <!-- ══ SUMMARY BAR ═══════════════════════════════════ -->
+        <tr><td class="sb" bgcolor="{DARK_BG}"
+          style="background:{DARK_BG};color:{ON_DARK};padding:16px 32px;
+            font-family:{F_BODY};font-size:13.5px;line-height:1.65;font-weight:300;
+            border-bottom:3px solid {RED};{_WRAP}">
+          {summary_html}
+        </td></tr>
 
-  <!-- ═══ FOOTER ══════════════════════════════════════════════ -->
-  <div class="ft warm-bg" style="background:{WARM};padding:20px 48px 24px;
-    border-top:3px double {INK};text-align:center;">
-    <div class="soft-text" style="font-family:{F_MONO};font-size:9px;
-      letter-spacing:0.16em;text-transform:uppercase;color:{INK_SOFT};margin-bottom:8px;">
-      Next edition:&nbsp;
-      <strong class="ink-text" style="color:{INK};">{next_ed}</strong>
-    </div>
-    <div style="font-family:{F_BODY};font-size:11px;color:{INK_FAINT};
-      font-style:italic;line-height:1.65;" class="soft-text">
-      AI Weekly is an independent digest. All summaries reflect publicly available reporting.<br>
-      Not financial or investment advice.
-    </div>
-  </div>
+        <!-- ══ NAV BAR ═══════════════════════════════════════ -->
+        <tr><td style="padding:0;">
+          {_nav_bar()}
+        </td></tr>
 
-</div><!-- /wrapper -->
+        <!-- ══ SECTIONS ══════════════════════════════════════ -->
+        <tr><td class="body-pad" style="padding:0 32px;">
+          {sections_html}
+          {_endnotes_section()}
+        </td></tr>
+
+        <!-- ══ FOOTER ════════════════════════════════════════ -->
+        <tr><td class="ft warm-bg" bgcolor="{WARM}"
+          style="background:{WARM};padding:20px 32px 24px;
+            border-top:3px double {INK};text-align:center;">
+          <div class="soft-text" style="font-family:{F_MONO};font-size:9px;
+            letter-spacing:0.16em;text-transform:uppercase;color:{INK_SOFT};margin-bottom:8px;">
+            Next edition:&nbsp;
+            <strong class="ink-text" style="color:{INK};">{next_ed}</strong>
+          </div>
+          <div style="font-family:{F_BODY};font-size:11px;color:{INK_FAINT};
+            font-style:italic;line-height:1.65;" class="soft-text">
+            AI Weekly is an independent digest. All summaries reflect publicly available reporting.<br>
+            Not financial or investment advice.
+          </div>
+        </td></tr>
+
+      </table>
+
+<!--[if mso]></td></tr></table><![endif]-->
+
+    </td>
+  </tr>
+</table>
+
 </body>
 </html>"""
 
@@ -408,11 +515,12 @@ def _build_html(summary_html: str, sections_html: str,
 # ── Main parser ───────────────────────────────────────────────────
 
 def markdown_to_html(md: str, date: datetime.datetime) -> str:
-    lines       = md.splitlines()
-    week_of     = date.strftime("Week of %b %d, %Y")
-    next_ed     = (date + datetime.timedelta(days=7)).strftime("%B %d, %Y")
+    _reset_endnotes()
+    lines      = md.splitlines()
+    week_of    = date.strftime("Week of %b %d, %Y")
+    next_ed    = (date + datetime.timedelta(days=7)).strftime("%B %d, %Y")
     edition_num = date.isocalendar()[1]
-    edition     = f"Vol. 2026 · No. {edition_num}"
+    edition    = f"Vol. 2026 · No. {edition_num}"
 
     # ── Extract summary ───────────────────────────────────────────
     summary_text, in_sum = "", False
@@ -426,7 +534,7 @@ def markdown_to_html(md: str, date: datetime.datetime) -> str:
                 summary_text += s + " "
     summary_text = summary_text.strip()
     summary_html = (
-        f'<strong style="font-weight:700;color:{ON_DARK};">This week:</strong> {_md(summary_text)}'
+        f'<strong style="font-weight:700;color:{ON_DARK};">This week:</strong> {_md(summary_text, on_dark=True)}'
         if summary_text else "Your weekly AI briefing."
     )
 

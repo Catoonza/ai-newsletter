@@ -51,22 +51,21 @@ def fetch_twitter_posts(start_date: datetime.datetime, end_date: datetime.dateti
 {figures_list}
 
 For each person, find their most notable or discussed tweet/post from this week.
-Focus on posts about: AI model releases, research findings, industry commentary, 
+Focus on posts about: AI model releases, research findings, industry commentary,
 predictions, or anything that sparked significant discussion.
 
 Return your findings as a JSON array with this exact structure:
-[
-  {{
+[{{
     "handle": "username",
     "name": "Full Name",
     "text": "the tweet content or a close paraphrase",
     "url": "https://x.com/... or empty string if not found",
     "published_at": "YYYY-MM-DD",
     "why_notable": "one sentence on why this post matters"
-  }}
+}}
 ]
 
-Return ONLY the JSON array, no other text. If you cannot find notable posts for 
+Return ONLY the JSON array, no other text. If you cannot find notable posts for
 someone this week, skip them. Only include genuinely interesting or impactful posts."""
 
     try:

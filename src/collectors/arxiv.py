@@ -11,6 +11,7 @@ Categories covered:
 """
 
 import datetime
+import time
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
@@ -57,8 +58,8 @@ def fetch_arxiv_papers(start_date: datetime.datetime, end_date: datetime.datetim
 
             for entry in root.findall("atom:entry", ns):
                 # Parse ID
-                paper_id = entry.find("atom:id", ns)
-                paper_id = paper_id.text.strip() if paper_id is not None else ""
+                paper_id_el = entry.find("atom:id", ns)
+                paper_id = paper_id_el.text.strip() if paper_id_el is not None else ""
 
                 if paper_id in seen_ids:
                     continue
@@ -89,10 +90,10 @@ def fetch_arxiv_papers(start_date: datetime.datetime, end_date: datetime.datetim
                         authors.append(name.text.strip())
 
                 # Parse title and abstract
-                title_el = entry.find("atom:title", ns)
+                title_el   = entry.find("atom:title", ns)
                 summary_el = entry.find("atom:summary", ns)
 
-                title = title_el.text.strip().replace("\n", " ") if title_el is not None else ""
+                title    = title_el.text.strip().replace("\n", " ")   if title_el   is not None else ""
                 abstract = summary_el.text.strip().replace("\n", " ") if summary_el is not None else ""
 
                 # Parse categories
@@ -101,17 +102,29 @@ def fetch_arxiv_papers(start_date: datetime.datetime, end_date: datetime.datetim
                     for tag in entry.findall("atom:category", ns)
                 ]
 
+                # Build a clean https URL from the arXiv ID
+                # Raw ID looks like: http://arxiv.org/abs/2603.12481v1
+                # We want:           https://arxiv.org/abs/2603.12481
+                clean_url = (
+                    paper_id
+                    .replace("http://", "https://")
+                    .split("v")[0]  # strip version suffix e.g. v1, v2
+                )
+
                 papers.append({
                     "source": "arxiv",
                     "id": paper_id,
                     "title": title,
-                    "authors": authors[:5],  # First 5 authors
-                    "abstract": abstract[:600],  # Cap for LLM context
+                    "authors": authors[:5],       # First 5 authors
+                    "abstract": abstract[:600],   # Cap for LLM context
                     "categories": paper_cats,
                     "primary_category": category,
-                    "url": paper_id,  # arXiv ID URL is the link
+                    "url": clean_url,
                     "published_at": published.isoformat(),
                 })
+
+            # Brief pause between category requests to be polite to the API
+            time.sleep(0.5)
 
         except Exception as e:
             print(f"   ⚠️  arXiv error for {category}: {e}")
