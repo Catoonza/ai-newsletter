@@ -1,23 +1,17 @@
 """
-Generates a fully inline-styled HTML email newsletter.
-
-Email clients (Gmail, Apple Mail, Outlook) strip <style> blocks.
-Every visible element here has styles applied as inline style="" attributes,
-so the design survives any email client's CSS sanitiser.
-
-The only <style> block included is a minimal one for hover states and
-dark mode — these cannot be inlined, but all elements look correct
-without them as fallback.
+Generates a responsive email newsletter using MJML compiled to HTML.
+Redesigned with a fresh, tech-focused dark-mode aesthetic.
 """
 
 import os
 import re
 import datetime
 import smtplib
+import shutil
+import subprocess
 from pathlib import Path
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
 
 SECTION_MAP = [
     ("Model Releases",        "models",    "Model Releases & Provider Updates",  "§ 01"),
@@ -28,74 +22,47 @@ SECTION_MAP = [
     ("One to Watch",          "watch",     "One to Watch",                       "§ 06"),
 ]
 
-# Palette — hardcoded, no CSS variables (email clients don't support them)
-PAPER     = "#faf8f4"
-WARM      = "#f2efe9"
-OUTER     = "#e8e4dc"
-INK       = "#0f0f0f"
-INK_MID   = "#3a3a3a"
-INK_SOFT  = "#5a5a5a"
-INK_FAINT = "#909090"
-ON_DARK   = "#f0ece4"
-RULE      = "#d8d3ca"
-RULE_MID  = "#b0a898"
-RED       = "#c41e3a"
-TEAL      = "#0a6b78"
-TEAL_BG   = "#e4f4f6"
-DARK_BG   = "#0f0f0f"
+# Tech Palette
+BG_DARK       = "#0B0F19"
+BG_CARD       = "#161B2E"
+BG_INNER_CARD = "#0D1120"
+BORDER_COLOR  = "#1E293B"
+TEXT_LIGHT    = "#F3F4F6"
+TEXT_MUTED    = "#9CA3AF"
+TEXT_WHITE    = "#FFFFFF"
 
-# Font stacks — Playfair/Source Serif load via Google Fonts link in <head>;
-# Georgia/Times are the email-safe fallbacks that match the feel closely.
-F_DISPLAY = "'Playfair Display', Georgia, 'Times New Roman', serif"
-F_BODY    = "'Source Serif 4', Georgia, 'Times New Roman', serif"
-F_MONO    = "'JetBrains Mono', 'Courier New', Courier, monospace"
+SECTION_ACCENTS = {
+    "models": "#00F0FF",    # Cyan
+    "research": "#A855F7",  # Purple
+    "industry": "#3B82F6",  # Blue
+    "tools": "#10B981",     # Green
+    "community": "#F43F5E", # Rose
+    "watch": "#F59E0B",     # Amber
+}
 
 # Shared overflow-safe text style (prevents content from extending past container)
 _WRAP = "overflow-wrap:break-word;word-wrap:break-word;word-break:break-word;"
-
-# ── Endnote registry (populated per newsletter build) ─────────────
-_endnotes: list = []  # [(url, domain), ...]
+_TBL = "border-collapse:collapse;"
 
 
-def _reset_endnotes():
-    global _endnotes
-    _endnotes = []
+# ── Markdown inline → HTML/MJML ───────────────────────────────────
 
-
-def _add_endnote(url: str) -> int:
-    """Register a URL and return its 1-based endnote number."""
-    global _endnotes
-    # Deduplicate: if same URL already registered, return existing number
-    for i, (existing_url, _) in enumerate(_endnotes):
-        if existing_url == url:
-            return i + 1
-    domain = re.sub(r'^https?://(www\.)?', '', url).split('/')[0]
-    _endnotes.append((url, domain))
-    return len(_endnotes)
-
-
-# ── Markdown inline → HTML ────────────────────────────────────────
-
-def _md(text: str, on_dark: bool = False) -> str:
-    """Convert inline markdown to HTML with inline styles.
-
-    on_dark: if True, bold text uses light color for dark backgrounds.
-    """
-    # Links — teal works on both light and dark
+def _md(text: str) -> str:
+    """Convert inline markdown to HTML with inline styles and classes."""
+    # Links - neon cyan
     text = re.sub(
         r'\[(.+?)\]\((https?://[^\)]+)\)',
-        rf'<a href="\2" style="color:{TEAL};text-decoration:none;">\1</a>',
+        r'<a href="\2" class="link-style" style="color:#00F0FF;text-decoration:none;">\1</a>',
         text
     )
-    # Bold — inherit parent color, don't force dark ink
-    bold_color = ON_DARK if on_dark else "inherit"
+    # Bold - pure white
     text = re.sub(
         r'\*\*(.+?)\*\*',
-        rf'<strong class="bld" style="font-weight:700;color:{bold_color};">\1</strong>',
+        r'<strong class="bld" style="font-weight:700;color:#FFFFFF;">\1</strong>',
         text
     )
     # Italic
-    text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
+    text = re.sub(r'\*(.+?)\*', r'<em style="font-style:italic;">\1</em>', text)
     return text
 
 
@@ -121,132 +88,118 @@ def _prose(lines: list) -> list:
     ]
 
 
-def _extract_all_urls(line: str) -> list:
-    """Extract all URLs from a line (both markdown links and bare URLs)."""
-    urls = []
-    # Markdown links [text](url)
-    for m in re.finditer(r'\[.+?\]\((https?://[^\)]+)\)', line):
-        urls.append(m.group(1).rstrip(".,)"))
-    # Bare URLs not inside markdown link syntax
-    bare_line = re.sub(r'\[.+?\]\(https?://[^\)]+\)', '', line)
-    for m in re.finditer(r'https?://[^\s]+', bare_line):
-        url = m.group(0).rstrip(".,)")
-        if url not in urls:
-            urls.append(url)
-    return urls
-
-
 def _strip_urls_from_body(line: str) -> str:
-    """Strip leading bullet/number prefix from a line. Keeps markdown links intact."""
+    """Strip leading bullet/number prefix from a line."""
     line = line.strip()
     if line.startswith(("- ", "* ")):
         line = line[2:].strip()
     else:
-        # Numbered list: "1. text"
         m = re.match(r'^\d+\.\s+', line)
         if m:
             line = line[m.end():].strip()
     return line
 
 
-# ── HTML component builders ───────────────────────────────────────
+# ── MJML component builders ───────────────────────────────────────
 
-# Shared table reset for Outlook spacing
-_TBL = "mso-table-lspace:0pt;mso-table-rspace:0pt;"
+def _compile_mjml(mjml_str: str) -> str:
+    """Compile MJML markup to responsive HTML using the mjml CLI."""
+    mjml_bin = shutil.which("mjml")
+    if mjml_bin:
+        cmd = [mjml_bin, "-i", "-s"]
+    else:
+        npx_bin = shutil.which("npx")
+        if not npx_bin:
+            raise RuntimeError("Neither 'mjml' nor 'npx' executable found in PATH. Please install Node.js/MJML.")
+        cmd = [npx_bin, "mjml", "-i", "-s"]
+
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8"
+        )
+        stdout, stderr = process.communicate(input=mjml_str)
+    except Exception as e:
+        raise RuntimeError(f"Failed to start MJML compiler process: {e}")
+
+    if process.returncode != 0:
+        raise RuntimeError(f"MJML compilation failed (exit code {process.returncode}): {stderr}")
+    
+    return stdout
 
 
-def _endnote_sup(url: str) -> str:
-    """Render a superscript endnote number linking to the source."""
-    n = _add_endnote(url)
-    return (
-        f'<sup style="font-family:{F_MONO};font-size:10px;line-height:0;'
-        f'vertical-align:super;">'
-        f'<a href="{url}" style="color:{TEAL};text-decoration:none;">[{n}]</a>'
-        f'</sup>'
-    )
-
-
-def _bullet_rows(bullets: list) -> str:
+def _bullet_rows(bullets: list, accent_color: str) -> str:
     rows = []
     last = len(bullets) - 1
     for i, raw in enumerate(bullets):
         body = _strip_urls_from_body(raw)
-        urls = _extract_all_urls(raw)
         body_html = _md(body)
-        # Append endnote superscripts for each source URL
-        endnotes_html = ""
-        for url in urls:
-            endnotes_html += _endnote_sup(url)
-        border = f"border-bottom:1px solid {RULE};" if i < last else ""
+        border = "border-bottom:1px solid #1E293B;" if i < last else ""
         rows.append(
             f'<tr valign="top">'
-            f'<td style="width:18px;padding:11px 6px 11px 0;{border}'
-            f'font-family:{F_BODY};font-size:14px;line-height:1.65;'
-            f'color:{RED};font-weight:700;">—</td>'
-            f'<td class="mid-text" style="padding:11px 0;{border}'
-            f'font-family:{F_BODY};font-size:14px;line-height:1.68;color:{INK_MID};{_WRAP}">'
-            f'{body_html}{endnotes_html}</td>'
+            f'<td style="width:16px;padding:12px 6px 12px 0;{border}'
+            f'font-family:Inter, sans-serif;font-size:13.5px;line-height:1.6;'
+            f'color:{accent_color};font-weight:700;">—</td>'
+            f'<td style="padding:12px 0;{border}font-family:Inter, sans-serif;'
+            f'font-size:13.5px;line-height:1.6;color:#D1D5DB;{_WRAP}">'
+            f'{body_html}</td>'
             f'</tr>'
         )
     return "\n".join(rows)
 
 
-def _qt_block(bullets: list, label: str = "The Quick Take") -> str:
+def _qt_block(bullets: list, accent_color: str, label: str = "The Quick Take") -> str:
     if not bullets:
         return (
-            f'<p style="font-family:{F_BODY};font-style:italic;'
-            f'color:{INK_SOFT};font-size:13px;margin:0;">No significant updates this week.</p>'
+            f'<mj-text font-family="Inter, sans-serif" font-style="italic"'
+            f' color="#9CA3AF" font-size="13px" padding="0px">No significant updates this week.</mj-text>'
         )
-    rows_html = _bullet_rows(bullets)
+    rows_html = _bullet_rows(bullets, accent_color)
     return (
-        f'<table role="presentation" class="warm-bg" cellpadding="0" cellspacing="0" border="0"'
-        f' width="100%" bgcolor="{WARM}" style="background:{WARM};'
-        f'border-left:3px solid {RED};{_TBL}">'
-        f'<tr><td style="padding:18px 22px 14px 22px;">'
-        f'<div style="font-family:{F_MONO};font-size:9px;letter-spacing:0.2em;'
-        f'text-transform:uppercase;color:{RED};margin-bottom:14px;">{label}</div>'
+        f'<mj-table padding="0px">'
+        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
+        f' width="100%" bgcolor="#0D1120" style="background:#0D1120;'
+        f'border-left:3px solid {accent_color};border-radius:4px;{_TBL}">'
+        f'<tr><td style="padding:16px 20px 14px 20px;">'
+        f'<div style="font-family:\'JetBrains Mono\', monospace;font-size:9px;letter-spacing:0.15em;'
+        f'text-transform:uppercase;color:{accent_color};margin-bottom:12px;">{label}</div>'
         f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
         f' width="100%" style="table-layout:fixed;{_TBL}">'
         f'<tbody>{rows_html}</tbody>'
         f'</table>'
         f'</td></tr></table>'
+        f'</mj-table>'
     )
 
 
-def _section_header(num: str, title: str) -> str:
-    title_el = (
-        f'<span class="sec-title ink-text" style="font-family:{F_DISPLAY};font-size:22px;'
-        f'font-weight:700;color:{INK};line-height:1.2;{_WRAP}">{title}</span>'
-    )
+def _section_header(num: str, title: str, accent_color: str, html_id: str = None) -> str:
+    prefix = f"// {num}" if num else "// UPDATE"
+    anchor = f'<a name="{html_id}" id="{html_id}" style="display:block;height:0;line-height:0;font-size:0;">&nbsp;</a>' if html_id else ""
     return (
-        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
-        f' width="100%" style="margin-bottom:20px;{_TBL}">'
-        f'<tr valign="middle">'
-        f'<td style="white-space:nowrap;padding-right:10px;'
-        f'font-family:{F_MONO};font-size:9px;letter-spacing:0.22em;'
-        f'text-transform:uppercase;color:{RED};">{num}</td>'
-        f'<td style="white-space:nowrap;">{title_el}</td>'
-        f'<td width="100%" style="padding-left:12px;">'
-        f'<div class="rule-line" style="height:1px;background:{RULE};font-size:0;line-height:0;">&nbsp;</div>'
-        f'</td>'
-        f'</tr>'
-        f'</table>'
+        f'<mj-text font-family="\'JetBrains Mono\', monospace" font-size="11px" color="{accent_color}" letter-spacing="0.15em" text-transform="uppercase" padding="0 0 6px 0">{anchor}{prefix}</mj-text>'
+        f'<mj-text font-family="Inter, sans-serif" font-size="20px" font-weight="800" color="#FFFFFF" line-height="1.2" padding="0 0 16px 0">{title}</mj-text>'
     )
 
 
-def _standard_section(html_id: str, num: str, title: str, lines: list) -> str:
+def _standard_section(html_id: str, num: str, title: str, lines: list, accent_color: str) -> str:
     bl    = _bullets(lines)
     label = "Notable Discussions This Week" if html_id == "community" else "The Quick Take"
     return (
-        f'<div id="{html_id}" style="padding:36px 0 32px;'
-        f'border-bottom:1px solid {RULE};">'
-        f'{_section_header(num, title)}'
-        f'{_qt_block(bl, label)}'
-        f'</div>'
+        f'<mj-section padding="24px 24px 12px 24px" css-class="section-block">'
+        f'<mj-column>'
+        f'{_section_header(num, title, accent_color, html_id)}'
+        f'{_qt_block(bl, accent_color, label)}'
+        f'<mj-divider border-width="1px" border-color="#1E293B" padding="24px 0 0 0" />'
+        f'</mj-column>'
+        f'</mj-section>'
     )
 
 
-def _one_to_watch(lines: list) -> str:
+def _one_to_watch(lines: list, accent_color: str = "#F59E0B") -> str:
     pr = _prose(lines)
     pgs, cur = [], []
     for l in pr:
@@ -260,262 +213,164 @@ def _one_to_watch(lines: list) -> str:
     for p in pgs:
         if not p:
             continue
-        # Collect endnotes from any URLs in prose
-        urls = _extract_all_urls(p)
-        endnotes_html = ""
-        for url in urls:
-            endnotes_html += _endnote_sup(url)
         paras += (
-            f'<p style="font-family:{F_BODY};font-size:14px;line-height:1.75;'
-            f'color:{ON_DARK};font-weight:300;margin:0 0 12px 0;{_WRAP}">'
-            f'{_md(p, on_dark=True)}{endnotes_html}</p>'
+            f'<p style="font-family:Inter, sans-serif;font-size:14px;line-height:1.68;'
+            f'color:#E5E7EB;margin:0 0 12px 0;{_WRAP}">'
+            f'{_md(p)}</p>'
         )
-    # fix last paragraph margin
     paras = re.sub(r'margin:0 0 12px 0;([^"]*?)"></p>$', r'margin:0;\1"></p>', paras)
 
     return (
-        f'<div id="watch" style="padding:36px 0 0;">'
-        f'{_section_header("§ 06", "One to Watch")}'
+        f'<mj-section padding="24px 24px 12px 24px" css-class="section-block">'
+        f'<mj-column>'
+        f'{_section_header("§ 06", "One to Watch", accent_color, "watch")}'
+        f'<mj-table padding="0px">'
         f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
-        f' width="100%" bgcolor="{DARK_BG}" style="background:{DARK_BG};{_TBL}">'
-        f'<tr><td style="padding:24px 28px;">'
-        f'<div style="font-family:{F_MONO};font-size:9px;letter-spacing:0.22em;'
-        f'text-transform:uppercase;color:{RED};margin-bottom:12px;">📌 &nbsp;Editor\'s Pick</div>'
+        f' width="100%" bgcolor="#0D1120" style="background:#0D1120;'
+        f'border-left:3px solid {accent_color};border-radius:4px;{_TBL}">'
+        f'<tr><td style="padding:20px 24px;">'
+        f'<div style="font-family:\'JetBrains Mono\', monospace;font-size:9px;letter-spacing:0.15em;'
+        f'text-transform:uppercase;color:{accent_color};margin-bottom:12px;">📌 &nbsp;Editor\'s Pick</div>'
         f'{paras}'
         f'</td></tr></table>'
-        f'</div>'
+        f'</mj-table>'
+        f'<mj-divider border-width="1px" border-color="#1E293B" padding="24px 0 0 0" />'
+        f'</mj-column>'
+        f'</mj-section>'
     )
 
 
-# ── Nav bar ───────────────────────────────────────────────────────
-
 def _nav_bar() -> str:
     items = [
-        ("🚀", "Models",    "#models"),
-        ("📚", "Research",  "#research"),
-        ("🏢", "Industry",  "#industry"),
-        ("🛠", "Tools",     "#tools"),
-        ("🐦", "Community", "#community"),
-        ("📌", "Watch",     "#watch"),
+        ("🚀", "Models",    "#models",    "#00F0FF"),
+        ("📚", "Research",  "#research",  "#A855F7"),
+        ("🏢", "Industry",  "#industry",  "#3B82F6"),
+        ("🛠", "Tools",     "#tools",     "#10B981"),
+        ("🐦", "Community", "#community", "#F43F5E"),
+        ("📌", "Watch",     "#watch",     "#F59E0B"),
     ]
-    # 2 rows x 3 columns — fits any screen width without overflow
     row1 = ""
     row2 = ""
-    for i, (emoji, label, href) in enumerate(items):
+    for i, (emoji, label, href, color) in enumerate(items):
+        border_r = "border-right:1px solid #1E293B;" if (i % 3) < 2 else ""
+        border_b = "border-bottom:1px solid #1E293B;" if i < 3 else ""
         cell = (
-            f'<td width="33%" style="text-align:center;'
-            f'border-bottom:1px solid {RULE};'
-            f'border-right:1px solid {RULE};">'
-            f'<a href="{href}" class="nav-link" style="display:block;'
-            f'padding:10px 6px;'
-            f'font-family:{F_MONO};font-size:9px;letter-spacing:0.08em;'
-            f'text-transform:uppercase;color:{INK_SOFT};text-decoration:none;'
-            f'white-space:nowrap;">'
-            f'{emoji}&nbsp;{label}</a>'
+            f'<td width="33%" style="text-align:center;{border_r}{border_b}">'
+            f'<a href="{href}" style="display:block;padding:12px 6px;'
+            f'font-family:\'JetBrains Mono\', monospace;font-size:10px;letter-spacing:0.1em;'
+            f'text-transform:uppercase;color:#9CA3AF;text-decoration:none;white-space:nowrap;">'
+            f'<span style="color:{color};">{emoji}</span>&nbsp;{label}</a>'
             f'</td>'
         )
         if i < 3:
             row1 += cell
         else:
             row2 += cell
+            
     return (
-        f'<table role="presentation" class="warm-bg" cellpadding="0" cellspacing="0" border="0"'
-        f' width="100%" bgcolor="{WARM}" style="background:{WARM};{_TBL}">'
+        f'<mj-section padding="0 24px 20px">'
+        f'<mj-column background-color="#111827" border="1px solid #1E293B" padding="0px">'
+        f'<mj-table padding="0px">'
+        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">'
         f'<tr>{row1}</tr>'
         f'<tr>{row2}</tr>'
         f'</table>'
+        f'</mj-table>'
+        f'</mj-column>'
+        f'</mj-section>'
     )
 
 
-# ── Endnotes section ──────────────────────────────────────────────
+# ── Full MJML / HTML assembler ────────────────────────────────────
 
-def _endnotes_section() -> str:
-    """Render the Sources endnotes section at the bottom of the newsletter body."""
-    global _endnotes
-    if not _endnotes:
-        return ""
-    rows = ""
-    for i, (url, domain) in enumerate(_endnotes):
-        n = i + 1
-        rows += (
-            f'<tr valign="top">'
-            f'<td style="width:28px;padding:4px 8px 4px 0;'
-            f'font-family:{F_MONO};font-size:11px;color:{TEAL};'
-            f'text-align:right;vertical-align:top;">[{n}]</td>'
-            f'<td style="padding:4px 0;font-family:{F_MONO};font-size:11px;'
-            f'color:{INK_SOFT};{_WRAP}">'
-            f'<a href="{url}" style="color:{TEAL};text-decoration:none;">'
-            f'{domain}</a>'
-            f'</td>'
-            f'</tr>'
-        )
-    return (
-        f'<div style="padding:32px 0 8px;border-top:1px solid {RULE};margin-top:32px;">'
-        f'<div style="font-family:{F_MONO};font-size:9px;letter-spacing:0.2em;'
-        f'text-transform:uppercase;color:{INK_SOFT};margin-bottom:14px;">Sources</div>'
-        f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"'
-        f' width="100%" style="table-layout:fixed;">'
-        f'<tbody>{rows}</tbody>'
-        f'</table>'
-        f'</div>'
-    )
-
-
-# ── Full HTML assembler ───────────────────────────────────────────
-
-def _build_html(summary_html: str, sections_html: str,
+def _build_mjml(summary_html: str, sections_html: str,
                 week_of: str, edition: str, next_ed: str) -> str:
-
-    return f"""<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
-  <title>AI Weekly — {week_of}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <meta name="color-scheme" content="light dark">
-  <meta name="supported-color-schemes" content="light dark">
-  <style>
-    :root {{ color-scheme: light dark; }}
-    .nav-link:hover {{ color:{RED} !important; background:rgba(196,30,58,0.05) !important; }}
-    @media (prefers-color-scheme:dark) {{
-      body {{ background:#111110 !important; }}
-      .wrapper {{ background:#1c1b19 !important; border-color:#3a3830 !important; }}
-      .mh, .warm-bg {{ background:#242220 !important; }}
-      .ink-text, .bld, .sec-title {{ color:#f0ece4 !important; }}
-      .mid-text, td.mid-text {{ color:#d0ccc4 !important; }}
-      .soft-text {{ color:#908880 !important; }}
-      .rule-line {{ background:#343230 !important; }}
-      .qt-block {{ background:#242220 !important; }}
-      .outer-bg {{ background:#111110 !important; }}
-      .nav-link {{ color:#908880 !important; }}
-      .dark-rule {{ background:#f0ece4 !important; }}
-    }}
-    @media screen and (max-width:600px) {{
-      .wrapper {{ width:100% !important; border-left:0 !important; border-right:0 !important; }}
-      .mh-title {{ font-size:36px !important; letter-spacing:-1px !important; }}
-      .mh-meta td {{ display:block !important; text-align:center !important; padding:3px 0 !important; }}
-      .body-pad {{ padding:0 16px !important; }}
-      .mh-pad {{ padding-left:16px !important; padding-right:16px !important; }}
-      .sb {{ padding:14px 16px !important; }}
-      .ft {{ padding:18px 16px !important; }}
-      .sec-title {{ font-size:18px !important; }}
-    }}
-  </style>
-  <!--[if mso]><style>table {{ border-collapse:collapse; }} td {{ font-family:Georgia,'Times New Roman',serif; }}</style><![endif]-->
-</head>
-<body class="outer-bg" style="margin:0;padding:0;background:{OUTER};font-family:{F_BODY};
-  -webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
-
-<!-- Outer centering table — the industry-standard way to center in all clients -->
-<table role="presentation" class="outer-bg" cellpadding="0" cellspacing="0" border="0"
-  width="100%" bgcolor="{OUTER}" style="background:{OUTER};{_TBL}">
-  <tr>
-    <td style="padding:24px 12px 48px;" align="center">
-
-<!--[if mso]><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="680" align="center"><tr><td><![endif]-->
-
-      <table role="presentation" class="wrapper" cellpadding="0" cellspacing="0" border="0"
-        width="100%"
-        bgcolor="{PAPER}"
-        style="max-width:680px;background:{PAPER};
-          border:1px solid {RULE_MID};{_TBL}">
-
-        <!-- ══ MASTHEAD ══════════════════════════════════════ -->
-        <tr><td class="mh warm-bg mh-pad" bgcolor="{WARM}"
-          style="background:{WARM};padding:28px 32px 18px;
-            text-align:center;border-bottom:3px double {INK};">
-
-          <div class="soft-text" style="font-family:{F_MONO};font-size:9px;
-            letter-spacing:0.22em;text-transform:uppercase;color:{INK_SOFT};
-            margin-bottom:12px;">Independent AI Research Digest</div>
-
-          <div class="mh-title ink-text" style="font-family:{F_DISPLAY};font-size:48px;
-            font-weight:900;letter-spacing:-1.5px;line-height:1;color:{INK};">
-            AI <span style="color:{RED};">Weekly</span>
-          </div>
-
-          <!-- Ornamental rule — Unicode diamond works everywhere including Outlook -->
-          <table role="presentation" cellpadding="0" cellspacing="0" border="0"
-            width="100%" style="margin:14px 0 12px;{_TBL}">
-            <tr valign="middle">
-              <td class="dark-rule" style="height:1px;background:{INK};font-size:0;line-height:0;">&nbsp;</td>
-              <td style="width:24px;text-align:center;font-size:8px;color:{RED};padding:0 4px;">&#9670;</td>
-              <td class="dark-rule" style="height:1px;background:{INK};font-size:0;line-height:0;">&nbsp;</td>
+    return f"""<mjml>
+  <mj-head>
+    <mj-title>AI Weekly — {week_of}</mj-title>
+    <mj-font name="Inter" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" />
+    <mj-font name="JetBrains Mono" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" />
+    <mj-attributes>
+      <mj-all font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" />
+      <mj-text font-size="14px" color="{TEXT_LIGHT}" line-height="1.6" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .tech-border {{
+        border: 1px solid {BORDER_COLOR} !important;
+      }}
+      .link-style {{
+        color: #00F0FF !important;
+        text-decoration: none;
+      }}
+      .link-style:hover {{
+        text-decoration: underline;
+      }}
+      .bld {{
+        font-weight: 700;
+        color: {TEXT_WHITE};
+      }}
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="{BG_DARK}">
+    <mj-wrapper background-color="{BG_CARD}" border="1px solid {BORDER_COLOR}" padding="0px">
+      
+      <!-- ══ MASTHEAD ══════════════════════════════════════ -->
+      <mj-section padding="32px 24px 20px" background-color="{BG_CARD}">
+        <mj-column>
+          <mj-text align="center" font-family="'JetBrains Mono', monospace" font-size="10px" letter-spacing="0.2em" color="{TEXT_MUTED}" text-transform="uppercase" padding="0px">
+            // Independent AI Research Digest
+          </mj-text>
+          <mj-text align="center" font-family="Inter, sans-serif" font-weight="800" font-size="42px" color="{TEXT_WHITE}" letter-spacing="-1px" line-height="1.1" padding="10px 0">
+            AI <span style="color:#00F0FF;">WEEKLY</span>
+          </mj-text>
+          <mj-divider border-width="1px" border-color="{BORDER_COLOR}" padding="10px 0" />
+          <mj-table padding="0px" font-family="'JetBrains Mono', monospace" font-size="10px" color="{TEXT_MUTED}">
+            <tr>
+              <td style="text-align: left; width: 33%;">{edition}</td>
+              <td style="text-align: center; width: 34%; font-style: italic;">WHAT HAPPENED IN AI THIS WEEK</td>
+              <td style="text-align: right; width: 33%;">{week_of}</td>
             </tr>
-          </table>
-
-          <!-- Vol / tagline / date — stacked on mobile via mh-meta class -->
-          <table class="mh-meta" role="presentation" cellpadding="0" cellspacing="0" border="0"
-            width="100%" style="{_TBL}">
-            <tr valign="middle">
-              <td style="width:30%;text-align:left;font-family:{F_MONO};font-size:9px;
-                letter-spacing:0.12em;text-transform:uppercase;color:{INK_SOFT};"
-                class="soft-text">{edition}</td>
-              <td style="width:40%;text-align:center;font-family:{F_BODY};
-                font-style:italic;font-weight:300;font-size:11px;color:{INK_SOFT};"
-                class="soft-text">What happened in AI this week</td>
-              <td style="width:30%;text-align:right;font-family:{F_MONO};font-size:9px;
-                letter-spacing:0.12em;text-transform:uppercase;color:{INK_SOFT};"
-                class="soft-text">{week_of}</td>
-            </tr>
-          </table>
-        </td></tr>
-
-        <!-- ══ SUMMARY BAR ═══════════════════════════════════ -->
-        <tr><td class="sb" bgcolor="{DARK_BG}"
-          style="background:{DARK_BG};color:{ON_DARK};padding:16px 32px;
-            font-family:{F_BODY};font-size:13.5px;line-height:1.65;font-weight:300;
-            border-bottom:3px solid {RED};{_WRAP}">
-          {summary_html}
-        </td></tr>
-
-        <!-- ══ NAV BAR ═══════════════════════════════════════ -->
-        <tr><td style="padding:0;">
-          {_nav_bar()}
-        </td></tr>
-
-        <!-- ══ SECTIONS ══════════════════════════════════════ -->
-        <tr><td class="body-pad" style="padding:0 32px;">
-          {sections_html}
-          {_endnotes_section()}
-        </td></tr>
-
-        <!-- ══ FOOTER ════════════════════════════════════════ -->
-        <tr><td class="ft warm-bg" bgcolor="{WARM}"
-          style="background:{WARM};padding:20px 32px 24px;
-            border-top:3px double {INK};text-align:center;">
-          <div class="soft-text" style="font-family:{F_MONO};font-size:9px;
-            letter-spacing:0.16em;text-transform:uppercase;color:{INK_SOFT};margin-bottom:8px;">
-            Next edition:&nbsp;
-            <strong class="ink-text" style="color:{INK};">{next_ed}</strong>
-          </div>
-          <div style="font-family:{F_BODY};font-size:11px;color:{INK_FAINT};
-            font-style:italic;line-height:1.65;" class="soft-text">
-            AI Weekly is an independent digest. All summaries reflect publicly available reporting.<br>
+          </mj-table>
+        </mj-column>
+      </mj-section>
+      
+      <!-- ══ SUMMARY BAR ═══════════════════════════════════ -->
+      <mj-section padding="0 24px 20px">
+        <mj-column background-color="{BG_INNER_CARD}" border-left="4px solid #A855F7" padding="16px 20px">
+          <mj-text padding="0px" font-size="13.5px" line-height="1.6" color="{TEXT_LIGHT}">
+            <strong style="color: #A855F7; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; display: block; margin-bottom: 6px; text-transform: uppercase;">⚡ THIS WEEK AT A GLANCE</strong>
+            {summary_html}
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      
+      <!-- ══ NAV BAR ═══════════════════════════════════════ -->
+      {_nav_bar()}
+      
+      <!-- ══ SECTIONS ══════════════════════════════════════ -->
+      {sections_html}
+      
+      <!-- ══ FOOTER ════════════════════════════════════════ -->
+      <mj-section padding="28px 24px" background-color="#111827">
+        <mj-column>
+          <mj-text align="center" font-family="'JetBrains Mono', monospace" font-size="10px" letter-spacing="0.1em" color="{TEXT_MUTED}" text-transform="uppercase" padding="0 0 10px 0">
+            Next edition: <strong style="color: #00F0FF; font-weight: 700;">{next_ed}</strong>
+          </mj-text>
+          <mj-text align="center" font-family="Inter, sans-serif" font-size="11px" color="#6B7280" line-height="1.6" font-style="italic" padding="0px">
+            AI Weekly is an independent digest. All summaries reflect publicly available reporting.<br />
             Not financial or investment advice.
-          </div>
-        </td></tr>
-
-      </table>
-
-<!--[if mso]></td></tr></table><![endif]-->
-
-    </td>
-  </tr>
-</table>
-
-</body>
-</html>"""
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      
+    </mj-wrapper>
+  </mj-body>
+</mjml>"""
 
 
 # ── Main parser ───────────────────────────────────────────────────
 
-def markdown_to_html(md: str, date: datetime.datetime) -> str:
-    _reset_endnotes()
+def markdown_to_mjml(md: str, date: datetime.datetime) -> str:
     lines      = md.splitlines()
     week_of    = date.strftime("Week of %b %d, %Y")
     next_ed    = (date + datetime.timedelta(days=7)).strftime("%B %d, %Y")
@@ -534,7 +389,7 @@ def markdown_to_html(md: str, date: datetime.datetime) -> str:
                 summary_text += s + " "
     summary_text = summary_text.strip()
     summary_html = (
-        f'<strong style="font-weight:700;color:{ON_DARK};">This week:</strong> {_md(summary_text, on_dark=True)}'
+        _md(summary_text)
         if summary_text else "Your weekly AI briefing."
     )
 
@@ -554,31 +409,41 @@ def markdown_to_html(md: str, date: datetime.datetime) -> str:
         raw_sections.append((cur_h, cur_l))
 
     # ── Render sections ───────────────────────────────────────────
-    sections_html = ""
+    sections_mjml = ""
     for heading, content in raw_sections:
         if re.search(r'at a glance|next edition|independent newsletter|not financial', heading, re.IGNORECASE):
             continue
         if re.search(r'one to watch', heading, re.IGNORECASE):
-            sections_html += _one_to_watch(content)
+            sections_mjml += _one_to_watch(content, SECTION_ACCENTS.get("watch", "#F59E0B"))
             continue
         matched = False
         for key, html_id, display_title, section_num in SECTION_MAP:
             if key.lower() in heading.lower():
-                sections_html += _standard_section(html_id, section_num, display_title, content)
+                accent = SECTION_ACCENTS.get(html_id, "#00F0FF")
+                sections_mjml += _standard_section(html_id, section_num, display_title, content, accent)
                 matched = True
                 break
         if not matched:
             bl = _bullets(content)
             safe_id = re.sub(r'[^a-z0-9]', '-', heading.lower())[:24].strip('-')
             clean_t = re.sub(r'[^\w\s&\-]', '', heading).strip()
-            sections_html += (
-                f'<div id="{safe_id}" style="padding:36px 0 32px;border-bottom:1px solid {RULE};">'
-                f'{_section_header("", clean_t)}'
-                f'{_qt_block(bl)}'
-                f'</div>'
+            accent = "#00F0FF"
+            sections_mjml += (
+                f'<mj-section padding="24px 24px 12px 24px" css-class="section-block">'
+                f'<mj-column>'
+                f'{_section_header("", clean_t, accent, safe_id)}'
+                f'{_qt_block(bl, accent)}'
+                f'<mj-divider border-width="1px" border-color="#1E293B" padding="24px 0 0 0" />'
+                f'</mj-column>'
+                f'</mj-section>'
             )
 
-    return _build_html(summary_html, sections_html, week_of, edition, next_ed)
+    return _build_mjml(summary_html, sections_mjml, week_of, edition, next_ed)
+
+
+def markdown_to_html(md: str, date: datetime.datetime) -> str:
+    mjml_content = markdown_to_mjml(md, date)
+    return _compile_mjml(mjml_content)
 
 
 # ── Save & email ──────────────────────────────────────────────────
@@ -590,8 +455,12 @@ def save_newsletter(newsletter_md: str, date: datetime.datetime) -> str:
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(newsletter_md)
 
-    html = markdown_to_html(newsletter_md, date)
+    mjml = markdown_to_mjml(newsletter_md, date)
+    mjml_path = f"output/ai-weekly-{date.strftime('%Y-%m-%d')}.mjml"
+    with open(mjml_path, "w", encoding="utf-8") as f:
+        f.write(mjml)
 
+    html = _compile_mjml(mjml)
     html_path = f"output/ai-weekly-{date.strftime('%Y-%m-%d')}.html"
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html)

@@ -10,19 +10,13 @@ You write a weekly AI newsletter for a dual audience:
 - Non-technical readers who want clear, jargon-free summaries of what happened and why it matters
 - Technical readers who want depth, nuance, and understanding of the underlying mechanisms
 
-Your newsletter structure for each section must always include:
-1. **The Quick Take** - 3-5 bullet points. Plain English. One sentence each. What happened and why it matters.
+You must submit the newsletter content using the `publish_newsletter` tool.
 
-CRITICAL: Every bullet point MUST include source links as inline markdown hyperlinks.
-Format: "- **Topic**: Description of what happened. [Source](https://example.com/article-url)"
-If a bullet draws from multiple sources, include a markdown link for each source.
-Never omit source links - at least one markdown hyperlink is required per bullet point.
+For each section entry (bullet point), you must explain the topic clearly and list the specific URLs from the raw data that support this story. Never omit source links - every entry must be backed by the actual source URLs.
 
 Your writing is precise, neutral, insightful, and never hype-driven.
-You always attribute claims to their sources.
 You skip anything that is not meaningfully new or interesting.
-You synthesise across sources to identify patterns - not just list events.
-Output only valid Markdown."""
+You synthesise across sources to identify patterns."""
 
 
 def build_user_prompt(data: Dict) -> str:
@@ -64,67 +58,8 @@ def build_user_prompt(data: Dict) -> str:
         sections.append(f"## TWEETS FROM AI LEADERS\n{tweets_text}")
 
     raw_data = "\n\n---\n\n".join(sections)
-    next_edition = (datetime.datetime.strptime(end, "%Y-%m-%d") + datetime.timedelta(days=7)).strftime("%B %d, %Y")
 
     return f"""Generate the AI Weekly Newsletter for the week of {start} to {end}.
-
-Use EXACTLY this structure:
-
----
-
-# 🤖 AI Weekly – Week of {start}
-
-*Your dual-layer briefing on everything happening in AI this week.*
-
----
-
-## 📰 This Week at a Glance
-[2-3 sentence editorial summary. What story does this week tell overall?]
-
----
-
-## 🚀 Model Releases & Provider Updates
-### The Quick Take
-[Bullet points – Technical explanation with analogies]
-
----
-
-## 📚 Research Highlights (arXiv)
-### The Quick Take
-[4-6 most significant papers as bullet points – what they did and why it matters, in plain English]
-
----
-
-## 💼 AI in Business & Industry
-### The Quick Take
-[Bullet points – What companies announced, launched, or updated. Why it matters for the industry and users.]
-
----
-
-## 🛠️ AI Tools & Products
-### The Quick Take
-[Bullet points – What does tooling evolution tell us about where the field is heading?]
-
----
-
-## 🐦 From the AI Community
-### Notable Discussions This Week
-[3-5 notable tweets – summarise and explain why interesting. Include handle and link.]
-
----
-
-## 🔮 One to Watch
-[One emerging trend or idea that deserves attention. 1 paragraph.]
-
----
-
-*Next edition: {next_edition}*
-
----
-
-*AI Weekly is an independent newsletter. Not financial or investment advice.*
-
----
 
 RAW DATA:
 
@@ -132,14 +67,258 @@ RAW DATA:
 
 Rules:
 - Only use content from the data above. Do not hallucinate.
-- If a section has no data write "No significant updates this week."
 - Prioritise quality over quantity. Surface surprising or important stories.
 - Always explain WHY something matters, not just WHAT happened.
-- Format URLs as markdown links wherever available.
-- EVERY bullet point MUST include at least one markdown hyperlink to its source (e.g. "- **Topic**: Description. [Source](https://source.com/article)"). This is mandatory – bullets without source links will be rejected.
-- For the Community section, include a markdown hyperlink for each discussion/tweet/article mentioned.
-- For Research, include the arXiv link as a markdown hyperlink for each paper.
+- For each entry in any section, extract the associated source URLs from the RAW DATA and pass them in the urls array.
 """
+
+
+def json_to_markdown(js: Dict, start_date: str, end_date: str, next_edition: str) -> str:
+    md = []
+    md.append(f"# 🤖 AI Weekly – Week of {start_date}")
+    md.append("")
+    md.append("*Your dual-layer briefing on everything happening in AI this week.*")
+    md.append("")
+    md.append("---")
+    md.append("")
+    md.append("## This Week at a Glance")
+    md.append("")
+    md.append(js.get("week_summary", ""))
+    md.append("")
+    md.append("---")
+    md.append("")
+    
+    # Helper to render standard sections
+    def render_section(title, heading_prefix, entries):
+        md.append(f"{heading_prefix} {title}")
+        md.append("")
+        md.append("### The Quick Take")
+        md.append("")
+        if not entries:
+            md.append("No significant updates this week.")
+        else:
+            for entry in entries:
+                text = entry.get("text", "").strip()
+                urls = entry.get("urls", [])
+                links = [f"[Source]({url})" for url in urls if url]
+                links_str = " ".join(links)
+                if links_str:
+                    md.append(f"- {text} {links_str}")
+                else:
+                    md.append(f"- {text}")
+        md.append("")
+        md.append("---")
+        md.append("")
+
+    render_section("Model Releases & Provider Updates", "## 🚀", js.get("models_section", []))
+    render_section("Research Highlights (arXiv)", "## 📚", js.get("research_section", []))
+    render_section("AI in Business & Industry", "## 💼", js.get("industry_section", []))
+    render_section("AI Tools & Products", "## 🛠️", js.get("tools_section", []))
+    
+    # Community Section
+    md.append("## 🐦 From the AI Community")
+    md.append("")
+    md.append("### Notable Discussions This Week")
+    md.append("")
+    community_entries = js.get("community_section", [])
+    if not community_entries:
+        md.append("No significant updates this week.")
+    else:
+        for entry in community_entries:
+            text = entry.get("text", "").strip()
+            urls = entry.get("urls", [])
+            links = [f"[Source]({url})" for url in urls if url]
+            links_str = " ".join(links)
+            if links_str:
+                md.append(f"- {text} {links_str}")
+            else:
+                md.append(f"- {text}")
+    md.append("")
+    md.append("---")
+    md.append("")
+    
+    # One to Watch Section
+    watch = js.get("one_to_watch", {})
+    md.append("## 🔮 One to Watch")
+    md.append("")
+    md.append(f"### {watch.get('title', 'Emerging Trend')}")
+    md.append("")
+    urls = watch.get("urls", [])
+    links_str = " ".join([f"[Source]({url})" for url in urls if url])
+    prose = watch.get("prose", "").strip()
+    if links_str:
+        md.append(f"{prose} {links_str}")
+    else:
+        md.append(prose)
+    md.append("")
+    md.append("---")
+    md.append("")
+    
+    md.append(f"*Next edition: {next_edition}*")
+    md.append("")
+    md.append("---")
+    md.append("")
+    md.append("*AI Weekly is an independent newsletter. Not financial or investment advice.*")
+    md.append("")
+    md.append("---")
+    
+    return "\n".join(md)
+
+
+PUBLISH_NEWSLETTER_TOOL = {
+    "name": "publish_newsletter",
+    "description": "Publish the weekly AI newsletter with structured sections and source links.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "week_summary": {
+                "type": "string",
+                "description": "A 2-3 sentence editorial summary of the week's overall AI narrative."
+            },
+            "models_section": {
+                "type": "array",
+                "description": "List of entries for the Model Releases & Provider Updates section.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "A bullet point summary in plain English, explaining what happened and why it matters. Do not include markdown links inside the text."
+                        },
+                        "urls": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "description": "The specific source URLs from the raw data supporting this bullet point."
+                        }
+                    },
+                    "required": ["text", "urls"]
+                }
+            },
+            "research_section": {
+                "type": "array",
+                "description": "List of entries for the Research Highlights (arXiv) section.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "A bullet point summary of the paper in plain English: what they did and why it matters."
+                        },
+                        "urls": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "description": "The arXiv paper URLs supporting this entry."
+                        }
+                    },
+                    "required": ["text", "urls"]
+                }
+            },
+            "industry_section": {
+                "type": "array",
+                "description": "List of entries for the AI in Business & Industry section.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "A bullet point summary of corporate announcements, launches, or updates and why they matter."
+                        },
+                        "urls": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "description": "The specific source URLs supporting this entry."
+                        }
+                    },
+                    "required": ["text", "urls"]
+                }
+            },
+            "tools_section": {
+                "type": "array",
+                "description": "List of entries for the AI Tools & Products section.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "A bullet point summary of new tools and developer tooling updates."
+                        },
+                        "urls": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "description": "The specific source URLs supporting this entry."
+                        }
+                    },
+                    "required": ["text", "urls"]
+                }
+            },
+            "community_section": {
+                "type": "array",
+                "description": "List of entries for the From the AI Community section.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "A summary of a notable discussion or tweet from AI leaders and researchers."
+                        },
+                        "urls": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "description": "The specific tweet/discussion URLs supporting this entry."
+                        }
+                    },
+                    "required": ["text", "urls"]
+                }
+            },
+            "one_to_watch": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the emerging trend or project to watch."
+                    },
+                    "prose": {
+                        "type": "string",
+                        "description": "A 1-paragraph explanation of the trend/project and why it is important."
+                    },
+                    "urls": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uri"
+                        },
+                        "description": "Associated source URLs for this trend."
+                    }
+                },
+                "required": ["title", "prose", "urls"]
+            }
+        },
+        "required": [
+            "week_summary",
+            "models_section",
+            "research_section",
+            "industry_section",
+            "tools_section",
+            "community_section",
+            "one_to_watch"
+        ]
+    }
+}
 
 
 def generate_newsletter(data: Dict) -> str:
@@ -148,6 +327,11 @@ def generate_newsletter(data: Dict) -> str:
         raise ValueError("ANTHROPIC_API_KEY environment variable not set")
 
     client = anthropic.Anthropic(api_key=api_key)
+
+    start = data["date_range"]["start"][:10]
+    end = data["date_range"]["end"][:10]
+    next_edition = (datetime.datetime.strptime(end, "%Y-%m-%d") + datetime.timedelta(days=7)).strftime("%B %d, %Y")
+
     user_prompt = build_user_prompt(data)
 
     max_retries = 5
@@ -162,17 +346,32 @@ def generate_newsletter(data: Dict) -> str:
                 max_tokens=8192,
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": user_prompt}],
+                tools=[PUBLISH_NEWSLETTER_TOOL],
+                tool_choice={"type": "tool", "name": "publish_newsletter"}
             )
 
-            newsletter = message.content[0].text
-            print(f"✅ Generated ({message.usage.output_tokens} output tokens, {message.usage.input_tokens} input tokens)")
-            return newsletter
+            # Find tool use block
+            tool_use_block = None
+            for block in message.content:
+                if block.type == "tool_use" and block.name == "publish_newsletter":
+                    tool_use_block = block
+                    break
+
+            if not tool_use_block:
+                raise RuntimeError("Claude response did not contain the publish_newsletter tool call.")
+
+            newsletter_data = tool_use_block.input
+            print(f"✅ Generated structured data ({message.usage.output_tokens} output tokens, {message.usage.input_tokens} input tokens)")
+            
+            # Map structured JSON data to standard markdown string
+            markdown_content = json_to_markdown(newsletter_data, start, end, next_edition)
+            return markdown_content
 
         except anthropic.RateLimitError as e:
             if attempt == max_retries - 1:
-                raise  # Out of retries, let it fail loudly
+                raise
 
-            wait = base_wait * (2 ** attempt)  # 60s, 120s, 240s, 480s
+            wait = base_wait * (2 ** attempt)
             print(f"⏳ Rate limit hit – waiting {wait}s before retry...")
             time.sleep(wait)
 
