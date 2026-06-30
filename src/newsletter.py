@@ -13,8 +13,24 @@ from collectors.twitter import fetch_twitter_posts
 from summariser import generate_newsletter
 from exporter import save_newsletter
 
+def load_env():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    for path in [os.path.join(script_dir, ".env"), os.path.join(os.path.dirname(script_dir), ".env")]:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if "=" in line:
+                        key, val = line.split("=", 1)
+                        key = key.strip()
+                        val = val.strip().strip('"').strip("'")
+                        os.environ[key] = val
+            break
 
 def main():
+    load_env()
     print("=" * 60)
     print("AI Weekly Newsletter Generator")
     print("=" * 60)

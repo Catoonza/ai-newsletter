@@ -39,6 +39,22 @@ import webbrowser
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+def load_env():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    for path in [os.path.join(script_dir, ".env"), os.path.join(os.path.dirname(script_dir), ".env")]:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if "=" in line:
+                        key, val = line.split("=", 1)
+                        key = key.strip()
+                        val = val.strip().strip('"').strip("'")
+                        os.environ[key] = val
+            break
+
 # Allow imports from src/
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
@@ -74,6 +90,7 @@ def extract_date(md_path):
 
 
 def main():
+    load_env()
     parser = argparse.ArgumentParser(
         description="Send a test newsletter email"
     )

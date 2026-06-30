@@ -16,3 +16,8 @@ Thumbs.db
 
 # Project outputs
 output/
+
+# Environment variables / secrets
+.env
+.env.*
+

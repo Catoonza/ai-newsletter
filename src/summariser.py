@@ -6,74 +6,6 @@ import datetime
 import anthropic
 from typing import Dict
 
-SYSTEM_PROMPT = """You are an expert AI journalist and researcher.
-You write a weekly AI newsletter for a dual audience:
-- Non-technical readers who want clear, jargon-free summaries of what happened and why it matters
-- Technical readers who want depth, nuance, and understanding of the underlying mechanisms
-
-You must submit the newsletter content using the `publish_newsletter` tool.
-
-For each section entry (bullet point), you must explain the topic clearly and list the specific URLs from the raw data that support this story. Never omit source links - every entry must be backed by the actual source URLs.
-
-Your writing is precise, neutral, insightful, and never hype-driven.
-You skip anything that is not meaningfully new or interesting.
-You synthesise across sources to identify patterns."""
-
-
-def build_user_prompt(data: Dict) -> str:
-    start = data["date_range"]["start"][:10]
-    end = data["date_range"]["end"][:10]
-
-    sections = []
-
-    # — News articles
-    if data.get("news_articles"):
-        news_text = "\n\n".join([
-            f"Title: {a['title']}\nSource: {a['source_name']}\nDate: {a['published_at'][:10]}\nSummary: {a.get('description','')}\nURL: {a['url']}"
-            for a in data["news_articles"]
-        ])
-        sections.append(f"## NEWS ARTICLES\n{news_text}")
-
-    # — Blog posts
-    if data.get("blog_posts"):
-        blogs_text = "\n\n".join([
-            f"Provider: {p['provider']}\nTitle: {p['title']}\nDate: {p['published_at'][:10]}\nSummary: {p.get('summary','')}\nURL: {p['url']}"
-            for p in data["blog_posts"]
-        ])
-        sections.append(f"## PROVIDER BLOG POSTS\n{blogs_text}")
-
-    # — arXiv papers
-    if data.get("arxiv_papers"):
-        papers_text = "\n\n".join([
-            f"Title: {p['title']}\nAuthors: {', '.join(p.get('authors', []))}\nCategory: {p['primary_category']}\nDate: {p['published_at'][:10]}\nAbstract: {p.get('abstract','')}\nURL: {p['url']}"
-            for p in data["arxiv_papers"]
-        ])
-        sections.append(f"## ARXIV PAPERS\n{papers_text}")
-
-    # — Tweets
-    if data.get("tweets"):
-        tweets_text = "\n\n".join([
-            f"@{t['handle']} ({t['published_at'][:10]})\n{t.get('text','')}\n{t.get('url','')}"
-            for t in data["tweets"]
-        ])
-        sections.append(f"## TWEETS FROM AI LEADERS\n{tweets_text}")
-
-    raw_data = "\n\n---\n\n".join(sections)
-
-    return f"""Generate the AI Weekly Newsletter for the week of {start} to {end}.
-
-RAW DATA:
-
-{raw_data}
-
-Rules:
-- Only use content from the data above. Do not hallucinate.
-- Prioritise quality over quantity. Surface surprising or important stories.
-- Always explain WHY something matters, not just WHAT happened.
-- For each entry in any section, extract the associated source URLs from the RAW DATA and pass them in the urls array.
-"""
-
-
 def _clean_source_name(url: str) -> str:
     # Extract domain name
     domain = re.sub(r'^https?://(www\.)?', '', url).split('/')[0].lower()
@@ -110,6 +42,76 @@ def _clean_source_name(url: str) -> str:
     else:
         name = domain
     return name.capitalize()
+
+SYSTEM_PROMPT = """You are an expert AI journalist and researcher.
+You write a weekly AI newsletter for a dual audience:
+- Non-technical readers who want clear, jargon-free summaries of what happened and why it matters
+- Technical readers who want depth, nuance, and understanding of the underlying mechanisms
+
+You must submit the newsletter content using the `publish_newsletter` tool.
+
+For each section entry (bullet point), you must explain the topic clearly and list the specific URLs from the raw data that support this story. Never omit source links - every entry must be backed by the actual source URLs.
+
+For the 'From the AI Community' section, you MUST only summarize tweets from the provided tweets dataset (TWEETS FROM AI LEADERS) and include the tweet author's handle and link. Do not include news articles, provider blog posts, or research papers in this section.
+
+Your writing is precise, neutral, insightful, and never hype-driven.
+You skip anything that is not meaningfully new or interesting.
+You synthesise across sources to identify patterns."""
+
+
+def build_user_prompt(data: Dict) -> str:
+    start = data["date_range"]["start"][:10]
+    end = data["date_range"]["end"][:10]
+
+    sections = []
+
+    # — News articles
+    if data.get("news_articles"):
+        news_text = "\n\n".join([
+            f"Title: {a['title']}\nSource: {_clean_source_name(a['url'])}\nDate: {a['published_at'][:10]}\nSummary: {a.get('description','')}\nURL: {a['url']}"
+            for a in data["news_articles"]
+        ])
+        sections.append(f"## NEWS ARTICLES\n{news_text}")
+
+    # — Blog posts
+    if data.get("blog_posts"):
+        blogs_text = "\n\n".join([
+            f"Provider: {_clean_source_name(p['url'])}\nTitle: {p['title']}\nDate: {p['published_at'][:10]}\nSummary: {p.get('summary','')}\nURL: {p['url']}"
+            for p in data["blog_posts"]
+        ])
+        sections.append(f"## PROVIDER BLOG POSTS\n{blogs_text}")
+
+    # — arXiv papers
+    if data.get("arxiv_papers"):
+        papers_text = "\n\n".join([
+            f"Title: {p['title']}\nAuthors: {', '.join(p.get('authors', []))}\nCategory: {p['primary_category']}\nDate: {p['published_at'][:10]}\nAbstract: {p.get('abstract','')}\nURL: {p['url']}"
+            for p in data["arxiv_papers"]
+        ])
+        sections.append(f"## ARXIV PAPERS\n{papers_text}")
+
+    # — Tweets
+    if data.get("tweets"):
+        tweets_text = "\n\n".join([
+            f"@{t['handle']} ({t['published_at'][:10]})\n{t.get('text','')}\n{t.get('url','')}"
+            for t in data["tweets"]
+        ])
+        sections.append(f"## TWEETS FROM AI LEADERS\n{tweets_text}")
+
+    raw_data = "\n\n---\n\n".join(sections)
+
+    return f"""Generate the AI Weekly Newsletter for the week of {start} to {end}.
+
+RAW DATA:
+
+{raw_data}
+
+Rules:
+- Only use content from the data above. Do not hallucinate.
+- Prioritise quality over quantity. Surface surprising or important stories.
+- Always explain WHY something matters, not just WHAT happened.
+- For each entry in any section, extract the associated source URLs from the RAW DATA and pass them in the urls array.
+"""
+
 
 
 def json_to_markdown(js: Dict, start_date: str, end_date: str, next_edition: str) -> str:
@@ -305,13 +307,13 @@ PUBLISH_NEWSLETTER_TOOL = {
             },
             "community_section": {
                 "type": "array",
-                "description": "List of entries for the From the AI Community section.",
+                "description": "List of entries for the From the AI Community section. You MUST only summarize tweets from the TWEETS FROM AI LEADERS section of the raw data. Do not include news articles, provider blog posts, or research papers.",
                 "items": {
                     "type": "object",
                     "properties": {
                         "text": {
                             "type": "string",
-                            "description": "A summary of a notable discussion or tweet from AI leaders and researchers."
+                            "description": "A summary of a notable tweet or Twitter/X discussion from AI leaders and researchers, including the author's handle (e.g. '@ylecun')."
                         },
                         "urls": {
                             "type": "array",
@@ -319,7 +321,7 @@ PUBLISH_NEWSLETTER_TOOL = {
                                 "type": "string",
                                 "format": "uri"
                             },
-                            "description": "The specific tweet/discussion URLs supporting this entry."
+                            "description": "The specific tweet URL(s) from the tweets dataset supporting this entry."
                         }
                     },
                     "required": ["text", "urls"]
