@@ -311,7 +311,7 @@ def _build_mjml(summary_html: str, sections_html: str,
       }}
     </mj-style>
   </mj-head>
-  <mj-body background-color="{BG_DARK}">
+  <mj-body background-color="{BG_DARK}" width="680px">
     <mj-wrapper background-color="{BG_CARD}" border="1px solid {BORDER_COLOR}" padding="0px">
       
       <!-- ══ MASTHEAD ══════════════════════════════════════ -->

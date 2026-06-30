@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import json
 import datetime
@@ -73,6 +74,44 @@ Rules:
 """
 
 
+def _clean_source_name(url: str) -> str:
+    # Extract domain name
+    domain = re.sub(r'^https?://(www\.)?', '', url).split('/')[0].lower()
+    
+    # Mapping of common domains to clean names
+    mapping = {
+        "openai.com": "OpenAI Blog",
+        "anthropic.com": "Anthropic News",
+        "deepmind.google": "Google DeepMind",
+        "blog.google": "Google Blog",
+        "techcrunch.com": "TechCrunch",
+        "venturebeat.com": "VentureBeat",
+        "arxiv.org": "arXiv",
+        "twitter.com": "Twitter/X",
+        "x.com": "Twitter/X",
+        "github.com": "GitHub",
+        "huggingface.co": "Hugging Face",
+        "aws.amazon.com": "AWS Blog",
+        "blogs.nvidia.com": "NVIDIA Blog",
+        "nvidia.com": "NVIDIA",
+        "cohere.com": "Cohere Blog",
+        "mistral.ai": "Mistral AI",
+        "meta.com": "Meta AI",
+    }
+    
+    for key, value in mapping.items():
+        if key in domain:
+            return value
+            
+    # Default fallback: domain name with capitalized components (e.g. blog.openai.com -> Blog OpenAI)
+    parts = domain.split('.')
+    if len(parts) >= 2:
+        name = parts[-2]
+    else:
+        name = domain
+    return name.capitalize()
+
+
 def json_to_markdown(js: Dict, start_date: str, end_date: str, next_edition: str) -> str:
     md = []
     md.append(f"# 🤖 AI Weekly – Week of {start_date}")
@@ -100,10 +139,10 @@ def json_to_markdown(js: Dict, start_date: str, end_date: str, next_edition: str
             for entry in entries:
                 text = entry.get("text", "").strip()
                 urls = entry.get("urls", [])
-                links = [f"[Source]({url})" for url in urls if url]
-                links_str = " ".join(links)
+                links = [f"[{_clean_source_name(url)}]({url})" for url in urls if url]
+                links_str = ", ".join(links)
                 if links_str:
-                    md.append(f"- {text} {links_str}")
+                    md.append(f"- {text} ({links_str})")
                 else:
                     md.append(f"- {text}")
         md.append("")
@@ -127,10 +166,10 @@ def json_to_markdown(js: Dict, start_date: str, end_date: str, next_edition: str
         for entry in community_entries:
             text = entry.get("text", "").strip()
             urls = entry.get("urls", [])
-            links = [f"[Source]({url})" for url in urls if url]
-            links_str = " ".join(links)
+            links = [f"[{_clean_source_name(url)}]({url})" for url in urls if url]
+            links_str = ", ".join(links)
             if links_str:
-                md.append(f"- {text} {links_str}")
+                md.append(f"- {text} ({links_str})")
             else:
                 md.append(f"- {text}")
     md.append("")
@@ -144,10 +183,10 @@ def json_to_markdown(js: Dict, start_date: str, end_date: str, next_edition: str
     md.append(f"### {watch.get('title', 'Emerging Trend')}")
     md.append("")
     urls = watch.get("urls", [])
-    links_str = " ".join([f"[Source]({url})" for url in urls if url])
+    links_str = ", ".join([f"[{_clean_source_name(url)}]({url})" for url in urls if url])
     prose = watch.get("prose", "").strip()
     if links_str:
-        md.append(f"{prose} {links_str}")
+        md.append(f"{prose} ({links_str})")
     else:
         md.append(prose)
     md.append("")
@@ -163,6 +202,7 @@ def json_to_markdown(js: Dict, start_date: str, end_date: str, next_edition: str
     md.append("---")
     
     return "\n".join(md)
+
 
 
 PUBLISH_NEWSLETTER_TOOL = {
